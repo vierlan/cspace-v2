@@ -4,6 +4,9 @@ Rails.application.routes.draw do
   root 'pages#home'
 
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_up: 'signup' }, controllers: { registrations: 'registrations' }
+
+  # onboarding page
+  get 'onboarding', to: 'onboarding#create', as: 'onboarding'
   get 'logout', to: 'pages#logout', as: 'logout'
 
   resources :subscribe, only: [:index]
