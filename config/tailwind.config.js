@@ -10,13 +10,15 @@ module.exports = {
   ],
   theme: {
     extend: {
+      backgroundImage: {
+        'group': "url('app/assets/images/group.png')",
+      },
       fontFamily: {
         sans: ['Inter var', ...defaultTheme.fontFamily.sans]
       },
       // custom color palette for branding, see https://tailwindcss.com/docs/customizing-colors
-      colors: {
-        primary: colors.lime,
-        secondary: colors.black
+      backgroundColor: {
+        'brand-teal': '#BECDC1',
       },
       keyframes: {
         flashfade: { "0%, 100%": { opacity: "0" }, "5%, 80%": { opacity: "1" } },
