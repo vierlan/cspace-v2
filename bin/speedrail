@@ -16,7 +16,7 @@ FileUtils.chdir APP_ROOT do
 
   new_app_name = ARGV[0]
 
-  puts "== Installing Speedrail =="
+  puts "== Installing =="
   system! "gem install bundler --conservative"
   system("bundle check") || system!("bundle install")
 

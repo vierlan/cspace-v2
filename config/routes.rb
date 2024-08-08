@@ -1,4 +1,12 @@
 Rails.application.routes.draw do
+ #get 'venues/index'
+ #get 'venues/top'
+ #get 'venues/show'
+ #get 'venues/new'
+ #get 'venues/create'
+ #get 'venues/edit'
+ #get 'venues/update'
+ #get 'venues/destroy'
   ActiveAdmin.routes(self)
 
   root 'pages#home'
@@ -9,6 +17,7 @@ Rails.application.routes.draw do
   get 'onboarding', to: 'onboarding#create', as: 'onboarding'
   get 'logout', to: 'pages#logout', as: 'logout'
 
+  resources :venues
   resources :subscribe, only: [:index]
   resources :dashboard, only: [:index]
   resources :account, only: %i[index update] do

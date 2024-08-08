@@ -1,0 +1,17 @@
+<div class="grid grid-cols-4 pb-10">
+  <div class=""></div>
+      <div class="col-span-2 bg-white rounded shadow p-4">
+        <h3>List your venue</h3>
+        <%= simple_form_for(@venue) do |f| %>
+        <%= f.input :name, placeholder: 'Venue' %>
+        <%= f.input :photos, as: :file, input_html: {multiple: true} %>
+        <div class="input-group">
+          <%= f.label :categories %>
+          <%= f.select :categories, :collection => %w[bar restaurant cafe hotel other] %>
+        </div>
+        <%= f.input :amenities, placeholder: 'Describe facilities' %>
+        <%= f.input :address, placeholder: '20 London Road, W1 4HF' %>
+        <%= f.submit "Add Venue", class: 'btn btn-primary' %>
+        <% end %>
+      </div>
+    </div>

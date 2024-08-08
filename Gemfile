@@ -5,6 +5,7 @@ ruby '3.2.2'
 
 gem 'activeadmin', '4.0.0.beta6'
 gem 'aws-sdk-s3', require: false
+gem 'bootstrap', '~> 5.3.3'
 gem 'chartkick'
 gem 'delayed' # delayed_job_active_record rails 7 fork: https://github.com/betterment/delayed
 gem 'devise'
@@ -20,10 +21,13 @@ gem 'pg'
 gem 'postmark-rails'
 gem 'pretender'
 gem 'puma', '6.4.2'
+gem 'pundit'
 gem 'rack-cors', :require => 'rack/cors'
 gem 'rails', '7.1.3.2'
 gem 'redis'
 gem 'rename', '1.1.3', git: 'https://github.com/ryanckulp/rename' # remove this gem after use
+gem 'sass-rails', '~> 6.0'
+gem 'simple_form'
 gem 'split', require: 'split/dashboard'
 gem 'sprockets-rails'
 gem 'stimulus-rails'

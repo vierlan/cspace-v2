@@ -105,6 +105,8 @@ GEM
       activesupport (>= 3.0.0)
       ruby2_keywords (>= 0.0.2)
     ast (2.4.2)
+    autoprefixer-rails (10.4.19.0)
+      execjs (~> 2)
     aws-eventstream (1.3.0)
     aws-partitions (1.928.0)
     aws-sdk-core (3.196.0)
@@ -127,6 +129,9 @@ GEM
     bindex (0.8.1)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
+    bootstrap (5.3.3)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 2.11.8, < 3)
     builder (3.2.4)
     capybara (3.40.0)
       addressable
@@ -163,6 +168,7 @@ GEM
     docile (1.4.0)
     drb (2.2.1)
     erubi (1.12.0)
+    execjs (2.9.1)
     factory_bot (6.4.6)
       activesupport (>= 5.0.0)
     factory_bot_rails (6.4.3)
@@ -269,6 +275,7 @@ GEM
       ast (~> 2.4.1)
       racc
     pg (1.5.6)
+    popper_js (2.11.8)
     postmark (1.24.1)
       json
     postmark-rails (0.22.1)
@@ -281,6 +288,8 @@ GEM
     public_suffix (5.0.5)
     puma (6.4.2)
       nio4r (~> 2.0)
+    pundit (2.3.2)
+      activesupport (>= 3.0.0)
     racc (1.7.3)
     rack (3.0.10)
     rack-cors (2.0.2)
@@ -396,6 +405,16 @@ GEM
     rubystats (0.4.1)
       matrix
     rubyzip (2.3.2)
+    sass-rails (6.0.0)
+      sassc-rails (~> 2.1, >= 2.1.1)
+    sassc (2.4.0)
+      ffi (~> 1.9)
+    sassc-rails (2.1.2)
+      railties (>= 4.0.0)
+      sassc (>= 2.0)
+      sprockets (> 3.0)
+      sprockets-rails
+      tilt
     selenium-webdriver (4.15.0)
       rexml (~> 3.2, >= 3.2.5)
       rubyzip (>= 1.2.2, < 3.0)
@@ -404,6 +423,9 @@ GEM
       activesupport (>= 3)
     shoulda-matchers (6.2.0)
       activesupport (>= 5.2.0)
+    simple_form (5.3.1)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -480,6 +502,7 @@ DEPENDENCIES
   activeadmin (= 4.0.0.beta6)
   aws-sdk-s3
   bootsnap
+  bootstrap (~> 5.3.3)
   capybara
   chartkick
   debug
@@ -500,6 +523,7 @@ DEPENDENCIES
   postmark-rails
   pretender
   puma (= 6.4.2)
+  pundit
   rack-cors
   rails (= 7.1.3.2)
   redis
@@ -510,9 +534,11 @@ DEPENDENCIES
   rubocop-factory_bot
   rubocop-rails
   rubocop-rspec
+  sass-rails (~> 6.0)
   selenium-webdriver
   shoulda-callback-matchers
   shoulda-matchers
+  simple_form
   simplecov
   simplecov-tailwindcss
   split
