@@ -7,16 +7,18 @@
         <span class="font-semibold text-xl tracking-tight text-primary-600"><%= Rails.application.credentials.company_name %></span>
       <% end %>
     </div>
-    <div class="block sm:hidden">
-      <button class="navbar-burger flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white" data-action="click->header#toggleMobileNav">
-        <svg class="text-black fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-          <title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
-        </svg>
-      </button>
+    <div class="block sm:hidden md:inline-block">
+      <!--
+        <button class="navbar-burger flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white" data-action="click->header#toggleMobileNav">
+          <svg class="text-black fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+            <title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+          </svg>
+        </button>
+      -->
     </div>
 
-    <div id="main-nav" class="w-full flex-grow sm:flex text-right sm:w-auto hidden" data-header-target="mainNav">
-      <div class="text-sm sm:flex-grow">
+    <div id="main-nav" class="w-full flex-grow sm:flex text-right sm:w-auto hidden " data-header-target="mainNav">
+      <div class="flex justify-center text-sm sm:flex-grow md:display-inline">
         <%= link_to 'Admin', admin_root_path, class: nav_link_classes('admin/dashboard') if current_user&.admin? %>
 
         <%= link_to 'Blog', blog_posts_path, class: nav_link_classes('blog') %>
