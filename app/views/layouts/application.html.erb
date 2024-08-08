@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <%= metamagic site: 'Speedrail', title: [:site, :title], separator: " | " %>
+    <%= metamagic site: 'Commonspace', title: [:site, :title], separator: " | " %>
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
+    <%= favicon_link_tag 'logo.png' %>
     <!-- tailwind components -->
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.10.1/dist/full.min.css" rel="stylesheet" type="text/css" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/1.6.5/flowbite.min.css" rel="stylesheet" />
@@ -25,9 +25,15 @@
 
       <%= render "shared/impersonator" %>
       <%= render "shared/flash" %>
-      <%= render "shared/header" %>
+      <%  if !current_user %>
+        <%= render "shared/header" %>
+      <% elsif params[:controller] == "onboarding"%>
+         <%# do nothing %>
+      <% else %>
+        <%=  render "shared/navbar" %>
+      <% end %>
       <%= yield %>
-  
+
     <%= render 'layouts/footer_nav' %>
   </body>
 </html>
