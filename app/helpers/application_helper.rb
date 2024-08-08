@@ -1,6 +1,6 @@
 module ApplicationHelper
   def nav_link_classes(path = nil)
-    defaults = 'ml-8 whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900'
+    defaults = 'text-gray-900 hover:bg-gray-50 hover:text-gray-900 block rounded-md py-2 px-3 text-base font-medium'
     defaults.gsub!('gray', 'black').gsub!('-medium', '-bold') if request.path == "/#{path}"
     defaults
   end
