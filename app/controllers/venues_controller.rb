@@ -37,9 +37,9 @@ class VenuesController < ApplicationController
     end
   end
 
-  def category
-    @category = params[:category]
-    @venues = Venue.where(category: params[:category]).where.not(user: current_user)
+  def categories
+    @categories = params[:categories]
+    @venues = Venue.where(categories: params[:categories]).where.not(user: current_user)
     authorize @venues
     if params[:query].present?
       #sql_subquery = "name ILIKE :query OR facilities ILIKE :query OR address ILIKE :query"
@@ -47,7 +47,7 @@ class VenuesController < ApplicationController
     end
   end
 
-  
+
 
   def destroy
     @venue = Venue.find(params[:id])
@@ -59,6 +59,6 @@ class VenuesController < ApplicationController
   private
 
   def venue_params
-    params.require(:venue).permit(:name, :address, :phone, :website, :amenities, :description)
+    params.require(:venue).permit(:name, :address, :phone, :website, :amenities, :description, :categories, :photos => [])
   end
 end

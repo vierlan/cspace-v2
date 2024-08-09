@@ -4,5 +4,5 @@ class Venue < ApplicationRecord
   has_many_attached :photos
 
   validates :name, presence: true
-  validates :category, inclusion: { in: CATEGORIES }
+  #validates :categories, inclusion: { in: CATEGORIES }
 end

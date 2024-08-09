@@ -29,6 +29,7 @@ This is a project I'm working on to improve my coding skills
 * interactive charts via [Chartkick](https://chartkick.com)
 * automated testing via GitHub actions + PR status check
 * Rubocop for code style enforcement and linting auto-fixes
+* Swiper.js for multi image swipable carousel
 
 ## Development
 ```sh
