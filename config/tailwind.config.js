@@ -10,6 +10,7 @@ module.exports = {
   ],
   theme: {
     extend: {
+      
       backgroundImage: {
         'group': "url('app/assets/images/group.png')",
       },

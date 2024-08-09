@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_04_11_204440) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_08_201707) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -52,6 +52,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_11_204440) do
     t.index ["blob_id", "variation_digest"], name: "index_active_storage_variant_records_uniqueness", unique: true
   end
 
+  create_table "assignments", force: :cascade do |t|
+    t.bigint "role_id", null: false
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["role_id"], name: "index_assignments_on_role_id"
+    t.index ["user_id"], name: "index_assignments_on_user_id"
+  end
+
   create_table "blog_posts", force: :cascade do |t|
     t.string "title"
     t.string "slug"
@@ -87,6 +96,13 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_11_204440) do
     t.index ["user_id"], name: "index_mail_logs_on_user_id"
   end
 
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
+    t.uuid "entity_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "script_tags", force: :cascade do |t|
     t.string "name"
     t.string "code"
@@ -111,6 +127,21 @@ ActiveRecord::Schema[7.1].define(version: 2024_04_11_204440) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "venues", force: :cascade do |t|
+    t.string "name"
+    t.string "amenities"
+    t.string "address"
+    t.string "district"
+    t.string "categories"
+    t.bigint "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_venues_on_user_id"
+  end
+
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "assignments", "roles"
+  add_foreign_key "assignments", "users"
+  add_foreign_key "venues", "users"
 end

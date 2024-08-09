@@ -1,0 +1,243 @@
+.swiper-slide {
+  width: 15rem !important;
+  height: 15rem !important;
+  display: flex !important;
+}
+
+.card-venue-idx {
+
+  display:flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  overflow: hidden !important;
+  background: white;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  height: 16rem;
+  width: 300px;
+  margin: 2px;
+
+}
+
+.card-venue-idx > img {
+  height: 80% !important;
+  width: 100%;
+  object-fit: cover !important;
+}
+
+.card-venue-idx h2 {
+  font-size: 16px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.card-venue-idx p {
+  font-size: 12px;
+  opacity: .7;
+  margin: 0;
+}
+
+
+.card-venue-idx .card-venue-idx-infos {
+  padding: 2px;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+}
+
+.card-venue-idx-infos .card-venue-idx-user {
+  position: absolute;
+  right: 16px;
+  top: -20px;
+  width: 40px;
+  border-radius: 50%;
+}
+
+$itemGrow: 1.2;
+$duration: 250ms;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #000;
+}
+
+h1 {
+  font-family: Arial;
+  color: white;
+  text-align: center;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3,100%);
+  overflow:hidden;
+  scroll-behavior: smooth;
+
+  section {
+    width: 100%;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    margin: 20px 0;
+
+    .item {
+      padding: 0 2px;
+      transition: $duration all;
+
+      &:hover {
+        margin: 0 40px;
+        transform: scale(1.2);
+      }
+
+    }
+
+    a {
+      position: absolute;
+      color: #fff;
+      text-decoration: none;
+      font-size: 6em;
+      background:rgb(0,0,0);
+      width: 80px;
+      padding: 20px;
+      text-align: center;
+      z-index: 1;
+
+      &:nth-of-type(1) {
+        top:0; bottom:0; left:0;
+        background: linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+      }
+      &:nth-of-type(2) {
+        top:0; bottom:0; right: 0;
+        background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+      }
+
+    }
+
+  }
+}
+
+
+$itemGrow: 1.2;
+$duration: 250ms;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background-color: #000;
+  font-family: Arial;
+}
+
+h1 {
+  color: white;
+  text-align: center;
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3,100%);
+  overflow:hidden;
+  scroll-behavior: smooth;
+
+  section {
+    width: 100%;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(5, auto);
+    margin: 20px 0;
+
+    .item {
+      position: relative;
+      padding: 0 2px;
+      transition: $duration all;
+
+      &:hover {
+        margin: 0 40px;
+        transform: scale(1.2);
+      }
+
+
+      .heading {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        color: #fff;
+      }
+
+      .duration {
+        position: absolute;
+        bottom: 0;
+        left: 20px;
+        color: #fff;
+      }
+
+    }
+
+    .arrow__btn {
+      position: absolute;
+      color: #fff;
+      text-decoration: none;
+      font-size: 6em;
+      background:rgb(0,0,0);
+      width: 80px;
+      padding: 20px;
+      text-align: center;
+      z-index: 1;
+    }
+
+    .left-arrow {
+      top:0; bottom:0; left:0;
+      background: linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    }
+
+    .right-arrow {
+      top:0; bottom:0; right: 0;
+      background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
+    }
+
+  }
+}
+
+// swiper.js carousel
+
+body {
+  position: relative;
+  height: 100%;
+}
+
+body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.swiper {
+  width: 100%;
+  height: 100%;
+}
+
+.swiper-slide {
+  text-align: center;
+  font-size: 18px;
+  background: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.swiper-slide img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
