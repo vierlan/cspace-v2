@@ -1,4 +1,3 @@
 class OnboardingController < ApplicationController
-  def create
-  end
+  def create; end
 end

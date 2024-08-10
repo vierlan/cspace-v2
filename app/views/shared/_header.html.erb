@@ -1,7 +1,7 @@
 <header class="py-10 px-2 max-sm:hidden" data-controller="header">
   <nav class="flex items-center justify-between flex-wrap">
     <div class="flex items-center flex-no-shrink text-white mr-6">
-      <% logo_path = current_user ? dashboard_index_path : root_path %>
+      <% logo_path = current_user ? dashboard_path : root_path %>
       <%= link_to logo_path, class:"flex items-center hover:opacity-80" do %>
         <%= image_tag "logo.png",  style: "height: 62px" %>
         <span class="font-semibold text-xl tracking-tight text-primary-600"><%= Rails.application.credentials.company_name %></span>
@@ -16,14 +16,12 @@
         </button>
       -->
     </div>
-
     <div id="main-nav" class="w-full flex-grow sm:flex text-right sm:w-auto hidden " data-header-target="mainNav">
       <div class="flex justify-center text-sm sm:flex-grow md:display-inline">
         <%= link_to 'Admin', admin_root_path, class: nav_link_classes('admin/dashboard') if current_user&.admin? %>
-
         <%= link_to 'Blog', blog_posts_path, class: nav_link_classes('blog') %>
         <% if current_user %>
-          <%= link_to 'Dashboard', dashboard_index_path, class: nav_link_classes('dashboard') %>
+          <%= link_to 'Dashboard', dashboard_path, class: nav_link_classes('dashboard') %>
           <%= link_to 'Account', account_index_path, class: nav_link_classes('account') %>
           <%= link_to 'Logout', logout_path, class: nav_link_classes %>
         <% else %>
@@ -35,8 +33,6 @@
     </div>
   </nav>
 </header>
-
-
 <!-- smooth scroll nav links -->
 <script type="text/javascript">
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {

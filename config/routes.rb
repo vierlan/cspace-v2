@@ -1,12 +1,4 @@
 Rails.application.routes.draw do
- #get 'venues/index'
- #get 'venues/top'
- #get 'venues/show'
- #get 'venues/new'
- #get 'venues/create'
- #get 'venues/edit'
- #get 'venues/update'
- #get 'venues/destroy'
   ActiveAdmin.routes(self)
 
   root 'pages#home'
@@ -17,9 +9,14 @@ Rails.application.routes.draw do
   get 'onboarding', to: 'onboarding#create', as: 'onboarding'
   get 'logout', to: 'pages#logout', as: 'logout'
 
-  resources :venues
+  get 'dashboard/:id', to: 'dashboard#index', as: :dashboard
+
+  resources :venues do
+    collection do
+      get 'categories/:categories', to: 'venues#categories', as: :categories
+    end
+  end
   resources :subscribe, only: [:index]
-  resources :dashboard, only: [:index]
   resources :account, only: %i[index update] do
     get :stop_impersonating, on: :collection
   end
