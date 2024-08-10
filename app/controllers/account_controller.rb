@@ -18,7 +18,7 @@ class AccountController < ApplicationController
   private
 
   def account_update_params
-    params.require(:user).permit(:email, :password)
+    params.require(:user).permit(:email, :password, )
   end
 
   def set_flashes

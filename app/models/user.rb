@@ -1,7 +1,7 @@
 class User < ApplicationRecord
   has_many :assignments, dependent: :destroy
   has_many :roles, through: :assignments
-  has_one_attached :photo
+  has_one_attached :avatar
   include Signupable
   include Onboardable
   include Billable
