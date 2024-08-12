@@ -1,0 +1,9 @@
+<h1>Are you a venue owner?</h1>
+<h1>Do you own or manage sites that you would like to add to our site?</h1>
+<%= simple_form_for @user, url:wizard_path(:add_venue_owner), method: :put do |f| %>
+
+  <%= f.input :venue_owner, :default => false  %>
+  <%= f.button :submit, "continue" %>
+
+<% end %>
+

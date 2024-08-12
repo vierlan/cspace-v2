@@ -5,8 +5,9 @@ Rails.application.routes.draw do
 
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_up: 'signup' }, controllers: { registrations: 'registrations' }
 
+  # after signup
+  resources :onboarding_steps
   # onboarding page
-  get 'onboarding', to: 'onboarding#create', as: 'onboarding'
   get 'logout', to: 'pages#logout', as: 'logout'
 
   get 'dashboard/:id', to: 'dashboard#index', as: :dashboard
