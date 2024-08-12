@@ -144,3 +144,27 @@
     </div>
   </div>
 </div>
+<!-- Carousel 2 populated with user created venues -->
+<div class="slider-carousel bg-white" data-controller="swiper">
+  <h2 class='text-black text-lg font-bold py-5 pl-10'>Best places for solo working</h2>
+    <div class="swiper mySwiper">
+      <div class="swiper-wrapper">
+      <% @venues.each_with_index do |venue, index| %>
+        <div class="swiper-slide">
+          <div class="card-venue-idx" id="index">
+              <% if venue.photos.attached? %>
+                <% photo = venue.photos.first %>
+                <%= cl_image_tag photo.key, alt: venue.name %>
+              <% else %>
+                <p>No images available for this venue.</p>
+              <% end %>
+              <h2><%= venue.name %></h2>
+              <p><strong <%= venue.categories %>></strong></p>
+              <p class= "address"><%= venue.address %></p>
+              <p><strong><%= venue.amenities %></strong></p>
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,8 @@
+<div class="bg white flex flex-col justify-center">
+  <h1>Let's get aquainted 👩🧑👳‍♀️👩‍🦳</h1>
+  <%=simple_form_for @user, url:wizard_path, method: :put do |f| %>
+   <%= f.input :first_name, placeholder: "John" %>
+   <%= f.input :last_name, placeholder: "Doe" %>
+   <%= f.button :submit, "continue" %>
+  <% end %>
+</div>
