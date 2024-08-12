@@ -1,4 +1,4 @@
-<header class="py-10 px-2 max-sm:hidden" data-controller="header">
+<header class="p-3 bg-brand-teal" data-controller="header">
   <nav class="flex items-center justify-between flex-wrap">
     <div class="flex items-center flex-no-shrink text-white mr-6">
       <% logo_path = current_user ? dashboard_path : root_path %>
@@ -8,13 +8,13 @@
       <% end %>
     </div>
     <div class="block sm:hidden md:inline-block">
-      <!--
+
         <button class="navbar-burger flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white" data-action="click->header#toggleMobileNav">
           <svg class="text-black fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
             <title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
           </svg>
         </button>
-      -->
+
     </div>
     <div id="main-nav" class="w-full flex-grow sm:flex text-right sm:w-auto hidden " data-header-target="mainNav">
       <div class="flex justify-center text-sm sm:flex-grow md:display-inline">
@@ -30,6 +30,18 @@
           <%= link_to 'Signup', new_user_registration_path, class: 'ml-8 whitespace-nowrap text-base font-medium inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-white bg-primary-600 hover:bg-primary-700' %>
         <% end %>
       </div>
+    </div>
+  </nav>
+  <!-- mobile nav dropdown-->
+  <nav class="hidden" aria-label="Global" id="moblie-nav" data-header-target="mobileNav">
+    <div class="space-y-1 px-2 pb-3 pt-2">
+      <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-900 hover:bg-gray-50 hover:text-gray-900" -->
+      <ul>
+        <%= link_to 'Login', new_user_session_path, class: nav_link_classes('login') %>
+        <%= link_to 'Signup', new_user_registration_path, class: nav_link_classes('signup') %>
+        <li><%= link_to 'Blog', blog_posts_path, class: nav_link_classes('blog') %></li>
+        <li><%= link_to 'Contact', "mailto:#{Rails.application.credentials.admin_email}", target: '_blank', class: nav_link_classes('contact')  %></li>
+      </ul>
     </div>
   </nav>
 </header>

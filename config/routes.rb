@@ -1,7 +1,7 @@
 Rails.application.routes.draw do
   ActiveAdmin.routes(self)
 
-  root 'pages#home'
+  root 'venues#index'
 
   devise_for :users, path: '', path_names: { sign_in: 'login', sign_up: 'signup' }, controllers: { registrations: 'registrations' }
 
@@ -26,7 +26,7 @@ Rails.application.routes.draw do
 
   # static pages
   pages = %w[
-    privacy terms
+    privacy terms onboarding home
   ]
 
   pages.each do |page|
