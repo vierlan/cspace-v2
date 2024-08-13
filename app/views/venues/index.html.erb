@@ -1,4 +1,4 @@
-<div class="bg-white">
+<div class="bg-white" data-controller="placesapi">
   <div>
     <h1 class="text-black font-bold text-4xl">Venues near you</h1>
   </div>
@@ -168,3 +168,10 @@
     </div>
   </div>
 </div>
+<div data-controller="placesapi">
+  <input data-placesapi-target="place" type="text" placeholder="Search for a place">
+</div>
+<div id="results-container">
+  <!-- This should be cleared by the script and then filled with content -->
+</div>
+
