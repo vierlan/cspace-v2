@@ -44,3 +44,4 @@ dump.rdb
 /config/credentials/test.key
 coverage
 .env
+.ENV
