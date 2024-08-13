@@ -1,11 +1,19 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["place"]
+  static targets = ["place", "locationButton"]
 
   connect() {
     console.log("Stimulus PLACES controller connected");
+
+    // Automatically get the user's current location on page load
+    this.getCurrentLocation();
+
+    // Initialize Places Autocomplete
     this.initPlaces();
+
+    // Attach click event listener to the "Get Current Location" button
+    this.locationButtonTarget.addEventListener("click", this.getCurrentLocation.bind(this));
   }
 
   initPlaces() {
@@ -34,6 +42,26 @@ export default class extends Controller {
     });
   }
 
+  getCurrentLocation() {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const location = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          console.log("Current location:", location);
+          this.findNearbyRestaurants(location);
+        },
+        (error) => {
+          console.error("Error getting location:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  }
+
   findNearbyRestaurants(location) {
     const service = new google.maps.places.PlacesService(this.placeTarget);
 
@@ -47,13 +75,12 @@ export default class extends Controller {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         console.log("Nearby restaurants:", results);
         
-        // Assuming there is a div with id="results-container" in your HTML
         const resultsContainer = document.getElementById('results-container');
         resultsContainer.innerHTML = ''; // Clear existing content
         
         results.forEach((restaurant, index) => {
           const restaurantDiv = document.createElement('div');
-          restaurantDiv.className="swiper-slide"
+          restaurantDiv.className = "swiper-slide";
           let photoUrl = '';
 
           // Check if the restaurant has photos and get the first one
