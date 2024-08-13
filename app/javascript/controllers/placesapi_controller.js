@@ -51,8 +51,9 @@ export default class extends Controller {
         const resultsContainer = document.getElementById('results-container');
         resultsContainer.innerHTML = ''; // Clear existing content
         
-        results.forEach((restaurant) => {
+        results.forEach((restaurant, index) => {
           const restaurantDiv = document.createElement('div');
+          restaurantDiv.className="swiper-slide"
           let photoUrl = '';
 
           // Check if the restaurant has photos and get the first one
@@ -61,11 +62,13 @@ export default class extends Controller {
           }
 
           restaurantDiv.innerHTML = `
-            <h3>${restaurant.name}</h3>
-            <p>Address: ${restaurant.vicinity}</p>
-            <p>Rating: ${restaurant.rating}</p>
-            ${photoUrl ? `<img src="${photoUrl}" alt="${restaurant.name}">` : ''}
-            <hr />
+              <div class="card-venue-idx" index="${index}">
+                <h3>${restaurant.name}</h3>
+                <p>Address: ${restaurant.vicinity}</p>
+                <p>Rating: ${restaurant.rating}</p>
+                ${photoUrl ? `<img src="${photoUrl}" alt="${restaurant.name}">` : ''}
+                <hr />
+              </div>
           `;
           resultsContainer.appendChild(restaurantDiv);
         });
