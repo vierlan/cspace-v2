@@ -1,10 +1,13 @@
 import { Controller } from "@hotwired/stimulus"
 
 export default class extends Controller {
-  static targets = ["place", "locationButton"]
+  static targets = ["place", "locationButton", "radiusSlider", "resultsContainer"]
 
   connect() {
     console.log("Stimulus PLACES controller connected");
+
+    // Get the place types from the data attribute
+    this.placeTypes = this.element.dataset.placesapiTypes.split(',');
 
     // Automatically get the user's current location on page load
     this.getCurrentLocation();
@@ -12,8 +15,14 @@ export default class extends Controller {
     // Initialize Places Autocomplete
     this.initPlaces();
 
-    // Attach click event listener to the "Get Current Location" button
-    this.locationButtonTarget.addEventListener("click", this.getCurrentLocation.bind(this));
+    // Attach event listener for the radius slider
+    this.radiusSliderTarget.addEventListener("input", this.updateRadiusValue.bind(this));
+    this.radiusValueTarget = document.getElementById("radius-value");
+  }
+
+  updateRadiusValue() {
+    const radius = this.radiusSliderTarget.value;
+    this.radiusValueTarget.textContent = radius;
   }
 
   initPlaces() {
@@ -35,7 +44,7 @@ export default class extends Controller {
 
       if (place.geometry) {
         console.log("Place selected:", place);
-        this.findNearbyRestaurants(place.geometry.location);
+        this.fetchPlacesForAllTypes(place.geometry.location);
       } else {
         console.log("No geometry available for this place.");
       }
@@ -51,7 +60,7 @@ export default class extends Controller {
             lng: position.coords.longitude,
           };
           console.log("Current location:", location);
-          this.findNearbyRestaurants(location);
+          this.fetchPlacesForAllTypes(location);
         },
         (error) => {
           console.error("Error getting location:", error);
@@ -62,45 +71,51 @@ export default class extends Controller {
     }
   }
 
-  findNearbyRestaurants(location) {
+  fetchPlacesForAllTypes(location) {
+    this.placeTypes.forEach((type, index) => {
+      this.findNearbyPlaces(location, type, index);
+    });
+  }
+
+  findNearbyPlaces(location, type, index) {
+    const radius = this.radiusSliderTarget.value;
     const service = new google.maps.places.PlacesService(this.placeTarget);
 
     const request = {
       location: location,
-      radius: 1000,  // 1km radius
-      type: ['restaurant'],
+      radius: parseInt(radius),  // Use the value from the slider
+      type: [type],
     };
 
     service.nearbySearch(request, (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
-        console.log("Nearby restaurants:", results);
+        console.log(`Nearby ${type}s:`, results);
         
-        const resultsContainer = document.getElementById('results-container');
+        const resultsContainer = document.getElementById(`results-container-${index}`);
         resultsContainer.innerHTML = ''; // Clear existing content
         
-        results.forEach((restaurant, index) => {
-          const restaurantDiv = document.createElement('div');
-          restaurantDiv.className = "swiper-slide";
+        results.slice(0, 10).forEach((place, idx) => {
+          const placeDiv = document.createElement('div');
+          placeDiv.className = "swiper-slide";
           let photoUrl = '';
 
-          // Check if the restaurant has photos and get the first one
-          if (restaurant.photos && restaurant.photos.length > 0) {
-            photoUrl = restaurant.photos[0].getUrl({ maxWidth: 400 });
+          if (place.photos && place.photos.length > 0) {
+            photoUrl = place.photos[0].getUrl({ maxWidth: 400 });
           }
 
-          restaurantDiv.innerHTML = `
-              <div class="card-venue-idx" index="${index}">
-                <h3>${restaurant.name}</h3>
-                <p>Address: ${restaurant.vicinity}</p>
-                <p>Rating: ${restaurant.rating}</p>
-                ${photoUrl ? `<img src="${photoUrl}" alt="${restaurant.name}">` : ''}
+          placeDiv.innerHTML = `
+              <div class="card-venue-idx" index="${idx}">
+                <h3>${place.name}</h3>
+                <p>Address: ${place.vicinity}</p>
+                <p>Rating: ${place.rating}</p>
+                ${photoUrl ? `<img src="${photoUrl}" alt="${place.name}">` : ''}
                 <hr />
               </div>
           `;
-          resultsContainer.appendChild(restaurantDiv);
+          resultsContainer.appendChild(placeDiv);
         });
       } else {
-        console.error("Nearby search failed:", status);
+        console.error(`Nearby search for ${type} failed:`, status);
       }
     });
   }
