@@ -5,144 +5,26 @@
   <div class="netflix-slider" data-controller="swiper">
     <h2 class='text-black text-lg font-bold'>Best places for solo working</h2>
     <div class="swiper mySwiper">
-      <div class="swiper-wrapper">
-        <div class="swiper-slide">
-          <div class="card-venue-idx">
-            <img src="/assets/img1.jpg" />
-            <div class="card-venue-idx-infos">
-              <div>
-                <h2>Some little cafe</h2>
-                <p>You want to work here!</p>
-              </div>
-              <h2 class="card-venue-idx-pricing">From € 6</h2>
-              <img src="/assets/james.jpg" class="card-venue-idx-user avatar-bordered" />
+  <div class="swiper-wrapper">
+    <% 10.times do %>
+      <div class="swiper-slide">
+        <div class="card-venue-idx">
+          <img src="/assets/img1.jpg" />
+          <div class="card-venue-idx-infos">
+            <div>
+              <h2>Some little cafe</h2>
+              <p>You want to work here!</p>
             </div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="card-venue-idx">
-            <img src="/assets/img1.jpg" />
-            <div class="card-venue-idx-infos">
-              <div>
-                <h2>Some little cafe</h2>
-                <p>You want to work here!</p>
-              </div>
-              <h2 class="card-venue-idx-pricing">From € 6</h2>
-              <img src="/assets/james.jpg" class="card-venue-idx-user avatar-bordered" />
-            </div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="card-venue-idx">
-            <img src="/assets/img1.jpg" />
-            <div class="card-venue-idx-infos">
-              <div>
-                <h2>Some little cafe</h2>
-                <p>You want to work here!</p>
-              </div>
-              <h2 class="card-venue-idx-pricing">From € 6</h2>
-              <img src="/assets/james.jpg" class="card-venue-idx-user avatar-bordered" />
-            </div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="card-venue-idx">
-            <img src="/assets/img1.jpg" />
-            <div class="card-venue-idx-infos">
-              <div>
-                <h2>Some little cafe</h2>
-                <p>You want to work here!</p>
-              </div>
-              <h2 class="card-venue-idx-pricing">From € 6</h2>
-              <img src="/assets/james.jpg" class="card-venue-idx-user avatar-bordered" />
-            </div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="card-venue-idx">
-            <img src="/assets/img1.jpg" />
-            <div class="card-venue-idx-infos">
-              <div>
-                <h2>Some little cafe</h2>
-                <p>You want to work here!</p>
-              </div>
-              <h2 class="card-venue-idx-pricing">From € 6</h2>
-              <img src="/assets/james.jpg" class="card-venue-idx-user avatar-bordered" />
-            </div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="card-venue-idx">
-            <img src="/assets/img1.jpg" />
-            <div class="card-venue-idx-infos">
-              <div>
-                <h2>Some little cafe</h2>
-                <p>You want to work here!</p>
-              </div>
-              <h2 class="card-venue-idx-pricing">From € 6</h2>
-              <img src="/assets/james.jpg" class="card-venue-idx-user avatar-bordered" />
-            </div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="card-venue-idx">
-            <img src="/assets/img1.jpg" />
-            <div class="card-venue-idx-infos">
-              <div>
-                <h2>Some little cafe</h2>
-                <p>You want to work here!</p>
-              </div>
-              <h2 class="card-venue-idx-pricing">From € 6</h2>
-              <img src="/assets/james.jpg" class="card-venue-idx-user avatar-bordered" />
-            </div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="card-venue-idx">
-            <img src="/assets/img1.jpg" />
-            <div class="card-venue-idx-infos">
-              <div>
-                <h2>Some little cafe</h2>
-                <p>You want to work here!</p>
-              </div>
-              <h2 class="card-venue-idx-pricing">From € 6</h2>
-              <img src="/assets/james.jpg" class="card-venue-idx-user avatar-bordered" />
-            </div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="card-venue-idx">
-            <img src="/assets/img1.jpg" />
-            <div class="card-venue-idx-infos">
-              <div>
-                <h2>Some little cafe</h2>
-                <p>You want to work here!</p>
-              </div>
-              <h2 class="card-venue-idx-pricing">From € 6</h2>
-              <img src="/assets/james.jpg" class="card-venue-idx-user avatar-bordered" />
-            </div>
-          </div>
-        </div>
-        <div class="swiper-slide">
-          <div class="card-venue-idx">
-            <img src="/assets/img1.jpg" />
-            <div class="card-venue-idx-infos">
-              <div>
-                <h2>Some little cafe</h2>
-                <p>You want to work here!</p>
-              </div>
-              <h2 class="card-venue-idx-pricing">From € 6</h2>
-              <img src="/assets/james.jpg" class="card-venue-idx-user avatar-bordered" />
-            </div>
+            <h2 class="card-venue-idx-pricing">From € 6</h2>
+            <img src="/assets/james.jpg" class="card-venue-idx-user avatar-bordered" />
           </div>
         </div>
       </div>
-      <!-- Add Pagination -->
-      <!-- <div class="swiper-pagination"></div> -->
-      <div class="swiper-button-next"></div>
-      <div class="swiper-button-prev"></div>
-    </div>
+    <% end %>
   </div>
+  <div class="swiper-pagination"></div>
+  <div class="swiper-button-next"></div>
+  <div class="swiper-button-prev"></div>
 </div>
 <!-- Carousel 2 populated with user created venues -->
 <div class="slider-carousel bg-white" data-controller="swiper">
@@ -164,38 +46,40 @@
               <p><strong><%= venue.amenities %></strong></p>
           </div>
         </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
       <% end %>
     </div>
   </div>
 </div>
 
-<-- carousel populated with google place api -->
+
+<%# Form Inputs to get search results %>
+
 <div class="slider-carousel bg-white" data-controller="swiper">
   <h1 class='text-black font-bold text-4xl'>Search places near you!</h1>
-  <div data-controller="placesapi" class="flex items-center justify-center">
+  <div data-controller="placesapi" data-placesapi-types="cafe,restaurant,library" class="flex items-center justify-center">
     <input data-placesapi-target="place" type="text" placeholder="Search for a place" class="p-1 m-3">
-  </div>
-    <div class="swiper mySwiper">
-      <div class="swiper-wrapper" id="results-container">
-      <% @venues.each_with_index do |venue, index| %>
-        <div class="swiper-slide">
-          <div class="card-venue-idx" id="index">
-              <% if venue.photos.attached? %>
-                <% photo = venue.photos.first %>
-                <%= cl_image_tag photo.key, alt: venue.name %>
-              <% else %>
-                <p>No images available for this venue.</p>
-              <% end %>
-              <h2><%= venue.name %></h2>
-              <p><strong <%= venue.categories %>></strong></p>
-              <p class= "address"><%= venue.address %></p>
-              <p><strong><%= venue.amenities %></strong></p>
-          </div>
-        </div>
-      <% end %>
-    </div>
+    <button data-placesapi-target="locationButton" class="p-2 bg-blue-500 text-white rounded">Get Current Location</button>
+
+    <!-- Slider for setting the search radius -->
+    <label for="radius">Search Radius: <span id="radius-value">1000</span> meters</label>
+    <input id="radius-slider" data-placesapi-target="radiusSlider" type="range" min="0" max="10000" value="1000" class="p-1 m-3">
   </div>
 </div>
-<%# <div id="results-container">
-  <!-- This should be cleared by the script and then filled with content -->
-</div> %>
+
+  <!-- Loop for creating multiple Swiper containers for different place types -->
+  <% ["Cafe's", "Restaurant's", "Libraries"].each_with_index do |place_type, index| %>
+    <h2 class='text-black font-bold text-2xl mt-4'><%= place_type.capitalize %> near you!</h2>
+    <div class="slider-carousel bg-white" data-controller="swiper">
+      <div class="swiper mySwiper<%= index %>">
+        <div class="swiper-wrapper" id="results-container-<%= index %>">
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+      </div>
+    </div>
+  <% end %>
+</div>
