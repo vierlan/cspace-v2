@@ -46,11 +46,11 @@ export default class extends Controller {
     service.nearbySearch(request, (results, status) => {
       if (status === google.maps.places.PlacesServiceStatus.OK) {
         console.log("Nearby restaurants:", results);
-        
+
         // Assuming there is a div with id="results-container" in your HTML
         const resultsContainer = document.getElementById('results-container');
         resultsContainer.innerHTML = ''; // Clear existing content
-        
+
         results.forEach((restaurant, index) => {
           const restaurantDiv = document.createElement('div');
           restaurantDiv.className="swiper-slide"

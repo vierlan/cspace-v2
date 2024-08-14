@@ -1,8 +1,6 @@
 <div>
   <h1 class="font-bold text-4xl">Venues#show</h1>
   <%= @venue.name %>
-  <p>Find me in app/views/venues/show.html.erb</p>
-
 </div>
 <div class="container">
 
@@ -64,11 +62,21 @@
             <h2>Venue Description</h2>
             <p><strong>Name:</strong> <%= @venue.name %></p>
             <p><strong>Hire Details:</strong> Venue hire for network</p>
-  
+
             <p><strong>Location:</strong> <%= @venue.address %></p>
             <p><strong>Description:</strong> <%= @venue.amenities %></p>
           </div>
         </div>
     </div>
+  </div>
+  <!-- Add Package and edits if venue owner -->
+
+  <div>
+    <% if current_user&.venue_owner? %>
+      <%= link_to 'Edit', edit_venue_path(@venue) %>
+      <%= link_to 'add and customise packages for your venue', new_package_items_path %>
+      <%= link_to 'Delete', @venue, method: :delete, data: { confirm: 'Are you sure?' } %>
+      <%= link_to 'Back', venues_path %>
+    <% end %>
   </div>
 </div>
