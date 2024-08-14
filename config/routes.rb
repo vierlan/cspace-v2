@@ -11,12 +11,17 @@ Rails.application.routes.draw do
   get 'logout', to: 'pages#logout', as: 'logout'
 
   get 'dashboard/:id', to: 'dashboard#index', as: :dashboard
+  get 'dashboard/:id/my_venues', to: 'dashboard#my_venues', as: :my_venues
+  get 'dashboard/:id/my_venue_packages', to: 'dashboard#my_venue_packages', as: :my_venue_packages
 
   resources :venues do
+    resources :package_items, only: %i[ new create edit update ]
     collection do
       get 'categories/:categories', to: 'venues#categories', as: :categories
     end
   end
+  resources :bookings
+  resources :package_items, except: %i[ new create edit update ]
   resources :subscribe, only: [:index]
   resources :account, only: %i[index update] do
     get :stop_impersonating, on: :collection

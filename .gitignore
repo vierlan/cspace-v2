@@ -45,3 +45,5 @@ dump.rdb
 coverage
 .env
 .ENV
+.ENV*
+.env*

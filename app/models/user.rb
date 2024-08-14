@@ -1,6 +1,7 @@
 class User < ApplicationRecord
   has_many :assignments, dependent: :destroy
   has_many :roles, through: :assignments
+  has_many :venues, dependent: :destroy
   has_one_attached :avatar
   include Signupable
   include Onboardable
@@ -12,13 +13,6 @@ class User < ApplicationRecord
     "#{first_name.capitalize} #{last_name.capitalize}"
   end
 
-  def role?(role, entity_id = nil)
-    if entity_id.present?
-      roles.where(name: role, entity_id: entity_id).exists?
-    else
-      roles.where(name: role).exists?
-    end
-  end
 
   # :nocov:
   def self.ransackable_attributes(*)

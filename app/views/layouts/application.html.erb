@@ -25,7 +25,7 @@
   </head>
 
   <body class="bg-white flex flex-col min-h-screen">
-      <p>Google API Key: <%= ENV['GOOGLE_API_KEY'] %></p>
+      <% ENV['GOOGLE_API_KEY'] %>
       <%= render "shared/impersonator" %>
       <%= render "shared/flash" %>
       <%  if !current_user %>
