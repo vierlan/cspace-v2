@@ -29,7 +29,7 @@ class BookingsController < ApplicationController
   def show
     @booking = Booking.find(params[:id])
     @package = @booking.package
-    @package_items = @package.package_items
+    @packages = @package.packages
     @package_price = @package.package_price
   end
 

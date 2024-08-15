@@ -29,7 +29,6 @@
 
             Menu open: "hidden", Menu closed: "block"
           -->
-
           <div data-header-target="mobileNav" class="block">
             <svg class="block h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true" >
               <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
@@ -47,7 +46,7 @@
           </div>
         </button>
       </div>
-      <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:items-center">
+      <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:packages-center">
         <button type="button" class="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
           <span class="absolute -inset-1.5"></span>
           <span class="sr-only">View notifications</span>
@@ -113,7 +112,6 @@
               <% else %>
                 <%= image_tag "logo.png", class: "avatar" %>
               <% end %>            </div>
-
             <button type="button" class="relative ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
               <span class="absolute -inset-1.5"></span>
               <span class="sr-only">View notifications</span>
@@ -126,7 +124,6 @@
         <li>
           <%= link_to 'Admin', admin_root_path, class: nav_link_classes('admin/dashboard') if current_user&.admin? %>
         </li>
-
         <li><%= link_to 'Dashboard', dashboard_path(current_user), class: nav_link_classes('dashboard') %></li>
         <li><%= link_to 'Blog', blog_posts_path, class: nav_link_classes('blog') %></li>
         <li><%= link_to 'Account', account_index_path, class: nav_link_classes('account') %></li>

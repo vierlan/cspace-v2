@@ -73,14 +73,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_13_152115) do
   create_table "bookings", force: :cascade do |t|
     t.date "booking_date"
     t.time "booking_start_time"
-    t.integer "booking_duration"
     t.boolean "booking_confirmed"
     t.boolean "booking_paid"
     t.decimal "booking_cost", precision: 4, scale: 2
     t.bigint "venue_id", null: false
     t.bigint "user_id", null: false
+    t.bigint "package_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["package_id"], name: "index_bookings_on_package_id"
     t.index ["user_id"], name: "index_bookings_on_user_id"
     t.index ["venue_id"], name: "index_bookings_on_venue_id"
   end
@@ -111,15 +112,15 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_13_152115) do
     t.index ["user_id"], name: "index_mail_logs_on_user_id"
   end
 
-  create_table "package_items", force: :cascade do |t|
-    t.string "item_name"
-    t.decimal "item_price", precision: 3, scale: 2
+  create_table "packages", force: :cascade do |t|
+    t.string "package_name"
+    t.decimal "package_price", precision: 3, scale: 2
+    t.string "package_description"
+    t.integer "package_duration"
     t.bigint "venue_id", null: false
-    t.bigint "booking_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["booking_id"], name: "index_package_items_on_booking_id"
-    t.index ["venue_id"], name: "index_package_items_on_venue_id"
+    t.index ["venue_id"], name: "index_packages_on_venue_id"
   end
 
   create_table "roles", force: :cascade do |t|
@@ -172,9 +173,9 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_13_152115) do
   add_foreign_key "active_storage_variant_records", "active_storage_blobs", column: "blob_id"
   add_foreign_key "assignments", "roles"
   add_foreign_key "assignments", "users"
+  add_foreign_key "bookings", "packages"
   add_foreign_key "bookings", "users"
   add_foreign_key "bookings", "venues"
-  add_foreign_key "package_items", "bookings"
-  add_foreign_key "package_items", "venues"
+  add_foreign_key "packages", "venues"
   add_foreign_key "venues", "users"
 end
