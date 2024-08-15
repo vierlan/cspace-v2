@@ -1,80 +1,27 @@
-
- <div class="col-span-full bg-white flex justify-center">
- <h1>Add a photo for your avatar</h1>
-  <%= simple_form_for @user, url:wizard_path(:add_avatar), method: :put do |f| %>
+<div class="col-span-full bg-white flex justify-center" data-controller="image-preview">
+  <%= simple_form_for @user, url: wizard_path(:add_avatar), method: :put do |f| %>
 
     <label for="avatar" class="block text-sm font-medium leading-6 text-gray-900">Avatar photo</label>
-    <div id="drop_zone" class="mt-2 flex justify-center rounded border border-dashed border-gray-900/25 max-w-40 px-6 py-10">
+    <div id="drop_zone" class="mt-2 flex justify-center rounded border border-dashed border-gray-900/25 max-w-40 px-6 py-10" data-image-preview-target="dropZone">
       <div class="text-center">
-        <%= image_tag @user.avatar, id: 'avatar_preview', data: { url: url_for(@user.avatar) } if @user.avatar.attached? %>
-        <img id="avatar_preview" src="#" alt="Avatar Preview" class="hidden"/>
+        <%= image_tag @user.avatar, id: 'avatar_preview', data: { image_preview_target: "preview", url: url_for(@user.avatar) } if @user.avatar.attached? %>
+        <img id="avatar_preview" src="#" alt="Avatar Preview" class="hidden" data-image-preview-target="preview" />
         <div class="mt-4 flex text-sm leading-6 text-gray-600 justify-center">
           <label for="avatar" class="relative cursor-pointer rounded-md bg-white font-semibold text-gray-600 focus-within:outline-none focus-within:ring-2 focus-within:ring-gray-600 focus-within:ring-offset-2 hover:text-gray-500">
             <span>Upload a file</span>
-            <%= f.file_field :avatar, id: 'avatar', class: 'sr-only' %>
+            <%= f.file_field :avatar, as: :file, id: 'avatar', class: 'sr-only',
+            data: { action: "change->image-preview#previewImage", image_preview_target: "input" } %>
           </label>
+          <button data-action="click->image-preview#previewImage"></button>
+
           <p class="pl-1">or drag and drop</p>
         </div>
         <p class="text-xs leading-5 text-gray-600">PNG, JPG, WEBP up to 1MB </p>
       </div>
     </div>
-  </div>
-  <div class="form-actions btn m-5">
-    <%= f.button :submit %>
-  </div>
+    <div class="form-actions btn m-5">
+      <%= f.button :submit, id: 'submit_avatar', label: 'Submit Avatar' %>
+    </div>
   <% end %>
   <%= link_to "Skip this step", next_wizard_path, class: "btn m-5" %>
 </div>
-
-<script>
-  // Preview the cover image
-  document.getElementById('avatar').addEventListener('change', function(e) {
-    var file = e.target.files[0];
-    var reader = new FileReader();
-
-    reader.onloadend = function() {
-      document.getElementById('avatar_preview').src = reader.result;
-      document.getElementById('avatar_preview').style.display = 'block';
-    }
-
-    if (file) {
-      reader.readAsDataURL(file);
-    } else {
-      document.getElementById('avatar_preview').src = "";
-    }
-  });
-
-  document.addEventListener('DOMContentLoaded', function() {
-  var coverImagePreview = document.getElementById('avatar_preview');
-  if (coverImagePreview) {
-    coverImagePreview.src = coverImagePreview.dataset.url;
-    coverImagePreview.style.display = 'opacity-100';
-  }
-  });
-
-  var dropZone = document.getElementById('drop_zone');
-  var fileInput = document.getElementById('avatar');
-
-  dropZone.addEventListener('dragover', function(e) {
-  e.preventDefault();
-  dropZone.classList.add('bg-gray-100');
-  });
-
-  dropZone.addEventListener('dragleave', function(e) {
-  e.preventDefault();
-  dropZone.classList.remove('bg-gray-100');
-  });
-
-  dropZone.addEventListener('drop', function(e) {
-  e.preventDefault();
-  dropZone.classList.remove('bg-gray-100');
-
-  var files = e.dataTransfer.files;
-  if (files.length > 0) {
-    fileInput.files = files;
-    // Trigger the 'change' event to update the preview
-    var event = new Event('change');
-    fileInput.dispatchEvent(event);
-  }
-  });
-</script>

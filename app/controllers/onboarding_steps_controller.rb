@@ -10,8 +10,16 @@ class OnboardingStepsController < ApplicationController
 
   def update
     @user = current_user
-    @user.update(user_params)
-    render_wizard @user
+
+    if @user.update(user_params)
+      if step == steps.last
+        finish_wizard
+      else
+        render_wizard @user
+      end
+    else
+      render_wizard @user, status: :unprocessable_entity
+    end
   end
 
   private
@@ -23,5 +31,4 @@ class OnboardingStepsController < ApplicationController
   def user_params
     params.require(:user).permit(:first_name, :last_name, :venue_owner, :avatar)
   end
-
 end

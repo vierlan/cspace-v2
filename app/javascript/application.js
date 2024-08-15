@@ -5,7 +5,6 @@ import "channels";
 import "chartkick";
 import "Chart.bundle";
 import "flowbite"
-
 import * as ActiveStorage from "@rails/activestorage";
 ActiveStorage.start();
 import "trix";
