@@ -1,29 +1,26 @@
 
-<div class="d-block mt-4">
+<div class="d-block my-4">
   <%= link_to "back", my_venues_path, class: "btn btn-primary" %>
 </div>
 
-<div class='flex flex-row flex-wrap gap-1 py-3'>
+<div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
 
     <% @packages.each do |package| %>
-
-        <div class="group relative w-80 flex justify-center py-2.5 px-4 border border-slate-400 text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
-          <div class="text-base flex justify-center items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -ml-1 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
-            </svg>
-            <%= link_to edit_venue_package_path(package.venue, package) do %>
-              <span class="absolute inset-0" aria-hidden="true"></span>
-              <h2 class="text-lg text-gray-500 focus:outline-none"><%= package.package_name %></h2>
-              <p class="text-gray-400"><%= package.package_price %></p>
-            <% end %>
+      <%= link_to edit_package_path(package) do %>
+        <div class="grid grid-cols-2 relative w-80  gap-1 text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
+          <div class="h-full text-base grid grid-rows-4 overflow-hidden hover:overflow-visable p-1">
+            <h2 class="text-lg text-gray-500 focus:outline-none"><%= package.package_name.capitalize %></h2>
+            <p class="text-gray-400"><%= package.package_description %> </p>
+            <p class="text-gray-400"><%= "#{package.package_duration} hours" if package.package_duration %></p>
+            <p class="text-gray-400">€<%= package.package_price %></p>
           </div>
-          <div>
+          <div class='border border-white'>
             <% if package.photo.key %>
-              <%= cl_image_tag package.photo.key, alt: "PICTURE", class: "d-block w-40" %>
+              <%= cl_image_tag package.photo.key, alt: "PICTURE", class: "object-cover w-40 h-full" %>
             <% else %>
               <%= image_tag "avatar.png", class: "h-10 w-10 rounded-full" %>
             <% end %>
+          <% end %>
           </div>
         </div>
 

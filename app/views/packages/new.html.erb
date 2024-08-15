@@ -6,6 +6,8 @@
   <div class="col-span-8 sm:col-span-8 md:col-span-6 lg:col-span-4 bg-white rounded shadow p-4">
     <%= simple_form_for([@venue, @package]) do |f| %>
       <%= f.input :package_name, placeholder: 'Croissant' %>
+      <%= f.input :package_description, placeholder: 'Freshly baked in house' %>
+      <%= f.input :package_duration, placeholder: '2', :value => 'hours', hint:'time in hours the package includes' %>
       <%= f.input :photo, as: :file, input_html: {multiple: false} %>
       <div class="input-group">
         <%= f.input :package_price, :value => '€', tabindex: 25 %>

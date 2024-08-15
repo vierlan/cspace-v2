@@ -1,7 +1,7 @@
 
  <div class="col-span-full bg-white flex justify-center">
  <h1>Add a photo for your avatar</h1>
-  <%= form_for @user, url:wizard_path(:add_avatar), method: :put do |f| %>
+  <%= simple_form_for @user, url:wizard_path(:add_avatar), method: :put do |f| %>
 
     <label for="avatar" class="block text-sm font-medium leading-6 text-gray-900">Avatar photo</label>
     <div id="drop_zone" class="mt-2 flex justify-center rounded border border-dashed border-gray-900/25 max-w-40 px-6 py-10">
