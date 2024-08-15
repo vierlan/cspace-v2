@@ -15,13 +15,13 @@ Rails.application.routes.draw do
   get 'dashboard/:id/my_venue_packages', to: 'dashboard#my_venue_packages', as: :my_venue_packages
 
   resources :venues do
-    resources :package_items, only: %i[ new create edit update ]
+    resources :packages, only: %i[ new create edit update ]
     collection do
       get 'categories/:categories', to: 'venues#categories', as: :categories
     end
   end
   resources :bookings
-  resources :package_items, except: %i[ new create edit update ]
+  resources :packages, except: %i[ new create edit update ]
   resources :subscribe, only: [:index]
   resources :account, only: %i[index update] do
     get :stop_impersonating, on: :collection

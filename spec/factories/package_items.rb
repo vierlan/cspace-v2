@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :package_item do
+  factory :package do
     item { "MyString" }
     item_price { "9.99" }
     package { nil }

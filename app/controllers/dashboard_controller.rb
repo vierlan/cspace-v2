@@ -36,8 +36,7 @@ class DashboardController < ApplicationController
 
   def my_venue_packages
     @venue = Venue.find(params[:id])
-    @items = PackageItem.where(venue: @venue)
-
+    @packages = Package.where(venue: @venue)
   end
 
 

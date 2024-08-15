@@ -1,24 +1,32 @@
-<div>
-  <h1>Items available in My Venue</h1>
+
+<div class="d-block mt-4">
+  <%= link_to "back", my_venues_path, class: "btn btn-primary" %>
 </div>
-<div>
-  <ul>
-    <% @items.each do |item| %>
-      <li>
-        <div class="group relative w-full flex justify-center items-center py-2.5 px-4 border border-transparent text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
+
+<div class='flex flex-row flex-wrap gap-1 py-3'>
+
+    <% @packages.each do |package| %>
+
+        <div class="group relative w-80 flex justify-center py-2.5 px-4 border border-slate-400 text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
           <div class="text-base flex justify-center items-center">
-          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -ml-1 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-            <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
-          </svg>
-          <%= link_to edit_venue_package_item_path(item.venue, item) do %>
-            <span class="absolute inset-0" aria-hidden="true"></span>
-            <h2 class="text-lg text-gray-500 focus:outline-none"><%= item.item_name %></h2>
-            <p class="text-gray-400"><%= item.item_price %></p>
-          <% end %>
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -ml-1 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+              <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
+            </svg>
+            <%= link_to edit_venue_package_path(package.venue, package) do %>
+              <span class="absolute inset-0" aria-hidden="true"></span>
+              <h2 class="text-lg text-gray-500 focus:outline-none"><%= package.package_name %></h2>
+              <p class="text-gray-400"><%= package.package_price %></p>
+            <% end %>
+          </div>
+          <div>
+            <% if package.photo.key %>
+              <%= cl_image_tag package.photo.key, alt: "PICTURE", class: "d-block w-40" %>
+            <% else %>
+              <%= image_tag "avatar.png", class: "h-10 w-10 rounded-full" %>
+            <% end %>
+          </div>
         </div>
 
-        </div>
-      </li>
     <% end %>
-  </ul>
+
 </div>
