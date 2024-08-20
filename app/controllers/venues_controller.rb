@@ -1,5 +1,6 @@
 class VenuesController < ApplicationController
   def index
+
     @venues = Venue.all
   end
 
@@ -7,7 +8,16 @@ class VenuesController < ApplicationController
   end
 
   def show
+    @user = current_user
     @venue = Venue.find(params[:id])
+    @packages = @venue.packages
+    @booking = Booking.new
+    @venue_owner = @venue.user
+
+  end
+
+  def venue_owner?
+    @venue.user == current_user
   end
 
   def new

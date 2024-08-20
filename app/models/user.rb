@@ -24,10 +24,6 @@ class User < ApplicationRecord
   end
   # :nocov:
 
-  private
 
-  def venue_owner?
-    Return True if current_user.venue_owner == True
-  end
-  
+
 end

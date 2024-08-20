@@ -51,8 +51,10 @@
             <% end %>
           <% end %>
         </div>
-        <div class="description">
-          <h2>Venue Description</h2>
+        <div class="description relative">
+          <% if @venue_owner.avatar.attached? %>
+            <p><strong>Venue Owner: <%= cl_image_tag @venue.user.avatar.key, alt:"#{@venue.name}", class:'avatar border-white border-4 absolute right-20'%></strong></p>
+          <% end %>
           <p><strong>Name:</strong> <%= @venue.name %></p>
           <p><strong>Hire Details:</strong> Venue hire for network</p>
           <p><strong>Location:</strong> <%= @venue.address %></p>
@@ -62,12 +64,28 @@
     </div>
   </div>
   <!-- Add Package and edits if venue owner -->
-  <div>
-    <% if current_user&.venue_owner? %>
-      <%= link_to 'Edit', edit_venue_path(@venue) %>
-      <%= link_to 'add and customise packages for your venue', new_venue_package_path(@venue) %>
-      <%= link_to 'Delete', @venue, method: :delete, data: { confirm: 'Are you sure?' } %>
-      <%= link_to 'Back', venues_path %>
+  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
+
+    <% @packages.each do |package| %>
+      <%= link_to edit_package_path(package) do %>
+        <div class="grid grid-cols-2 relative w-100  gap-1 text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
+          <div class="h-full text-base grid grid-rows-4 overflow-hidden hover:overflow-visable p-1">
+            <h2 class="text-lg text-gray-500 focus:outline-none"><%= package.package_name.capitalize %></h2>
+            <p class="text-gray-400"><%= package.package_description %> </p>
+            <p class="text-gray-400"><%= "#{package.package_duration} hours" if package.package_duration %></p>
+            <p class="text-gray-400">€<%= package.package_price %></p>
+          </div>
+          <div class='border border-white'>
+            <% if package.photo.key %>
+              <%= cl_image_tag package.photo.key, alt: "PICTURE", class: "object-cover w-50 h-full" %>
+            <% else %>
+              <%= image_tag "avatar.png", class: "h-10 w-10 rounded-full" %>
+            <% end %>
+          <% end %>
+          </div>
+        </div>
+
     <% end %>
-  </div>
+
+</div>
 </div>

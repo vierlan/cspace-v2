@@ -17,21 +17,20 @@ Rails.application.routes.draw do
   patch 'dashboard/:id', to: 'dashboard#update', as: :update_dashboard
 
   resources :venues do
-    resources :packages, only: %i[ new create ]
+    resources :packages, only: %i[ new create index]
     collection do
       get 'categories/:categories', to: 'venues#categories', as: :categories
     end
   end
+  
   resources :bookings
-  resources :packages, except: %i[ new create edit update ]
+  resources :packages, except: %i[ new create index]
   resources :subscribe, only: [:index]
   resources :account, only: %i[index update] do
     get :stop_impersonating, on: :collection
   end
-  resources :billing_portal, only: [:new, :create]
+  resources :billing_portal, only: [:new, :create,]
   resources :blog_posts, controller: :blog_posts, path: "blog", param: :slug
-
-  resources :packages, except: %i[ new create ]
 
   # static pages
   pages = %w[

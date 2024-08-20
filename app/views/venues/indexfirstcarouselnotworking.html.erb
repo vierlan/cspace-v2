@@ -1,5 +1,6 @@
+
 <%# Form Inputs to get search results %>
-<div data-controller="placesapi" data-placesapi-types="cafe,restaurant,library" class="m-2 flex items-center justify-center">
+<div data-controller="placesapi" data-placesapi-types="cafe,restaurant,library" data-placesapi-query="<%= @search_query %>" class='venue-index'>
 <div class="slider-carousel bg-white" data-controller="swiper">
   <h1 class='text-black font-bold text-4xl'>Search places near you!</h1>
 
@@ -10,17 +11,20 @@
     <label for="radius">Search Radius: <span id="radius-value">1000</span> meters</label>
     <input id="radius-slider" data-placesapi-target="radiusSlider" type="range" min="0" max="10000" value="1000" class="p-1 m-3">
   </div>
-</div>
-<div class='mx-10'>
+
+
 <!-- Carousel 1 populated with user created venues -->
-<div class="swiper mySwiper " data-controller="swiper">
+<div class='slider-carousel mt-2' data-controller="swiper">
+    <div class='mb-2'>
+        <h2 class='text-black font-bold text-2xl mt-2 ml-2'>Places to Book near you!</h2>
+    </div>
+<div class="swiper mySwiper " >
   <!-- Additional required wrapper -->
   <div class="swiper-wrapper">
     <!-- Slides -->
      <% @venues.each_with_index do |venue, index| %>
-
+      <%= link_to venue_path(venue) do %>
         <div class="swiper-slide">
-         <%= link_to venue_path(venue) do %>
           <div class="card-venue-idx" id="index">
               <% if venue.photos.attached? %>
                 <% photo = venue.photos.first %>
@@ -28,35 +32,35 @@
               <% else %>
                 <p>No images available for this venue.</p>
               <% end %>
+
               <h2><%= venue.name %></h2>
               <p><strong <%= venue.categories %>></strong></p>
               <p class= "address"><%= venue.address %></p>
               <p><strong><%= venue.amenities %></strong></p>
-
           </div>
-          <% end %>
         </div>
+       <% end %>
       <% end %>
-
     ...
   </div>
 
   <!-- If we need navigation buttons -->
   <div class="swiper-button-prev"></div>
   <div class="swiper-button-next"></div>
-
+</div>
 </div>
 
   <!-- Loop for creating multiple Swiper containers for different place types -->
 <div class='mt-2'>
     <div class='mb-2'><% ["Cafe's", "Restaurant's", "Libraries"].each_with_index do |place_type, index| %>
         <h2 class='text-black font-bold text-2xl mt-2 ml-2'><%= place_type.capitalize %> near you!</h2>
-
+    </div>
 
       <div class="slider-carousel bg-white p-2" data-controller="swiper">
         <div class="swiper mySwiper<%= index %>">
           <div class="swiper-wrapper" id="results-container-<%= index %>">
           </div>
+
           <div class="swiper-button-next"></div>
           <div class="swiper-button-prev"></div>
         </div>
