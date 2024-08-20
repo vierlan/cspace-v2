@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_13_152115) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_17_131953) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -114,7 +114,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_13_152115) do
 
   create_table "packages", force: :cascade do |t|
     t.string "package_name"
-    t.decimal "package_price", precision: 3, scale: 2
+    t.decimal "package_price", precision: 5, scale: 2
     t.string "package_description"
     t.integer "package_duration"
     t.bigint "venue_id", null: false
@@ -166,6 +166,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_13_152115) do
     t.bigint "user_id", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.float "latitude"
+    t.float "longitude"
     t.index ["user_id"], name: "index_venues_on_user_id"
   end
 

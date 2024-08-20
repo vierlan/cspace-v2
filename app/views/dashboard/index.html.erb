@@ -5,52 +5,33 @@
       <div class="border-4 border-dashed border-gray-200 rounded-lg h-96">
         <div class="flex justify-center items-center h-full">
           <div class="text-center">
-            <h2 class="text-3xl font-extrabold text-gray-900">Welcome to your dashboard</h2>
+            <h2 class="text-3xl font-extrabold text-gray-900">Hi <%= @user.full_name %>!</h2>
             <p class="mt-4 text-lg text-gray-500">Here you can manage your bookings, see your profile and more.</p>
               <div class="mt-8 mx-auto max-w-fit">
                 <!-- add buttons start here -->
                   <ul class="flex flex-col items-start">
                     <li>
-                    <div class="group relative w-full flex justify-center items-center py-2.5 px-4 border border-transparent text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
-                      <div class="text-base flex justify-center items-center">
-                      <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -ml-1 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
-                      </svg>
-                      <%= link_to new_venue_path, class: "text-lg text-gray-500 focus:outline-none" do %>
-                        <span class="absolute inset-0" aria-hidden="true"></span>
-                        Add a venue
-                      <% end %>
-                    </div>
+                      <div class="group relative w-full flex justify-center items-center py-2.5 px-4 border border-transparent      text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
+                        <div class="text-base flex justify-center items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -ml-1 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                          <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
+                        </svg>
+                        <%= link_to edit_user_registration_path, class: "text-lg text-gray-500 focus:outline-none" do %>
+                          <span class="absolute inset-0" aria-hidden="true"></span>
+                          Finish or edit your Profile set-up
+                        <% end %>
+                      </div>
                   </div>
                 </li>
-                <li>
-                  <div class="group relative w-full flex justify-center items-center py-2.5 px-4 border border-transparent text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
-                    <div class="text-base flex justify-center items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -ml-1 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
-                    </svg>
-                    <%= link_to edit_user_registration_path, class: "text-lg text-gray-500 focus:outline-none" do %>
-                      <span class="absolute inset-0" aria-hidden="true"></span>
-                      Finish or edit your Profile set-up
-                    <% end %>
-                  </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="group relative w-full flex justify-center items-center py-2.5 px-4 border border-transparent text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
-                    <div class="text-base flex justify-center items-center">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 -ml-1 mr-2" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
-                      <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd"></path>
-                    </svg>
-                    <%= link_to my_venues_path, class: "text-lg text-gray-500 focus:outline-none" do %>
-                      <span class="absolute inset-0" aria-hidden="true"></span>
-                      View and edit your venues and create packages
-                    <% end %>
-                  </div>
-                  </div>
-                </li>
- </ul>
-              </div>
+                <% if @user.venue_owner %>
+                  <%= render "venue_owner_dash" %>
+                <% elsif @user.admin %>
+                  <%= render "admin_dash" %>
+                <% else %>
+                  <%= render "user_dash" %>
+                <% end %>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

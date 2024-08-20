@@ -4,7 +4,7 @@ import Swiper from 'https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.mjs
 // Export the Swiper initialization as a function
 export function initializeSwiper(selector) {
   return new Swiper(selector, {
-    spaceBetween: 10,
+    spaceBetween: 20,
     loop: false,
     centeredSlides: false,
     freeMode: false,

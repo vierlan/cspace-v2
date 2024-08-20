@@ -11,9 +11,9 @@
   flex-direction: column;
   overflow: hidden !important;
   background: white;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+  border: rgba(240, 240, 240, 0.9) 1px solid;
   height: 16rem;
-  width: 300px;
+
   margin: 2px;
 
   img {
@@ -25,7 +25,7 @@
 }
 
 .card-venue-idx > img {
-  height: 80% !important;
+  height: 70% !important;
   width: 100%;
   object-fit: cover !important;
 }
@@ -77,72 +77,39 @@ h1 {
   text-align: center;
 }
 
-.wrapper {
-  display: grid;
-  grid-template-columns: repeat(3,100%);
-  overflow:hidden;
-  scroll-behavior: smooth;
+.card-package {
+  margin-right: 4px;
+  display: flex;
+  grid-gap: 10px;
+  border: red 1px solid;
+  border-radius: 5px;
+  height: 100%;
+  width: 50rem !important;
 
-  section {
-    width: 100%;
-    position: relative;
-    display: grid;
-    grid-template-columns: repeat(5, auto);
-    margin: 20px 0;
 
-    .item {
-      padding: 0 2px;
-      transition: $duration all;
-
-      &:hover {
-        margin: 0 40px;
-        transform: scale(1.2);
-      }
-
-    }
-
-    a {
-      position: absolute;
-      color: #fff;
-      text-decoration: none;
-      font-size: 6em;
-      background:rgb(0,0,0);
-      width: 80px;
-      padding: 20px;
-      text-align: center;
-      z-index: 1;
-
-      &:nth-of-type(1) {
-        top:0; bottom:0; left:0;
-        background: linear-gradient(-90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-      }
-      &:nth-of-type(2) {
-        top:0; bottom:0; right: 0;
-        background: linear-gradient(90deg, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%);
-      }
-
-    }
-
+  &:hover {
+    transform: scale($itemGrow);
   }
-}
 
+  img {
+    flex: 0 0 50%;
+    height: 100%;
+    object-fit: cover;
+  }
 
-$itemGrow: 1.2;
-$duration: 250ms;
+  .heading {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    color: #fff;
+  }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  margin: 0;
-  background-color: #000;
-  font-family: Arial;
-}
-
-h1 {
-  color: white;
-  text-align: center;
+  .duration {
+    position: absolute;
+    bottom: 0;
+    left: 20px;
+    color: #fff;
+  }
 }
 
 .wrapper {
@@ -243,6 +210,182 @@ body {
 .swiper-slide img {
   display: block;
   width: 100%;
-  height: 100%;
   object-fit: cover;
+}
+
+
+.main-showpage {
+  margin: 0 auto;
+
+  h2 {
+    color: black;
+  }
+
+  .container-top, .container-middle, .container-bottom {
+    margin: 20px;
+    padding: 20px;
+    background-color: white;
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+  }
+
+  .container-top {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .carousel-container {
+    flex: 2;
+    margin-right: 20px;
+  }
+
+  .venue-main-img {
+    width: 100%;
+    max-height: 500px;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+
+  .show-map {
+    flex: 1;
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 8px;
+  }
+
+  .container-middle {
+    display: flex;
+    flex-wrap: center;
+    &-card {
+      flex:2;
+    }
+
+  }
+
+  .cards-showpage {
+    display: flex;
+    gap: 50px;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px;
+  }
+
+  .form-show {
+    width: 30%;
+    margin-left: 10px;
+    flex:1;
+  }
+
+  .card-showpage {
+    width: 18rem;
+    overflow: hidden;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    position: relative;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .hover-effect {
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .hover-effect:hover {
+    transform: scale(1.1);
+    z-index: 1000;
+  }
+
+  .card img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .venue-thumbnail-img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .description p {
+    margin: 10px 0;
+    color: black;
+  }
+
+  .description .btn {
+    margin-top: 10px;
+  }
+
+
+
+  .form-show  {
+    margin-bottom: 20px;
+    text-align: center;
+    color: white;
+    .btn {
+      width:100%;
+   }
+  }
+
+  .simple input, .simple textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    color: black;
+  }
+
+  .btn-show {
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    background-color: #008080;
+    border: none;
+    color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+  }
+
+  .button-form:hover, .simple_form .button-form:hover {
+    background-color: #006666;
+  }
+
+  .container-bottom {
+    margin-top: 20px;
+  }
+
+  .reviews {
+    margin-top: 0px;
+    color: white;
+
+
+    ul {
+      list-style-type: none;
+    }
+
+  }
+
+  .carousel-container .carousel-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+
+
+  .star-rating {
+    font-size: 20px;
+    color: gold;
+  }
 }

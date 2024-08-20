@@ -38,16 +38,19 @@ export default class extends Controller {
 
 
   handleDragOver(event) {
+    console.log("Drag over");
     event.preventDefault();
     this.dropZoneTarget.classList.add("bg-gray-100");
   };
 
   handleDragLeave(event) {
+    console.log("Drag leave");
     event.preventDefault();
     this.dropZoneTarget.classList.remove("bg-gray-100");
   };
 
   handleDrop(event) {
+    console.log("Drop");
     event.preventDefault();
     this.dropZoneTarget.classList.remove("bg-gray-100");
 

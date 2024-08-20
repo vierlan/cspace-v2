@@ -23,4 +23,7 @@ class User < ApplicationRecord
     []
   end
   # :nocov:
+
+
+
 end

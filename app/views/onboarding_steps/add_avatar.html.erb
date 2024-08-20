@@ -2,7 +2,7 @@
   <%= simple_form_for @user, url: wizard_path(:add_avatar), method: :put do |f| %>
 
     <label for="avatar" class="block text-sm font-medium leading-6 text-gray-900">Avatar photo</label>
-    <div id="drop_zone" class="mt-2 flex justify-center rounded border border-dashed border-gray-900/25 max-w-40 px-6 py-10" data-image-preview-target="dropZone">
+    <div id="drop_zone" class="mt-2 flex justify-center rounded border border-dashed border-gray-900/25 max-w-40 px-6 py-10" data-action="dragover->image-preview#handleDragOver dragleave->image-preview#handleDragLeave drop->image-preview#handleDrop" data-image-preview-target="dropZone">
       <div class="text-center">
         <%= image_tag @user.avatar, id: 'avatar_preview', data: { image_preview_target: "preview", url: url_for(@user.avatar) } if @user.avatar.attached? %>
         <img id="avatar_preview" src="#" alt="Avatar Preview" class="hidden" data-image-preview-target="preview" />

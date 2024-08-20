@@ -1,4 +1,3 @@
-// app/javascript/controllers/placesapi_controller.js
 import { Controller } from "@hotwired/stimulus"
 import { initializeSwiper } from "./swiper_controller"
 
@@ -11,39 +10,29 @@ export default class extends Controller {
     // Get the place types from the data attribute
     this.placeTypes = this.element.dataset.placesapiTypes.split(',')
 
-    // Initialize Places Autocomplete for both search inputs
-    if (this.hasPlaceTarget) {
-      console.log("Initializing Places Autocomplete for:", this.placeTarget)
-      this.initPlaces(this.placeTarget)
-    }
+    // Automatically get the user's current location on page load
+    this.getCurrentLocation()
 
-    // Attach event listener for the radius slider if it exists
-    if (this.hasRadiusSliderTarget) {
-      console.log("Attaching event listener for radius slider:", this.radiusSliderTarget)
-      this.radiusSliderTarget.addEventListener("input", this.updateRadiusValue.bind(this))
-      this.radiusValueTarget = document.getElementById("radius-value")
-    }
+    // Initialize Places Autocomplete
+    this.initPlaces()
 
-    // Automatically get the user's current location if the button exists
-    if (this.hasLocationButtonTarget) {
-      console.log("Getting current location on page load")
-      this.getCurrentLocation()
-    }
+    // Attach event listener for the radius slider
+    this.radiusSliderTarget.addEventListener("input", this.updateRadiusValue.bind(this))
+    this.radiusValueTarget = document.getElementById("radius-value")
   }
 
   updateRadiusValue() {
-    console.log("Updating radius value")
     const radius = this.radiusSliderTarget.value
-    console.log("New radius value:", radius)
     this.radiusValueTarget.textContent = radius
   }
 
-  initPlaces(input) {
+  initPlaces() {
     if (typeof google === 'undefined' || !google.maps) {
       console.error("Google Maps JavaScript API is not loaded.")
       return
     }
 
+    const input = this.placeTarget
     const options = {
       types: ['establishment'],
       fields: ['name', 'formatted_address', 'place_id', 'geometry'],
@@ -53,6 +42,7 @@ export default class extends Controller {
 
     autocomplete.addListener('place_changed', () => {
       const place = autocomplete.getPlace()
+
       if (place.geometry) {
         console.log("Place selected:", place)
         this.fetchPlacesForAllTypes(place.geometry.location)
@@ -94,7 +84,7 @@ export default class extends Controller {
 
     const request = {
       location: location,
-      radius: parseInt(radius),
+      radius: parseInt(radius),  // Use the value from the slider
       type: [type],
     }
 
@@ -121,14 +111,13 @@ export default class extends Controller {
 
           placeDiv.innerHTML = `
               <div class="card-venue-idx" index="${idx}">
-              ${photoUrl ? `<img src="${photoUrl}" alt="${place.name}">` : ''}
-                <h2>${place.name}</h2>
+                <h3>${place.name}</h3>
                 <p>Address: ${place.vicinity}</p>
                 <p>Rating: ${place.rating}</p>
-               
+                ${photoUrl ? `<img src="${photoUrl}" alt="${place.name}">` : ''}
+                <hr />
               </div>
           `
-
           resultsContainer.appendChild(placeDiv)
         })
 

@@ -7,10 +7,11 @@ class PackagesController < ApplicationController
   def create
     @package = Package.new(item_params)
     @package.venue_id = params[:venue_id]
+    @venue = Venue.find(params[:venue_id])
 
 
     if @package.save
-      redirect_to dashboard_path(current_user)
+      redirect_to my_venue_packages_path(@venue)
     else
       render :new ,status: :unprocessable_entity
     end
@@ -19,8 +20,6 @@ class PackagesController < ApplicationController
   def index
     @venue_items = Package.find(params[:venue_id])
     @venue = Venue.find(params[:venue_id])
-    @booking_items = Booking.find(params[:booking_id])
-    @booking = Booking.find(params[:booking_id])
   end
 
   def show
@@ -33,9 +32,10 @@ class PackagesController < ApplicationController
 
   def update
     @package = Package.find(params[:id])
+    @venue = Venue.find(params[:venue_id])
 
     if @package.update(item_params)
-      redirect_to dashboard_path(current_user)
+      redirect_to my_venue_packages_path(@venue)
     else
       render :edit, status: :unprocessable_entity
     end
