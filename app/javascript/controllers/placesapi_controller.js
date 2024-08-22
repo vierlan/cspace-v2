@@ -3,18 +3,22 @@ import { Controller } from "@hotwired/stimulus"
 import { initializeSwiper } from "./swiper_controller"
 
 export default class extends Controller {
-  static targets = ["place", "locationButton", "radiusSlider", "resultsContainer"]
+  static targets = ["place", "locationButton", "radiusSlider", "resultsContainer", "name"]
 
   connect() {
     console.log("Stimulus PLACES controller connected")
 
     // Get the place types from the data attribute
+    console.log("Place types:", this.element.dataset.placesapiTypes)
     this.placeTypes = this.element.dataset.placesapiTypes.split(',')
+    console.log("Place types:", this.placeTypes)
 
     // Initialize Places Autocomplete for both search inputs
     if (this.hasPlaceTarget) {
+      const scopedTarget = this.targets.find("place")
       console.log("Initializing Places Autocomplete for:", this.placeTarget)
-      this.initPlaces(this.placeTarget)
+      this.initPlaces(scopedTarget)
+      console.log("Initializing Places Autocomplete for scopedTarget:", scopedTarget)
     }
 
     // Attach event listener for the radius slider if it exists
@@ -29,7 +33,14 @@ export default class extends Controller {
       console.log("Getting current location on page load")
       this.getCurrentLocation()
     }
+
   }
+  changePlace(input) {
+    console.log("Changing place")
+    this.fetchPlacesForAllTypes(this.placeTarget)
+  }
+
+
 
   updateRadiusValue() {
     console.log("Updating radius value")
@@ -52,6 +63,7 @@ export default class extends Controller {
     const autocomplete = new google.maps.places.Autocomplete(input, options)
 
     autocomplete.addListener('place_changed', () => {
+      debugger
       const place = autocomplete.getPlace()
       if (place.geometry) {
         console.log("Place selected:", place)
@@ -61,6 +73,8 @@ export default class extends Controller {
       }
     })
   }
+
+
 
   getCurrentLocation() {
     if (navigator.geolocation) {
@@ -90,6 +104,8 @@ export default class extends Controller {
 
   findNearbyPlaces(location, type, index) {
     const radius = this.radiusSliderTarget.value
+    console.log("Finding nearby places of type:", type, "within radius:", radius)
+
     const service = new google.maps.places.PlacesService(this.placeTarget)
 
     const request = {
@@ -125,7 +141,7 @@ export default class extends Controller {
                 <h2>${place.name}</h2>
                 <p>Address: ${place.vicinity}</p>
                 <p>Rating: ${place.rating}</p>
-               
+
               </div>
           `
 

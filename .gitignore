@@ -47,3 +47,7 @@ coverage
 .ENV
 .ENV*
 .env*
+
+/config/credentials/devlopment.key
+
+/config/credentials/development.key

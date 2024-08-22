@@ -298,6 +298,8 @@ GEM
     parser (3.3.4.2)
       ast (~> 2.4.1)
       racc
+    pay (7.3.0)
+      rails (>= 6.0.0)
     pg (1.5.7)
     popper_js (2.11.8)
     postmark (1.25.1)
@@ -548,6 +550,7 @@ DEPENDENCIES
   letter_opener
   metamagic
   methodz
+  pay (~> 7.0)
   pg
   postmark-rails
   pretender
