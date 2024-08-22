@@ -10,6 +10,7 @@ class BookingsController < ApplicationController
     @booking = Booking.new(booking_params)
     @booking.user = current_user
     @booking.package = Package.find(params[:package_id])
+    @booking.venue = @booking.package.venue
 
     if @booking.save
       redirect_to dashboard_path(current_user)
@@ -52,6 +53,6 @@ class BookingsController < ApplicationController
   private
 
   def booking_params
-    params.require(:booking).permit(:booking_date, :start_time, :package_id)
+    params.require(:booking).permit(:booking_date, :booking_start_time, :package_id)
   end
 end

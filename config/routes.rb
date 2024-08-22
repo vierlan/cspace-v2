@@ -15,21 +15,28 @@ Rails.application.routes.draw do
   get 'dashboard/:id/my_venue_packages', to: 'dashboard#my_venue_packages', as: :my_venue_packages
   get 'dashboard/:id/edit', to: 'dashboard#edit', as: :edit_dashboard
   patch 'dashboard/:id', to: 'dashboard#update', as: :update_dashboard
+  get 'checkout', to: 'checkouts#show'
+  get 'checkout/success', to: 'checkouts#success'
+  get 'checkout/cancel', to: 'checkouts#cancel'
+ 
+
 
   resources :venues do
-    resources :packages, only: %i[ new create index]
+    resources :packages, only: %i[ new create index show]
+    resources :bookings, only: %i[ new create index]
     collection do
       get 'categories/:categories', to: 'venues#categories', as: :categories
     end
+
   end
-  
-  resources :bookings
-  resources :packages, except: %i[ new create index]
+
+  resources :bookings, except: %i[ new create index]
+  resources :packages, except: %i[ new create index show]
   resources :subscribe, only: [:index]
   resources :account, only: %i[index update] do
     get :stop_impersonating, on: :collection
   end
-  resources :billing_portal, only: [:new, :create,]
+  resources :billing_portal, only: [:new, :create, :show]
   resources :blog_posts, controller: :blog_posts, path: "blog", param: :slug
 
   # static pages

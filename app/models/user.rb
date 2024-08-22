@@ -7,7 +7,24 @@ class User < ApplicationRecord
   include Onboardable
   include Billable
 
+  pay_customer stripe_attributes: :stripe_attributes
+
   scope :subscribed, -> { where.not(stripe_subscription_id: [nil, '']) }
+
+  def stripe_attributes(pay_customer)
+    {
+      address: {
+        city: pay_customer.owner.city,
+        country: pay_customer.owner.country
+      },
+      metadata: {
+        pay_customer_id: pay_customer.id,
+        user_id: id
+      }
+    }
+  end
+
+
 
   def full_name
     "#{first_name.capitalize} #{last_name.capitalize}"

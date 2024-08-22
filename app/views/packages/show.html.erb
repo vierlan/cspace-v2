@@ -1,4 +1,37 @@
 <div>
-  <h1 class="font-bold text-4xl">Packages#show</h1>
-  <p>Find me in app/views/packages/show.html.erb</p>
+  <h1 class="font-bold text-4xl">packages#show</h1>
+  <%= @package.package_name %>
+
 </div>
+</div>
+</div>
+<div class="container flex flex-col sm:flex-row w-8/10 p-2 gap-5 justify-center">
+        <div class="grid grid-cols-2 relative w-100  gap-1 text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none border">
+          <div class="h-full text-base grid grid-rows-4 overflow-hidden hover:overflow-visable p-3">
+            <h2 class="text-lg text-gray-500 focus:outline-none"><%= @package.package_name.capitalize %></h2>
+            <p class="text-gray-400"><%= @package.package_description %> </p>
+            <p class="text-gray-400"><%= "#{@package.package_duration} hours" if @package.package_duration %></p>
+            <p class="text-gray-400">€<%= @package.package_price %></p>
+          </div>
+          <div class='border border-white'>
+            <% if @package.photo.key %>
+              <%= cl_image_tag @package.photo.key, alt: "PICTURE", class: "object-cover w-50 h-full" %>
+            <% else %>
+              <%= image_tag "avatar.png", class: "h-10 w-10 rounded-full" %>
+            <% end %>
+          </div>
+        </div>
+  <div class="form-show ml-10 border p-4">
+    <h2>Book this Venue</h2>
+      <%= simple_form_for [@venue, @booking], class: "simple", data: { controller: 'flatpickr' } do |f| %>
+        <%= f.input :booking_date, as: :string, input_html: { placeholder: "Select booking date", data: { flatpickr_target: "bookingDate" } } %>
+        <%= f.input :booking_start_time, as: :string, input_html: { placeholder: "Select start time", data: { flatpickr_target: "bookingStartTime" } } %>
+        <%= f.submit "Reserve", class: "btn btn-primary" %>
+      <% end %>
+      <%= link_to "Buy Package", checkout_path, class: "btn btn-sucess" %>
+      <%= render partial: 'pay/stripe/checkout_button', locals: {
+  session: @checkout_session,
+  title: "Checkout"
+}  %>
+    </div>
+    </div>
