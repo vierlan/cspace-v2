@@ -1,4 +1,6 @@
 class BookingsController < ApplicationController
+  before_action :authenticate_user!
+
   def new
     @booking = Booking.new
     @booking.user = current_user
@@ -6,14 +8,23 @@ class BookingsController < ApplicationController
   end
 
   def create
-
     @booking = Booking.new(booking_params)
     @booking.user = current_user
     @booking.package = Package.find(params[:package_id])
     @booking.venue = @booking.package.venue
 
     if @booking.save
-      redirect_to dashboard_path(current_user)
+      Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+      current_user.set_payment_processor :stripe
+      current_user.payment_processor.customer
+      @checkout_session = current_user
+                          .payment_processor
+                          .checkout(
+                            mode: 'payment',
+                            line_items: 'price_1PpvXoRszoiavRvriwLx0Fqy',
+                            success_url: checkout_success_url,
+                            cancel_url: checkout_cancel_url,
+                          )
     else
       render :new
     end
