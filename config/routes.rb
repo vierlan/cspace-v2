@@ -18,12 +18,13 @@ Rails.application.routes.draw do
   get 'checkout', to: 'checkouts#show'
   get 'checkout/success', to: 'checkouts#success'
   get 'checkout/cancel', to: 'checkouts#cancel'
- 
+
 
 
   resources :venues do
-    resources :packages, only: %i[ new create index show]
-    resources :bookings, only: %i[ new create index]
+    resources :packages, only: %i[ new create index show] do
+      resources :bookings, only: %i[ new create index]
+    end
     collection do
       get 'categories/:categories', to: 'venues#categories', as: :categories
     end

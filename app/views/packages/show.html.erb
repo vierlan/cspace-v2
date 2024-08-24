@@ -23,12 +23,12 @@
         </div>
   <div class="form-show ml-10 border p-4">
     <h2>Book this Venue</h2>
-      <%= simple_form_for [@venue, @booking], class: "simple", data: { controller: 'flatpickr' } do |f| %>
+
+      <%= simple_form_for [@venue, @booking], url: venue_package_bookings_path(@venue, @package), class: "simple", data: { controller: 'flatpickr' } do |f| %>
         <%= f.input :booking_date, as: :string, input_html: { placeholder: "Select booking date", data: { flatpickr_target: "bookingDate" } } %>
         <%= f.input :booking_start_time, as: :string, input_html: { placeholder: "Select start time", data: { flatpickr_target: "bookingStartTime" } } %>
         <%= f.submit "Reserve", class: "btn btn-primary" %>
       <% end %>
-      <%= link_to "Buy Package", checkout_path, class: "btn btn-sucess" %>
       <%= render partial: 'pay/stripe/checkout_button', locals: {
   session: @checkout_session,
   title: "Checkout"
