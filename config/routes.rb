@@ -23,7 +23,7 @@ Rails.application.routes.draw do
 
   resources :venues do
     resources :packages, only: %i[ new create index show] do
-      resources :bookings, only: %i[ new create index]
+      resources :bookings, only: %i[ new create]
     end
     collection do
       get 'categories/:categories', to: 'venues#categories', as: :categories
@@ -31,7 +31,7 @@ Rails.application.routes.draw do
 
   end
 
-  resources :bookings, except: %i[ new create index]
+  resources :bookings, except: %i[ new create ]
   resources :packages, except: %i[ new create index show]
   resources :subscribe, only: [:index]
   resources :account, only: %i[index update] do

@@ -9,29 +9,8 @@ class DashboardController < ApplicationController
   def my_venues
     @venues = Venue.where(user: current_user)
     @user_bookings = Booking.where(user: current_user)
-    @venue_bookings = current_user.venues.flat_map { |venue| venue.bookings }.sort_by { |booking| booking.created_at }.reverse
-
-    @current_bookings = []
-    @past_bookings = []
-    @user_bookings.each do |booking|
-      if booking.booking_date > Date.today
-        @current_bookings << booking
-      else
-        @past_bookings << booking
-      end
-    end
-
-    @current_venue_booking = []
-    @past_venue_bookings = []
-
-    @venue_bookings.each do |request|
-      if request.booking_date > Date.today
-        @current_venue_bookings << request
-      else
-        @past_venue_bookings << request
-      end
-    end
   end
+  
 
 
   def my_venue_packages

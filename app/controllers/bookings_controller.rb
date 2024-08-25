@@ -73,17 +73,26 @@ class BookingsController < ApplicationController
   end
 
   def index
-    if current_user.venue_owner?
-      @bookings = Booking.where(venue_id: current_user.venue.id)
-    else
-      @bookings = Booking.where(user_id: current_user.id)
+    #f current_user.venue_owner
+    # @bookings = Booking.where(venue_id: current_user.venue.id)
+    #lse
+      @bookings = current_user.bookings.order(created_at: :desc)
+      @current_bookings = []
+      @past_bookings = []
+      @bookings.each do |booking|
+        if booking.booking_date > Date.today
+          @current_bookings << booking
+        else
+          @past_bookings << booking
+        end
+      #end
     end
   end
 
   def show
     @booking = Booking.find(params[:id])
     @package = @booking.package
-    @packages = @package.packages
+    @venue = @package.venue
     @package_price = @package.package_price
   end
 
