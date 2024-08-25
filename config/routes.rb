@@ -19,6 +19,7 @@ Rails.application.routes.draw do
   get 'checkout/success', to: 'checkouts#success'
   get 'checkout/cancel', to: 'checkouts#cancel'
 
+  post 'webhooks', to: 'webhooks#create'
 
 
   resources :venues do
