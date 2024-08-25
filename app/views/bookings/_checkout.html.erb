@@ -1,0 +1,4 @@
+<div id="checkout">
+  <h2><%= title %></h2>
+  <%= button_to "Pay with Stripe", @checkout_session.url, method: :post, class: "btn btn-primary" %>
+</div>
