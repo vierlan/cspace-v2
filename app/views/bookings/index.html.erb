@@ -10,8 +10,7 @@
           <p><%= booking.package.package_name %></p>
           <p><%= booking.booking_date.strftime("%A, %d %b %Y") %></p>
           <p><%= booking.booking_start_time.strftime("%H:%M") %></p>
-          <%= link_to "Edit", edit_booking_path(booking.venue, booking.package, booking), class: "btn btn-primary" %>
-          <%= link_to "Delete", booking_path(booking.venue, booking.package, booking), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+          <%= link_to "Cancel this booking", booking_path(booking.venue, booking.package, booking), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger bg-red-700 text-white hover:text-black" %>
         </div>
       </div>
     <% end %>
@@ -23,7 +22,6 @@
           <p><%= booking.package.package_name %></p>
           <p><%= booking.booking_date.strftime("%A, %d %b %Y") %></p>
           <p><%= booking.booking_start_time.strftime("%H:%M") %></p>
-          <%= link_to "Edit", edit_booking_path(booking.venue, booking.package, booking), class: "btn btn-primary" %>
           <%= link_to "Delete", booking_path(booking.venue, booking.package, booking), method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
         </div>
       </div>

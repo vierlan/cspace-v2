@@ -1,6 +1,6 @@
 <div class="container p-8">
   <h1>Checkout success</h1>
-  <p>Thank you for your purchase!</p>
+  <h2>Thank you for your purchase!</h2>
   <p>Your order total is: €<%= @session.amount_total.to_f / 100 %></p>
   <br/>
   <% @line_items.each do |item| %>

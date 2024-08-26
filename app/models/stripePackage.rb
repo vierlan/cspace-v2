@@ -25,7 +25,7 @@ class StripePackage
       unit_amount_decimal: @package.package_price * 100,
       product: stripe_product.id
     )
-    Package.update(
+    @package.update(
       stripe_id: stripe_product.id,
       data: stripe_product.to_json,
       stripe_price_id: stripe_price.id

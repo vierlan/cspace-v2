@@ -13,8 +13,6 @@ class CheckoutsController < ApplicationController
     @venue_name = @venue.name
     @booking.update(booking_paid: true)
 
-
-
   end
 
   def cancel

@@ -40,7 +40,7 @@ class BookingsController < ApplicationController
     @booking_id = @booking.id
     @booking_start_time = @booking.booking_start_time
     @booking_date = @booking.booking_date
-    @package = Package.find(params[:package_id])
+    @package = @booking.package
     @venue = @package.venue
     @stripe_price_id = @package.stripe_price_id
     current_user.set_payment_processor :stripe
@@ -61,6 +61,12 @@ class BookingsController < ApplicationController
                                 booking_date: @booking_date,
                                 booking_start_time: @booking_start_time,
                                 booking_id: @booking_id
+                              },
+                              custom_text: {
+                                submit: {
+                                  message: "Your Booking: #{@booking_date} #{@booking_start_time} @ #{@venue.name} "
+                                }
+
                               },
                               success_url: checkout_success_url,
                               cancel_url: checkout_cancel_url
