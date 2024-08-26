@@ -37,6 +37,13 @@ end
 
 # Create 5 users with random names
 def create_users
+  avatar_urls = [
+    "https://res.cloudinary.com/drirqdfbt/image/upload/c_thumb,w_200,g_face/v1724709324/7_hf6dav.jpg",
+    'https://res.cloudinary.com/drirqdfbt/image/upload/c_thumb,w_200,g_face/v1724709279/james_avatar_nemnaf.jpg',
+    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709321/6_rcdsbv.jpg',
+    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709321/6_rcdsbv.jpg',
+    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709321/6_rcdsbv.jpg'
+  ]
   puts "Creating users..."
   users = [
     User.create!(first_name: "John", last_name: "Doe4", email: "john4ed75@example.com", password: "password123", password_confirmation: "password123", venue_owner: true),
@@ -45,6 +52,9 @@ def create_users
     User.create!(first_name: "Dev", last_name: "Doe4", email: "Dev@la.la", password: "123123", password_confirmation: "123123", venue_owner: true, admin: true),
     User.create!(first_name: "Lan", last_name: "Anh", email: "la@la.la", password: "123123", password_confirmation: "123123", venue_owner: true, admin: true)
   ]
+  users.each do |user|
+    user.avatar.attach(io: URI.open(avatar_urls.sample), filename: "avatar_#{SecureRandom.hex}.jpg")
+  end
   return users
 end
 
@@ -53,7 +63,7 @@ def create_places(api_key, location, radius, type, users)
   puts "Fetching places..."
   places = fetch_places(API_KEY, LONDON_COORDINATES, RADIUS, TYPE)
 
-  places.each_with_index do |place, index|
+  places.first(5).each_with_index do |place, index|
     next if place['photos'].nil? || place['photos'].empty?
 
     user = users[index % users.size]
@@ -81,7 +91,7 @@ end
   # Attach up to 3 photos to the venue
 def attach_photos(venue, place)
   puts "Attaching photos..."
-    place['photos'].first(3).each do |photo|
+    place['photos'].first(1).each do |photo|
       photo_file_path = download_photo(API_KEY, photo['photo_reference'])
 
       venue.photos.attach(
@@ -127,10 +137,10 @@ def seed_packages
   puts "Seeding packages..."
   venues = Venue.all
   venues.each do |venue|
-    3.times do |i|
+    2.times do |i|
       package = venue.packages.new(
-        package_name: "Package #{i + 1}",
-        package_price: rand(9..99),
+        package_name: "Package #{i + 1} @ #{venue.name}",
+        package_price: rand(9..59),
         package_description: "This is package #{i + 1}",
         package_duration: rand(1..5),
         venue_id: venue.id
@@ -139,9 +149,13 @@ def seed_packages
         puts "attaching photo to package"
         photo = package_photos[i].sample
         add_package_photo(package, photo)
+        wait_for_cloudinary(package)
+        service = StripePackage.new(package)
+        service.create_package
       else
         puts "Package creation failed!"
       end
+      puts "Package created successfully!"
     end
   end
 end
@@ -150,6 +164,12 @@ def add_package_photo(package, photo)
   package.photo.attach(io: URI.open(photo), filename: "photo_#{SecureRandom.hex}.jpg")
 end
 
+def wait_for_cloudinary(package)
+  while !package.photo.attached?
+    puts "Waiting for photo to attach..."
+    sleep(1)
+  end
+end
 
 
 def run_seed

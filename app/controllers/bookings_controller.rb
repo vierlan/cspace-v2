@@ -1,6 +1,6 @@
 class BookingsController < ApplicationController
   before_action :authenticate_user!
-  
+
   def new
     @booking = Booking.new
     @booking.user = current_user
@@ -18,7 +18,7 @@ class BookingsController < ApplicationController
     @booking_date = params[:booking][:booking_date]
     @booking_start_time = params[:booking][:booking_start_time]
 
-    if @booking.save
+    if @booking.valid? && @booking.save
       @booking_id = @booking.id
       Rails.logger.info "Booking created with ID: #{@booking_id}, booking date: #{@booking_date}, booking start time: #{@booking_start_time}"
       @checkout_session = create_stripe_checkout_session(@booking)
