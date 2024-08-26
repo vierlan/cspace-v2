@@ -28,18 +28,27 @@
     <script src="https://js.stripe.com/v3"></script>
     <%= render "shared/script_tags" %>
   </head>
-
-  <body class="bg-white flex flex-col min-h-screen">
-      <%= render "shared/impersonator" %>
-      <%= render "shared/flash" %>
-      <%  if !current_user %>
+      <%  if !current_user && params[:controller].match?(/(devise)(\S)(\w+)/) %>
+        <body class="bg-brand-teal flex flex-col min-h-screen justify-between ">
+        <%= render "shared/flash" %>
+        <%= render "shared/header" %>
+      <% elsif !current_user && params[:controller] == "venues" || params[:controller] == "packages" %>
+        <body class="bg-white flex flex-col min-h-screen">
+        <%= render "shared/flash" %>
         <%= render "shared/header" %>
       <% elsif params[:controller] == "onboarding"%>
-         <%# do nothing %>
+        <body class="bg-white flex flex-col min-h-screen">
+      <% elsif params[:controller] == "blog_posts" %>
+        <body class="bg-brand-teal flex flex-col min-h-screen">
+        <%= render "shared/flash" %>
+        <%=  render "shared/navbar" %>
       <% else %>
+        <body class="bg-white flex flex-col min-h-screen">
+        <%= render "shared/impersonator" %>
+        <%= render "shared/flash" %>
         <%=  render "shared/navbar" %>
       <% end %>
-      <div class="container mx-auto">
+      <div class="relative container mx-auto px-2 flex-grow flex-col">
         <%= yield %>
       </div>
     <%= render 'layouts/footer_nav' %>

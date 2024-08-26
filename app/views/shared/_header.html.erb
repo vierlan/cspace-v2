@@ -1,7 +1,7 @@
 <header class="p-3 bg-brand-teal" data-controller="header">
   <nav class="flex items-center justify-between flex-wrap">
     <div class="flex items-center flex-no-shrink text-white mr-6">
-      <% logo_path = current_user ? dashboard_path : root_path %>
+      <% logo_path = current_user ? dashboard_path(current_user) : root_path %>
       <%= link_to logo_path, class:"flex items-center hover:opacity-80" do %>
         <%= image_tag "logo.png",  style: "height: 62px" %>
         <span class="font-semibold text-xl tracking-tight text-primary-600"><%= Rails.application.credentials.company_name %></span>

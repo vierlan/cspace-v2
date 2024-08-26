@@ -1,4 +1,6 @@
 class BookingsController < ApplicationController
+  before_action :authenticate_user!
+  
   def new
     @booking = Booking.new
     @booking.user = current_user
@@ -79,9 +81,6 @@ class BookingsController < ApplicationController
   end
 
   def index
-    #f current_user.venue_owner
-    # @bookings = Booking.where(venue_id: current_user.venue.id)
-    #lse
       @bookings = current_user.bookings.order(created_at: :desc)
       @current_bookings = []
       @past_bookings = []
@@ -91,9 +90,22 @@ class BookingsController < ApplicationController
         else
           @past_bookings << booking
         end
-      #end
     end
   end
+
+  def venue_bookings
+    @bookings = Booking.where(venue_id: current_user.venue.id).order(created_at: :desc)
+    @current_bookings = []
+    @past_bookings = []
+    @bookings.each do |booking|
+      if booking.booking_date > Date.today
+        @current_bookings << booking
+      else
+        @past_bookings << booking
+      end
+  end
+end
+
 
   def show
     @booking = Booking.find(params[:id])
@@ -115,7 +127,6 @@ class BookingsController < ApplicationController
   def destroy
     @booking = Booking.find(params[:id])
     @booking.destroy
-    redirect_to dashboard_path(current_user)
   end
 
   private

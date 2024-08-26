@@ -18,7 +18,7 @@ Rails.application.routes.draw do
   get 'checkout', to: 'checkouts#show'
   get 'checkout/success', to: 'checkouts#success'
   get 'checkout/cancel', to: 'checkouts#cancel'
-
+  get 'booking/venue_bookings', to: 'bookings#venue_bookings', as: :venue_bookings
   post 'webhooks', to: 'webhooks#create'
 
 
@@ -29,7 +29,6 @@ Rails.application.routes.draw do
     collection do
       get 'categories/:categories', to: 'venues#categories', as: :categories
     end
-
   end
 
   resources :bookings, except: %i[ new create ]
