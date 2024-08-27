@@ -1,0 +1,39 @@
+<div class="map-container" data-controller="map">
+  <div
+    id="map"
+    data-map-target="map"
+    class="w-full h-80"
+  >
+  </div>
+  <div class="venue-list" >
+    <ol data-map-target="venues">
+      <% @venues.each do |venue| %>
+        <li
+          class="venue-list-item"
+          data-lat=<%= venue.latitude %>
+          data-lng=<%= venue.longitude %>
+          data-title=<%= "#{venue.name} -#{venue.address}"%>
+        >
+          <h4><%= venue.name %></h4>
+          <p><%= venue.address %></p>
+        </li>
+      <% end %>
+    </ol>
+  </div>
+</div>
+
+<script>
+let map;
+
+async function initMap() {
+  const { Map } = await google.maps.importLibrary("maps");
+
+  map = new Map(document.getElementById("map"), {
+    center: { lat: -34.397, lng: 150.644 },
+    zoom: 8,
+  });
+}
+
+initMap();
+
+</script>
