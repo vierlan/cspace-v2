@@ -10,7 +10,7 @@ class DashboardController < ApplicationController
     @venues = Venue.where(user: current_user)
     @user_bookings = Booking.where(user: current_user)
   end
-  
+
 
 
   def my_venue_packages
@@ -30,6 +30,12 @@ class DashboardController < ApplicationController
     else
       render :edit, status: :unprocessable_entity
     end
+  end
+
+  def destroy
+    @package = Package.find(params[:id])
+    @package.destroy
+    redirect_to my_venue_packages_path(current_user)
   end
 
   private
