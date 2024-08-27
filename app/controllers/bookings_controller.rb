@@ -20,19 +20,18 @@ class BookingsController < ApplicationController
 
     if @booking.valid? && @booking.save
       @booking_id = @booking.id
+      readable_time = readable_date_time(@booking.booking_date, @booking.booking_start_time)
+      Rails.logger.info "Booking time: #{readable_time}"
+      @booking.update(booking_start_time: readable_time)
       Rails.logger.info "Booking created with ID: #{@booking_id}, booking date: #{@booking_date}, booking start time: #{@booking_start_time}"
       @checkout_session = create_stripe_checkout_session(@booking)
       redirect_to @checkout_session.url, status: 303, allow_other_host: true
       Rails.logger.info "Redirecting to Stripe checkout session URL: #{@checkout_session.url}"
-
-     #respond_to do |format|
-     #  format.html { redirect_to @checkout_session.url, allow_other_host: true }
-     #  format.turbo_stream { render turbo_stream: turbo_stream.replace("checkout_redirect", partial: "shared/redirect", locals: { url: @checkout_session.url }) }
-     #end
     else
       Rails.logger.error "Booking save failed: #{@booking.errors.full_messages.join(', ')}"
       flash.now[:error] = 'Something went wrong'
-      render :new, status: :unprocessable_entity
+
+      render 'packages/show', status: :unprocessable_entity, id: @booking.package.id
     end
   end
 
@@ -94,7 +93,8 @@ class BookingsController < ApplicationController
   end
 
   def venue_bookings
-    @bookings = Booking.where(venue_id: current_user.venue.id).order(created_at: :desc)
+    @venues = current_user.venues
+    @bookings = current_user.venues.flat_map { |venue| venue.bookings }.sort_by { |booking| booking.created_at }.reverse
     @current_bookings = []
     @past_bookings = []
     @bookings.each do |booking|
@@ -130,6 +130,10 @@ end
   end
 
   private
+
+  def readable_date_time(date, time)
+    DateTime.parse("#{date} #{time}").strftime('%d %m %Y at %H:%M')
+  end
 
   def booking_params
     params.require(:booking).permit(:booking_date, :booking_start_time)
