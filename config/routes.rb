@@ -18,19 +18,20 @@ Rails.application.routes.draw do
   get 'checkout', to: 'checkouts#show'
   get 'checkout/success', to: 'checkouts#success'
   get 'checkout/cancel', to: 'checkouts#cancel'
- 
+  get 'booking/venue_bookings', to: 'bookings#venue_bookings', as: :venue_bookings
+  post 'webhooks', to: 'webhooks#create'
 
 
   resources :venues do
-    resources :packages, only: %i[ new create index show]
-    resources :bookings, only: %i[ new create index]
+    resources :packages, only: %i[ new create index show] do
+      resources :bookings, only: %i[ new create]
+    end
     collection do
       get 'categories/:categories', to: 'venues#categories', as: :categories
     end
-
   end
 
-  resources :bookings, except: %i[ new create index]
+  resources :bookings, except: %i[ new create ]
   resources :packages, except: %i[ new create index show]
   resources :subscribe, only: [:index]
   resources :account, only: %i[index update] do

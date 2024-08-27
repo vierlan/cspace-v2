@@ -1,0 +1,8 @@
+<!-- app/views/shared/_redirect.html.erb -->
+<turbo-stream action="replace" target="checkout_redirect">
+  <template>
+    <script type="text/javascript">
+      window.location.href = "<%= url %>";
+    </script>
+  </template>
+</turbo-stream>

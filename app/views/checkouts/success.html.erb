@@ -1,15 +1,18 @@
 <div class="container p-8">
   <h1>Checkout success</h1>
-  <p>Thank you for your purchase!</p>
+  <h2>Thank you for your purchase!</h2>
   <p>Your order total is: €<%= @session.amount_total.to_f / 100 %></p>
   <br/>
-  <%= @line_items.each do |item| %>
+  <% @line_items.each do |item| %>
     <h3><%= item.description %></h3>
     <br/>
     <p>€<%= item.price.unit_amount.to_f / 100 %></p>
     <% product = Stripe::Product.retrieve(item.price.product) %>
-    <%#= image_tag(product.images.first, width: 300) %>
-    <% package_id = product.metadata["package_id"].to_i %>
+    <% package_details = product.metadata%>
+    <p>Booking date: <%= @readable_booking_date %></p>
+    <p>Booking start time: <%= @readable_booking_start_time %></p>
+    <p>At: <%= @venue_name %></p>
+    <% package_id = package_details["package_id"].to_i %>
     <%= cl_image_tag(Package.find(package_id).photo.key, size: "200") %>
     <% end %>
 </div>
