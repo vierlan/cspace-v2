@@ -3,5 +3,4 @@
 @tailwind utilities;
 @import "actiontext.css";
 @import "trix.css";
-@import "cards";
-@import "components";
+
