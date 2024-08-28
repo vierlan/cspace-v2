@@ -13,7 +13,6 @@ gem 'devise'
 gem 'geocoder'
 gem 'groupdate' # used by Chartkick
 gem 'honeypot-captcha', github: 'founderhacker/honeypot-captcha' # prevent unauthenticated form spam
-gem 'htmlbeautifier'
 gem 'httparty'
 gem "image_processing", ">= 1.2"
 gem 'importmap-rails'
@@ -55,7 +54,7 @@ group :development, :test do
   gem 'rubocop-factory_bot', require: false
   gem 'rubocop-rails', require: false
   gem 'rubocop-rspec', require: false
-
+  gem 'htmlbeautifier'
 end
 
 group :development do
