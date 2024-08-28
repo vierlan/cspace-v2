@@ -36,7 +36,7 @@
         <body class="bg-white flex flex-col min-h-screen">
         <%= render "shared/flash" %>
         <%= render "shared/header" %>
-      <% elsif params[:controller] == "onboarding"%>
+      <% elsif !current_user || params[:controller] == "onboarding"%>
         <body class="bg-white flex flex-col min-h-screen">
       <% elsif params[:controller] == "blog_posts" %>
         <body class="bg-brand-teal flex flex-col min-h-screen">
