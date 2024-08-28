@@ -41,8 +41,8 @@ def create_users
     "https://res.cloudinary.com/drirqdfbt/image/upload/c_thumb,w_200,g_face/v1724709324/7_hf6dav.jpg",
     'https://res.cloudinary.com/drirqdfbt/image/upload/c_thumb,w_200,g_face/v1724709279/james_avatar_nemnaf.jpg',
     'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709321/6_rcdsbv.jpg',
-    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709321/6_rcdsbv.jpg',
-    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709321/6_rcdsbv.jpg'
+    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709319/Untitled_design_1_auiyso.png',
+    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709274/197532_480468269228_1120636_n_pcjgvm.jpg'
   ]
   puts "Creating users..."
   users = [
