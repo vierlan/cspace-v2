@@ -17,44 +17,42 @@
     <%= stylesheet_link_tag "tailwind", "data-turbo-track": "reload" %>
     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
     <%= javascript_importmap_tags %>
-
     <!-- fontawesome-->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!--swiper -->
-      <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <!--Google Places API-->
     <script src="https://maps.googleapis.com/maps/api/js?key=<%=ENV['GOOGLE_API_KEY']%>&libraries=places"></script>
-     <!-- Payments -->
+    <!-- Payments -->
     <script src="https://js.stripe.com/v3"></script>
     <%= render "shared/script_tags" %>
   </head>
-      <%  if !current_user && params[:controller].match?(/(devise)(\S)(\w+)/) %>
-        <body class="bg-brand-teal flex flex-col min-h-screen justify-between ">
-        <%= render "shared/flash" %>
-        <%= render "shared/header" %>
-      <% elsif !current_user && params[:controller] == "venues" || params[:controller] == "packages" %>
-        <body class="bg-white flex flex-col min-h-screen">
+  <%  if !current_user && params[:controller].match?(/(devise)(\S)(\w+)/) %>
+    <body class="bg-brand-teal flex flex-col min-h-screen justify-between ">
+      <%= render "shared/flash" %>
+      <%= render "shared/header" %>
+    <% elsif !current_user && params[:controller] == "venues" || params[:controller] == "packages" %>
+      <body class="bg-white flex flex-col min-h-screen">
         <%= render "shared/flash" %>
         <%= render "shared/header" %>
       <% elsif !current_user || params[:controller] == "onboarding"%>
         <body class="bg-white flex flex-col min-h-screen">
-      <% elsif params[:controller] == "blog_posts" %>
-        <body class="bg-brand-teal flex flex-col min-h-screen">
-        <%= render "shared/flash" %>
-        <%=  render "shared/navbar" %>
-      <% else %>
-        <body class="bg-white flex flex-col min-h-screen">
-        <%= render "shared/impersonator" %>
-        <%= render "shared/flash" %>
-        <%=  render "shared/navbar" %>
-      <% end %>
-      <div class="relative container mx-auto px-2 flex-grow flex-col">
-        <%= yield %>
-      </div>
-      <div class='h-16 mt-4 pt-4'>
-      </div>
-    <%= render 'layouts/footer_nav' %>
-  </body>
-  <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
-
-</html>
+        <% elsif params[:controller] == "blog_posts" %>
+          <body class="bg-brand-teal flex flex-col min-h-screen">
+            <%= render "shared/flash" %>
+            <%=  render "shared/navbar" %>
+          <% else %>
+            <body class="bg-white flex flex-col min-h-screen">
+              <%= render "shared/impersonator" %>
+              <%= render "shared/flash" %>
+              <%=  render "shared/navbar" %>
+            <% end %>
+            <div class="relative container mx-auto px-2 flex-grow flex-col">
+              <%= yield %>
+            </div>
+            <div class='h-16 mt-4 pt-4'>
+            </div>
+            <%= render 'layouts/footer_nav' %>
+          </body>
+          <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+        </html>

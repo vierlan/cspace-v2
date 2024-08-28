@@ -47,3 +47,11 @@ addEventListener("trix-initialize", (event) => {
   `
   );
 });
+
+document.addEventListener('touchstart', function(event) {
+  var target = event.target;
+  if (target.tagName === 'A' && target.href) {
+    window.location = target.href;
+  }
+});
+
