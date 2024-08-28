@@ -10,6 +10,7 @@ gem 'chartkick'
 gem "cloudinary"
 gem 'delayed' # delayed_job_active_record rails 7 fork: https://github.com/betterment/delayed
 gem 'devise'
+gem 'geocoder'
 gem 'groupdate' # used by Chartkick
 gem 'honeypot-captcha', github: 'founderhacker/honeypot-captcha' # prevent unauthenticated form spam
 gem 'htmlbeautifier'

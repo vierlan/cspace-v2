@@ -1,5 +1,6 @@
 <%= simple_form_for [venue, booking], url: venue_package_bookings_path(venue, package), class: "simple", data: { controller: 'flatpickr' } do |f| %>
   <%= f.input :booking_date, as: :string, input_html: { placeholder: "Select booking date", data: { flatpickr_target: "bookingDate" } } %>
-  <%= f.input :booking_start_time, as: :string, input_html: { placeholder: "Select start time", data: { flatpickr_target: "bookingStartTime" } } %>
+  <%= f.input :booking_start_time, as: :string, input_html: { placeholder: "Select start time", data: { flatpickr_target: "bookingStartTime" }
+  } %>
   <%= f.submit "Reserve", data: { turbo: false }, class: "btn btn-primary" %>
 <% end %>

@@ -6,6 +6,8 @@ class Venue < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :packages, dependent: :destroy
 
+  geocoded_by :address
+
   validates :name, presence: true
   #validates :categories, inclusion: { in: CATEGORIES }
 end
