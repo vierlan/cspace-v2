@@ -65,19 +65,19 @@
     </div>
   </div>
   <!-- Add Package and edits if venue owner -->
-  <div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
+  <div class='px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
 
     <% @packages.each do |package| %>
       <%= link_to venue_package_path(@venue, package) do %>
 
-        <div class="px-10 grid grid-cols-2 relative w-100  gap-1 text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
-          <div class="h-full text-base grid grid-rows-4 overflow-hidden hover:overflow-visable p-1">
-            <h2 class="text-lg text-gray-500 focus:outline-none"><%= package.package_name.capitalize %></h2>
-            <p class="text-gray-400"><%= package.package_description %> </p>
-            <p class="text-gray-400"><%= "#{package.package_duration} hours" if package.package_duration %></p>
-            <p class="text-gray-400">€<%= package.package_price %></p>
+        <div class="grid grid-cols-2 relative w-full h-64 my-4 text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
+          <div class="h-full text-base grid grid-rows-6 overflow-hidden hover:overflow-visable p-1">
+            <div class="grid grid-rows-subgrid row-span-2 text-md text-gray-700 focus:outline-none overflow-hidden hover:overflow-visable" ><p ><%= package.package_name.capitalize %></p></div>
+            <div class="grid grid-rows-subgrid row-span-2 text-gray-500"><p ><%= package.package_description %> </p></div>
+            <div class="text-gray-400"><p><%= "#{package.package_duration} hours" if package.package_duration %></p></div>
+            <div class="text-gray-400"><p>€<%= package.package_price %></p></div>
           </div>
-          <div class='border border-white'>
+          <div class='border border-cyan-600'>
             <% if package.photo.key %>
               <%= cl_image_tag package.photo.key, alt: "PICTURE", class: "object-cover w-50 h-full" %>
             <% else %>
