@@ -1,6 +1,9 @@
 class VenuesController < ApplicationController
   def index
     @venues = Venue.all
+    @bar_venues = Venue.where(categories: "bar")
+    @restaurant_venues = Venue.where(categories: "restaurant")
+    @cafe_venues = Venue.where(categories: "cafe")
   end
 
   def top
@@ -49,7 +52,6 @@ class VenuesController < ApplicationController
   def categories
     @categories = params[:categories]
     @venues = Venue.where(categories: params[:categories]).where.not(user: current_user)
-    authorize @venues
     if params[:query].present?
       #sql_subquery = "name ILIKE :query OR facilities ILIKE :query OR address ILIKE :query"
       @venues = @venues.where(sql_subquery, query: "%#{params[:query]}%")
@@ -66,6 +68,10 @@ class VenuesController < ApplicationController
   end
 
   private
+
+  #def distance_from_user(@venue)
+  #  Geocoder::Calculations.distance_between([@venue.latitude, @venue.longitude], [current_user.latitude, current_user.longitude])
+  #end
 
   def venue_params
     params.require(:venue).permit(:name, :address, :phone, :website, :amenities, :description, :categories, :photos => [])

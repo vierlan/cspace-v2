@@ -5,21 +5,45 @@ require 'json'
 require 'securerandom'
 
 API_KEY = ENV['GOOGLE_API_KEY'] # Fetch the API key from the .env file
-LONDON_COORDINATES = '51.5020,-0.4878'
+LONDON_COORDINATES = '41.381691,2.177010'
 RADIUS = 5000
-TYPE = 'restaurant'
+TYPE = %w[restaurant cafe bar]
 def destroy_all
   Booking.destroy_all
+  packages = Package.all
+  packages.each do |package|
+    package.cloudinary_purge(package.photo)
+    package.delete_stripe_package(package)
+  end
   Package.destroy_all
+  venues = Venue.all
+  venues.each do |venue|
+    venue.photos.purge
+  end
   Venue.destroy_all
+  users = User.all
+  users.each do |user|
+    user.avatar.purge
+  end
+
   User.destroy_all
 end
 
 # Fetch places from Google Places API
 def fetch_places(api_key, location, radius, type)
-  url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=#{location}&radius=#{radius}&type=#{type}&key=#{api_key}"
-  response = URI.open(url).read
-  return JSON.parse(response)["results"]
+  url = "https://maps.googleapis.com/maps/api/place/nearbysearch/json?fields=formatted_address%2Cname%2Cbusiness_status%2Cplace_id%2Cutc_offset%2Cwheelchair_accessible_access%2Copening_hours%2Cgeometry%2Cphotos%2Cvicinity%2Ctype&location=#{location}&radius=#{radius}&type=#{type}&key=#{api_key}"
+  begin
+    response = URI.open(url).read
+    results_parsed = JSON.parse(response)["results"]
+    puts "response:" + response
+    print "results_parsed:" + results_parsed.to_s
+    results_parsed.each do |place|
+    end
+    return results_parsed
+  rescue OpenURI::HTTPError => e
+    puts response
+    puts e.message
+  end
 end
 
 # Download the photo using open-uri and return the file path
@@ -38,11 +62,11 @@ end
 # Create 5 users with random names
 def create_users
   avatar_urls = [
-    "https://res.cloudinary.com/drirqdfbt/image/upload/c_thumb,w_200,g_face/v1724709324/7_hf6dav.jpg",
-    'https://res.cloudinary.com/drirqdfbt/image/upload/c_thumb,w_200,g_face/v1724709279/james_avatar_nemnaf.jpg',
-    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709321/6_rcdsbv.jpg',
-    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709319/Untitled_design_1_auiyso.png',
-    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709274/197532_480468269228_1120636_n_pcjgvm.jpg'
+    "https://res.cloudinary.com/drirqdfbt/image/upload/v1724709319/Untitled_design_1_auiyso.png",
+    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709283/me_avatar_ta333n.jpg',
+    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709279/james_avatar_nemnaf.jpg',
+    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709274/197532_480468269228_1120636_n_pcjgvm.jpg',
+    'https://res.cloudinary.com/drirqdfbt/image/upload/c_thumb,w_200,g_face/v1724709321/6_rcdsbv.jpg'
   ]
   puts "Creating users..."
   users = [
@@ -61,29 +85,36 @@ end
 # Fetch places from the Google Places API
 def create_places(api_key, location, radius, type, users)
   puts "Fetching places..."
-  places = fetch_places(API_KEY, LONDON_COORDINATES, RADIUS, TYPE)
-
-  places.first(5).each_with_index do |place, index|
-    next if place['photos'].nil? || place['photos'].empty?
-
-    user = users[index % users.size]
-
-    # Create a venue with the details from the Google Places API
-    venue = Venue.new(
-      name: place['name'],
-      amenities: "WiFi, Parking", # Example amenities, can be modified
-      address: place['vicinity'],  # Fetching and storing the address
-      district: "London", # This could be made dynamic if needed
-      categories: TYPE,
-      latitude: place.dig('geometry', 'location', 'lat'),  # Fetching and storing latitude
-      longitude: place.dig('geometry', 'location', 'lng'), # Fetching and storing longitude
-      user: user
-    )
-    if venue.save!
-      puts "Venue created successfully!"
-      attach_photos(venue, place)
-    else
-      puts "Venue creation failed!"
+  place_ids = []
+  TYPE.each do |cat|
+    places = fetch_places(API_KEY, LONDON_COORDINATES, RADIUS, cat)
+    places.first(10).each_with_index do |place, index|
+      if place_ids.include?(place['place_id']) || place['photos'].nil? || place['photos'].empty?
+        puts "Place already exists!"
+        next
+      else
+        puts "Creating" + place['name'] + place['types'].to_s
+        place_ids << place['place_id']
+        user = users[index % users.size]
+        # Create a venue with the details from the Google Places API
+        venue = Venue.new(
+          name: place['name'],
+          amenities: "WiFi, Parking", # Example amenities, can be modified
+          address: place['vicinity'],  # Fetching and storing the address
+          categories: cat,
+          latitude: place.dig('geometry', 'location', 'lat'),  # Fetching and storing latitude
+          longitude: place.dig('geometry', 'location', 'lng'), # Fetching and storing longitude
+          district: place['vicinity'],
+          user: user,
+          google_data: place
+        )
+        if venue.save!
+          puts "Venue created successfully!"
+          attach_photos(venue, place)
+        else
+          puts "Venue creation failed!"
+        end
+      end
     end
   end
 end
@@ -171,12 +202,40 @@ def wait_for_cloudinary(package)
   end
 end
 
+def seed_bookings
+  puts "Seeding bookings..."
+  packages = Package.joins(venue: :user).where(users: { email: "la@la.la" })
+  packages = Package.where(venue: Venue.where(user: User.where(email: "la@la.la")))
+  times = rand(1..2)
+  times.times do
+    packages.each do |package|
+
+      booking_date = 0.5.days.ago.to_date + rand(1..10)
+      booking_start_time = 0.3.hours.ago + rand(1..5).hours
+      users = User.where.not(email: "la@la.la")
+
+      booking = Booking.new(
+        booking_date: booking_date,
+        booking_start_time: booking_start_time,
+        package_id: package.id,
+        venue_id: package.venue.id,
+        booking_paid: booking_date < Date.today ? true : false,
+        user_id: users.sample.id,
+        created_at: booking_date - rand(1..10).days
+      )
+      booking.save!
+    end
+  end
+end
+
+
 
 def run_seed
   destroy_all
   users = create_users
   create_places(API_KEY, LONDON_COORDINATES, RADIUS, TYPE, users)
-  packages = seed_packages
+  seed_packages
+  seed_bookings
   puts "Seed completed!"
 end
 

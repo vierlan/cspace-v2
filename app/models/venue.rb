@@ -11,8 +11,17 @@ class Venue < ApplicationRecord
   geocoded_by :address
   after_validation :geocode, if: :address_changed?
 
-  def distance_from_user(user)
-    Geocoder::Calculations.distance_between([latitude, longitude], [user.latitude, user.longitude])
+  private
+
+  def get_city(latitude, longitude)
+    result = Geocoder.search([latitude, longitude])
+    if result.present?
+      city = result.first.city
+    else
+      return nil
+    end
   end
+
+
   #validates :categories, inclusion: { in: CATEGORIES }
 end
