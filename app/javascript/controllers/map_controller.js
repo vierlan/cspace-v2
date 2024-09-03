@@ -57,6 +57,7 @@ export default class extends Controller {
 fitBounds(map) {
   const bounds = new google.maps.LatLngBounds();
   Array.from(this.venuesTarget.children).forEach((venue) => {
+    console.log('Venue:', venue);
     const lat = parseFloat(venue.dataset.lat);
     const lng = parseFloat(venue.dataset.lng);
     if (!isNaN(lat) && !isNaN(lng)) {

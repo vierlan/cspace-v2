@@ -1,31 +1,31 @@
 <div class="map-container" data-controller="map">
   <ul class="flex flex-wrap text-sm font-medium text-center text-gray-500 border-b border-gray-200 dark:border-gray-700 dark:text-gray-400">
       <li class="me-2">
-          <a href="#" aria-current="page"
+          <a aria-current="page"
           data-action="click->map#showMap"
           data-map-target="showMap"
-          class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500">
+          class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500 cursor-pointer ">
            Show Map</a>
       </li>
       <li class="me-2">
-          <a href="#" aria-current="page"
+          <a aria-current="page"
           data-action="click->map#hideMap"
           data-map-target="hideMap"
-          class="hidden inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500">
+          class="hidden inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500 cursor-pointer">
            Hide Map</a>
       </li>
       <li class="me-2">
-          <a href="#" aria-current="page"
+          <a aria-current="page"
           data-action="click->map#showList"
           data-map-target="showList"
-          class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500">
+          class="inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500 cursor-pointer">
            Show List</a>
       </li>
       <li class="me-2">
-          <a href="#" aria-current="page"
+          <a aria-current="page"
           data-action="click->map#hideList"
           data-map-target="hideList"
-          class="hidden inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500">
+          class="hidden inline-block p-4 text-blue-600 bg-gray-100 rounded-t-lg active dark:bg-gray-800 dark:text-blue-500 cursor-pointer">
            Hide List</a>
       </li>
   </ul>
@@ -35,38 +35,36 @@
     class="w-full h-80 hidden"
   >
   </div>
-  <div
-    class="venue-list hidden"
-    data-map-target="venueList"
-   >
-    <ol data-map-target="venues">
+
+<div class="venue-list hidden"
+  data-map-target="venueList"
+    >
+  <table class="table table-striped table-sm mt-2"
+
+          >
+      <thead>
+        <tr>
+          <th>Name</th>
+          <th>Category</th>
+          <th>Address</th>
+          <th>Amenities</th>
+        </tr>
+      </thead>
+    <tbody data-map-target="venues">
       <% @venues.each do |venue| %>
-        <li
-          class="venue-list-item"
+        <tr class="venue-list-item"
           data-lat=<%= venue.latitude %>
           data-lng=<%= venue.longitude %>
           data-title=<%= "#{venue.name} -#{venue.address}"%>
         >
-          <h4><%= venue.name %></h4>
-          <p><%= venue.address %></p>
-        </li>
+          <td><%= venue.name %></td>
+          <td><%= venue.categories %></td>
+          <td><%= venue.address %></td>
+          <td><%= venue.amenities %></td>
+        </tr>
       <% end %>
-    </ol>
-  </div>
+    </tbody>
+
+  </table>
 </div>
-
-<!--<script>
-let map;
-
-async function initMap() {
-  const { Map } = await google.maps.importLibrary("maps");
-
-  map = new Map(document.getElementById("map"), {
-    center: { lat: -34.397, lng: 150.644 },
-    zoom: 8,
-  });
-}
-
-initMap();
-
-</script>-->
+</div>

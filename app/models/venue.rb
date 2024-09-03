@@ -6,8 +6,22 @@ class Venue < ApplicationRecord
   has_many :bookings, dependent: :destroy
   has_many :packages, dependent: :destroy
 
-  geocoded_by :address
-
   validates :name, presence: true
+
+  geocoded_by :address
+  after_validation :geocode, if: :address_changed?
+
+  private
+
+  def get_city(latitude, longitude)
+    result = Geocoder.search([latitude, longitude])
+    if result.present?
+      city = result.first.city
+    else
+      return nil
+    end
+  end
+
+
   #validates :categories, inclusion: { in: CATEGORIES }
 end

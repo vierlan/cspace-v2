@@ -1,93 +1,47 @@
 <div>
   <h1 class="font-bold text-4xl">Venues#show</h1>
-
 </div>
-<div class="container">
-  <div class="main-showpage">
-    <div class="container-top flex flex-col">
-    <%= @venue.name %>
-      <div class="carousel-container no-hover-effect">
-        <div id="carouselExampleIndicators" class="carousel slide" data-bs-ride="carousel">
-          <!--<div class="carousel-indicators">
-            <% @venue.photos.each_with_index do |photo, index| %>
-              <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="<%= index %>" class="<%= 'active' if index.zero? %>" aria-label="Slide <%= index + 1 %>"></button>
-            <% end %>
-          </div>
-          <div class="carousel-inner">-->
-            <% @venue.photos.each_with_index do |photo, index| %>
-              <div class="carousel-item <%= 'active' if index.zero? %>">
-                <%= cl_image_tag photo.key, alt: @venue.name, class: "d-block w-100" %>
-              </div>
-            <% end %>
-          </div>
-          <!--<button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
-          </button>
-          <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
-            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
-          </button>-->
-        </div>
+<div class="px-10 mx-10 container">
+  <div class="container-top flex flex-col px-6">
+    <b><h2><%= @venue.name %></h3></b>
+      <% @venue.photos.each_with_index do |photo, index| %>
+        <div class="relative w-full">
+          <%= cl_image_tag photo.key, alt: @venue.name, class: "object-cover d-block h-full w-full rounded" %>
+      <% end %>
+      <% if @venue_owner.avatar.attached? %>
+        <%= cl_image_tag @venue.user.avatar.key, alt:"#{@venue.name}", class:'avatar mt-4 border-white border-4 absolute bottom-2 end-1'%>
+      <% end %>
       </div>
-      <div class="show-map">
-        <div style="width: 100%; height: 100%;"
-            data-controller="show-map"
-            data-show-map-marker-value="<%= @marker.to_json %>"
-            data-show-map-api-key-value="<%= ENV['MAPBOX_API_KEY'] %>">
-        </div>
       </div>
-    </div>
-    <div class="container-middle px-10">
-      <div class="container-middle-card">
-        <div class="cards-showpage">
-          <% if @venue.photos.attached? && @venue.photos[0].present? %>
-            <% @venue.photos.each_with_index do |photo, index| %>
-              <% next if index.zero? || photo.nil? || index > 2 %>
-              <div class="card hover-effect" style="width: 18rem;">
-                <%= cl_image_tag photo.key, alt: @venue.name, class: "venue-thumbnail-img" %>
-                <div class="card-body">
-                </div>
-              </div>
-            <% end %>
-          <% end %>
-        </div>
-        <div class="description relative">
-          <% if @venue_owner.avatar.attached? %>
-            <p><strong>Venue Owner: <%= cl_image_tag @venue.user.avatar.key, alt:"#{@venue.name}", class:'avatar border-white border-4 absolute -top-20 right-20'%></strong></p>
-          <% end %>
-          <p><strong>Name:</strong> <%= @venue.name %></p>
-          <p><strong>Hire Details:</strong> Venue hire for network</p>
-          <p><strong>Location:</strong> <%= @venue.address %></p>
-          <p><strong>Description:</strong> <%= @venue.amenities %></p>
-        </div>
+      <div class="px-10 pt-10 pb-4">
+        <p><strong>Name:</strong> <%= @venue.name %></p>
+        <p><strong>Hire Details:</strong> Venue hire for network</p>
+        <p><strong>Location:</strong> <%= @venue.address %></p>
+        <p><strong>Description:</strong> <%= @venue.amenities %></p>
       </div>
-    </div>
-  </div>
   <!-- Add Package and edits if venue owner -->
-  <div class='px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4'>
+  <div class='px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'>
 
     <% @packages.each do |package| %>
       <%= link_to venue_package_path(@venue, package) do %>
 
-        <div class="grid grid-cols-2 relative w-full h-64 my-4 text-sm leading-5 font-medium rounded-md bg-primary-600 hover:bg-primary-700 focus:outline-none">
-          <div class="h-full text-base grid grid-rows-6 overflow-hidden hover:overflow-visable p-1">
-            <div class="grid grid-rows-subgrid row-span-2 text-md text-gray-700 focus:outline-none overflow-hidden hover:overflow-visable" ><p ><%= package.package_name.capitalize %></p></div>
-            <div class="grid grid-rows-subgrid row-span-2 text-gray-500"><p ><%= package.package_description %> </p></div>
-            <div class="text-gray-400"><p><%= "#{package.package_duration} hours" if package.package_duration %></p></div>
-            <div class="text-gray-400"><p>€<%= package.package_price %></p></div>
+        <div class="flex w-4/5 h-64 m-4">
+          <div class="flex-1 flex-col w-3/6 p-1">
+            <div class="h-20 overflow-hidden hover:overflow-visable text-gray-700" ><b><p><%= package.package_name.capitalize %></p></b></div>
+            <div class="h-20 overflow-hidden hover:overflow-visable text-gray-500"><p><%= package.package_description %> </p></div>
+            <div class="h-10 overflow-hidden hover:overflow-visable text-gray-400"><p><%= "#{package.package_duration} hours" if package.package_duration %></p></div>
+            <div class="h-10 overflow-hidden hover:overflow-visable text-gray-400"><p>€<%= package.package_price %></p></div>
           </div>
-          <div class='border border-cyan-600'>
+          <div class="flex-1 w-3/6">
             <% if package.photo.key %>
-              <%= cl_image_tag package.photo.key, alt: "PICTURE", class: "object-cover w-50 h-full" %>
+              <%= cl_image_tag package.photo.key, alt: "PICTURE", class: "object-cover h-full w-full rounded" %>
             <% else %>
-              <%= image_tag "avatar.png", class: "h-10 w-10 rounded-full" %>
+                <%= image_tag "avatar.png", class: "h-10 w-10 rounded-full" %>
             <% end %>
-          <% end %>
           </div>
         </div>
 
+      <% end %>
     <% end %>
-
 </div>
 </div>
