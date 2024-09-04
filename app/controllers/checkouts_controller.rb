@@ -12,7 +12,6 @@ class CheckoutsController < ApplicationController
     @venue = Venue.find(@session.metadata.venue_id)
     @venue_name = @venue.name
     @booking.update(booking_paid: true)
-
   end
 
   def cancel
