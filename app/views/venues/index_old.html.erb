@@ -1,0 +1,106 @@
+<%# Form Inputs to get search results %>
+<div data-controller="placesapi" data-placesapi-types="cafe,restaurant,bar" class="flex items-center justify-center">
+<div class="slider-carousel bg-white" data-controller="swiper">
+  <h1 class='text-black font-bold text-4xl'>Search places near you!</h1>
+
+  <input data-placesapi-target="place" type="text" placeholder="Search for a place" class="p-1 m-3">
+    <button data-placesapi-target="locationButton" class="p-2 bg-blue-500 text-white rounded">Get Current Location</button>
+    <!-- Slider for setting the search radius -->
+    <label for="radius">Search Radius: <span id="radius-value">1000</span> meters</label>
+    <input id="radius-slider" data-placesapi-target="radiusSlider" type="range" min="0" max="10000" value="1000" class="p-1 m-3">
+  </div>
+</div>
+<div class='mx-2'>
+<%= render "map", venues: @venues %>
+
+</div>
+
+<!-- Carousel 1 populated with user created venues -->
+<div class="swiper mySwiper bg-white" data-controller="swiper">
+<h2 class='text-black font-bold text-2xl mt-2 ml-2 bg-white'>Work from Cafes!</h2>
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+     <% @cafe_venues.each_with_index do |venue, index| %>
+        <div class="swiper-slide">
+         <%= link_to venue_path(venue) do %>
+        <div class="card-venue-idx w-full h-full" id="index">
+          <% if venue.photos.attached? %>
+            <% photo = venue.photos.first %>
+            <%= cl_image_tag photo.key, alt: venue.name, class: "object-cover w-full h-full" %>
+          <% else %>
+            <p>No images available for this venue.</p>
+          <% end %>
+          <h2><%= venue.name %></h2>
+          <p><strong <%= venue.categories %>></strong></p>
+          <p class= "address"><%= venue.address %></p>
+          <p><strong><%= venue.amenities %></strong></p>
+        </div>
+      <% end %>
+     </div>
+    <% end %>
+    </div>
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+
+<!-- Carousel 2 populated with user created venues -->
+<div class="swiper mySwiper bg-white" data-controller="swiper">
+<h2 class='text-black font-bold text-2xl mt-2 ml-2 bg-white'>Work from Restaurants!</h2>
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+     <% @restaurant_venues.each_with_index do |venue, index| %>
+        <div class="swiper-slide">
+         <%= link_to venue_path(venue) do %>
+        <div class="card-venue-idx w-30" id="index">
+          <% if venue.photos.attached? %>
+            <% photo = venue.photos.first %>
+            <%= cl_image_tag photo.key, alt: venue.name %>
+          <% else %>
+            <p>No images available for this venue.</p>
+          <% end %>
+          <h2><%= venue.name %></h2>
+          <p><strong <%= venue.categories %>></strong></p>
+          <p class= "address"><%= venue.address %></p>
+          <p><strong><%= venue.amenities %></strong></p>
+        </div>
+      <% end %>
+     </div>
+    <% end %>
+    </div>
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>
+
+<!-- Carousel 3 populated with user created venues -->
+<div class="swiper mySwiper bg-white" data-controller="swiper">
+<h2 class='text-black font-bold text-2xl mt-2 ml-2 bg-white'>Work from bars!</h2>
+  <!-- Additional required wrapper -->
+  <div class="swiper-wrapper">
+    <!-- Slides -->
+     <% @bar_venues.each_with_index do |venue, index| %>
+        <div class="swiper-slide">
+         <%= link_to venue_path(venue) do %>
+        <div class="card-venue-idx" id="index">
+          <% if venue.photos.attached? %>
+            <% photo = venue.photos.first %>
+            <%= cl_image_tag photo.key, alt: venue.name %>
+          <% else %>
+            <p>No images available for this venue.</p>
+          <% end %>
+          <h2><%= venue.name %></h2>
+          <p><strong <%= venue.categories %>></strong></p>
+          <p class= "address"><%= venue.address %></p>
+          <p><strong><%= venue.amenities %></strong></p>
+        </div>
+      <% end %>
+     </div>
+    <% end %>
+    </div>
+  <!-- If we need navigation buttons -->
+  <div class="swiper-button-prev"></div>
+  <div class="swiper-button-next"></div>
+</div>

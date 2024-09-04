@@ -8,26 +8,21 @@ API_KEY = ENV['GOOGLE_API_KEY'] # Fetch the API key from the .env file
 LONDON_COORDINATES = '41.381691,2.177010'
 RADIUS = 5000
 TYPE = %w[restaurant cafe bar]
-def destroy_all
-  Booking.destroy_all
-  packages = Package.all
-  packages.each do |package|
-    package.cloudinary_purge(package.photo)
-    package.delete_stripe_package(package)
-  end
-  Package.destroy_all
-  venues = Venue.all
-  venues.each do |venue|
-    venue.photos.purge
-  end
-  Venue.destroy_all
-  users = User.all
-  users.each do |user|
-    user.avatar.purge
-  end
-
-  User.destroy_all
-end
+#def destroy_all
+#  Booking.destroy_all
+#  packages = Package.all
+#  packages.each do |package|
+#    package.cloudinary_purge(package.photo)
+#    package.delete_stripe_package(package)
+#  end
+#  Package.destroy_all
+#  venues = Venue.all
+#  venues.each do |venue|
+#    venue.photos.purge
+#  end
+#  Venue.destroy_all
+#
+#end
 
 # Fetch places from Google Places API
 def fetch_places(api_key, location, radius, type)
@@ -60,27 +55,27 @@ def download_photo(api_key, photo_reference)
 end
 
 # Create 5 users with random names
-def create_users
-  avatar_urls = [
-    "https://res.cloudinary.com/drirqdfbt/image/upload/v1724709319/Untitled_design_1_auiyso.png",
-    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709283/me_avatar_ta333n.jpg',
-    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709279/james_avatar_nemnaf.jpg',
-    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709274/197532_480468269228_1120636_n_pcjgvm.jpg',
-    'https://res.cloudinary.com/drirqdfbt/image/upload/c_thumb,w_200,g_face/v1724709321/6_rcdsbv.jpg'
-  ]
-  puts "Creating users..."
-  users = [
-    User.create!(first_name: "John", last_name: "Doe4", email: "john4ed75@example.com", password: "password123", password_confirmation: "password123", venue_owner: true),
-    User.create!(first_name: "Jan", last_name: "Smit4h", email: "janwdt56e@example.com", password: "password123", password_confirmation: "password123", venue_owner: true),
-    User.create!(first_name: "Alice", last_name: "Johnso4n", email: "aldiecwe55@example.com", password: "password123", password_confirmation: "password123", venue_owner: true),
-    User.create!(first_name: "Dev", last_name: "Doe4", email: "Dev@la.la", password: "123123", password_confirmation: "123123", venue_owner: true, admin: true),
-    User.create!(first_name: "Lan", last_name: "Anh", email: "la@la.la", password: "123123", password_confirmation: "123123", venue_owner: true, admin: true)
-  ]
-  users.each do |user|
-    user.avatar.attach(io: URI.open(avatar_urls.sample), filename: "avatar_#{SecureRandom.hex}.jpg")
-  end
-  return users
-end
+#def create_users
+#  avatar_urls = [
+#    "https://res.cloudinary.com/drirqdfbt/image/upload/v1724709319/Untitled_design_1_auiyso.png",
+#    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709283/me_avatar_ta333n.jpg',
+#    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709279/james_avatar_nemnaf.jpg',
+#    'https://res.cloudinary.com/drirqdfbt/image/upload/v1724709274/197532_480468269228_1120636_n_pcjgvm.jpg',
+#    'https://res.cloudinary.com/drirqdfbt/image/upload/c_thumb,w_200,g_face/v1724709321/6_rcdsbv.jpg'
+#  ]
+#  puts "Creating users..."
+#  users = [
+#    User.create!(first_name: "John", last_name: "Doe4", email: "john4ed75@example.com", password: "password123", password_confirmation: "password123", venue_owner: true),
+#    User.create!(first_name: "Jan", last_name: "Smit4h", email: "janwdt56e@example.com", password: "password123", password_confirmation: "password123", venue_owner: true),
+#    User.create!(first_name: "Alice", last_name: "Johnso4n", email: "aldiecwe55@example.com", password: "password123", password_confirmation: "password123", venue_owner: true),
+#    User.create!(first_name: "Dev", last_name: "Doe4", email: "Dev@la.la", password: "123123", password_confirmation: "123123", venue_owner: true, admin: true),
+#    User.create!(first_name: "Lan", last_name: "Anh", email: "la@la.la", password: "123123", password_confirmation: "123123", venue_owner: true, admin: true)
+#  ]
+#  users.each do |user|
+#    user.avatar.attach(io: URI.open(avatar_urls.sample), filename: "avatar_#{SecureRandom.hex}.jpg")
+#  end
+#  return users
+#end
 
 # Fetch places from the Google Places API
 def create_places(api_key, location, radius, type, users)
@@ -232,7 +227,7 @@ end
 
 def run_seed
   destroy_all
-  users = create_users
+  users = User.all
   create_places(API_KEY, LONDON_COORDINATES, RADIUS, TYPE, users)
   seed_packages
   seed_bookings
