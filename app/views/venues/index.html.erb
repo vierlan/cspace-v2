@@ -1,5 +1,5 @@
 <div class="w-full flex justify-between p-8">
-  <h2 class="text-xl font-light"><%= "Good morning#{' ' + current_user.first_name}!" if current_user && current_user.first_name.present? %></h2>
+  <h2 class="text-xl font-light"><%= "Good morning#{current_user ? ' ' + current_user.first_name : ''}" %>!</h2>
   <div class="justify-self-end text-xl text-slate-400 font-light"><i class="fa-regular fa-bell"></i></div>
 </div>
 <div class="flex px-8 pb-4">
