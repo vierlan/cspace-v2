@@ -14,7 +14,7 @@
     <% else %>
       <p>No venues found.</p>
     <% end %>
-    <p class="text-pink-800 text-sm text-left ml-2"><%= venue.categories.capitalize! + " • " + venue.google_data["rating"].to_s + " " + ("⭐" * venue.google_data["rating"].to_i) %></p>
+    <p class="text-pink-800 text-sm text-left ml-2"><%= venue.categories.capitalize + " • " + venue.google_data["rating"].to_s + " " + ("⭐" * venue.google_data["rating"].to_i) %></p>
     <span class="text-black font-semibold text-sm text-left ml-2"><i class="fa-solid fa-location-dot"></i><%="  " + venue.address%><i class="ml-4 text-xl fa-solid fa-person-walking"></i><span class="text-pink-800 text-xs font-extralight text-left mx-2"> 17 mins</span><i class="fa-solid fa-bus"></i><span class="text-pink-800 text-sm font-extralight text-left mx-2"> 5 mins</span> </span>
     <div>
       <button class="bg-gray-900 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full inline-flex items-center">

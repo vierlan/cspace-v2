@@ -101,7 +101,7 @@
                 <h5 class="line-clamp-2 text-left mx-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white"><%= venue.name %></h5>
               </div>
             <% end %>
-            <p class="text-pink-800 text-base text-left ml-2"><%= venue.categories.capitalize! + " • " + venue.google_data["rating"].to_s + " " + ("⭐" * venue.google_data["rating"].to_i) %></p>
+            <p class="text-pink-800 text-base text-left ml-2"><%= venue.categories.capitalize + " • " + venue.google_data["rating"].to_s + " " + ("⭐" * venue.google_data["rating"].to_i) %></p>
             <div class=" ml-2 text-left text-red-500">
               <i class="fa-regular fa-heart"></i>
             </div>
