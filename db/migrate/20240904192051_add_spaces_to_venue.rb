@@ -3,3 +3,4 @@ class AddSpacesToVenue < ActiveRecord::Migration[7.1]
     add_column :venues, :spaces, :jsonb
   end
 end
+#
