@@ -1,5 +1,4 @@
-<header class="bg-white shadow" data-controller=header>
-
+<header class="bg-white shadow" data-controller="header" >
   <div class="mx-auto max-w-7xl px-2 sm:px-4 lg:divide-y lg:divide-gray-200 lg:px-8" >
     <div class="relative flex h-16 justify-between" data-controller="placesapi" data-placesapi-types="cafe,restaurant,library">
       <div class="relative z-10 flex px-2 lg:px-0">
@@ -7,12 +6,10 @@
           <img class="h-8 w-auto" src="/assets/logo.png" alt="Your Company">
         </div>
       </div>
-        <!--  <input  data-action="input->placesapi#changePlace" data-placesapi-target="place" type="text" placeholder="Search for a place" class="p-1 m-3">
+      <!--  <input  data-action="input->placesapi#changePlace" data-placesapi-target="place" type="text" placeholder="Search for a place" class="p-1 m-3">
           <input data-placesapi-target="name" type="text" value="Jose">-->
-
       <!-- searchbar -->
       <div data-controller="placesapi" data-placesapi-types="cafe,restaurant,library" class="relative z-0 flex flex-1 items-center justify-center px-2 sm:absolute sm:inset-0">
-
         <div class="w-full sm:max-w-xs">
           <label for="search" class="sr-only">Search</label>
           <div class="relative">
@@ -27,7 +24,7 @@
       </div>
       <div class="relative z-10 flex items-center lg:hidden">
         <!-- Mobile menu button -->
-        <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" data-action="click->header#toggleMobileNav" aria-controls="mobile-menu" aria-expanded="false">
+        <button type="button" class="relative inline-flex items-center justify-center rounded-md p-2 text-gray-400 hover:bg-gray-100 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-indigo-500" class="spaces-nav" data-action="click->header#toggleMobileNav" aria-controls="mobile-menu" aria-expanded="false">
           <span class="absolute -inset-0.5"></span>
           <span class="sr-only">Open menu</span>
           <!--
@@ -61,16 +58,11 @@
           </svg>
         </button>
         <!-- Profile dropdown -->
-        <div class="relative ml-4 flex-shrink-0 " data-action="click->header#toggleMainNav">
+        <div class="relative ml-4 flex-shrink-0 " class="spaces-nav" data-action="click->header#toggleMainNav">
           <div>
             <button type="button" class="relative flex rounded-full bg-white focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2" id="user-menu-button" aria-expanded="false" aria-haspopup="true">
               <span class="absolute -inset-1.5"></span>
               <span class="sr-only">Open user menu</span>
-              <% if current_user.avatar.key %>
-                <%= cl_image_tag current_user.avatar.key, class: "avatar", alt: "dropdown menu" %>
-              <% else %>
-                <%= image_tag "logo.png", class: "avatar" %>
-              <% end %>
             </button>
           </div>
           <!--
@@ -85,20 +77,19 @@
           -->
           <div class= "absolute hidden right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1" id='mainNav' data-header-target="mainNav">
             <!-- Active: "bg-gray-100", Not Active: "" -->
-            <a href="/dashboard/:id" class="block px-4 py-2 text-sm text-gray-700" Active="bg-cyan-200" role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-            <a href="/venues" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">See cafes</a>
-            <a href="/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">Sign out</a>
+            <%= link_to 'Admin', admin_root_path, class: nav_link_classes('admin/dashboard') if current_user&.admin? %>
+            <% if current_user %>
+              <a href="/dashboard/:id" class="block px-4 py-2 text-sm text-gray-700" Active="bg-cyan-200" role="menuitem" tabindex="-1" id="user-menu-item-0">Dashboard</a>
+              <a href="/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-1">Sign out</a>
+            <% end %>
+            <a href="/venues" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-2">See cafes</a>
+            <a href="/logout" class="block px-4 py-2 text-sm text-gray-700" role="menuitem" tabindex="-1" id="user-menu-item-3">Log Out</a>
           </div>
         </div>
       </div>
     </div>
     <nav class="hidden lg:flex lg:space-x-8 lg:py-2" aria-label="Global">
       <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-900 hover:bg-gray-50 hover:text-gray-900" -->
-      <a href="/dashboard/:id" class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 inline-flex items-center rounded-md py-2 px-3 text-sm font-medium" aria-current="page">Dashboard</a>
-      <%= link_to 'Admin', admin_root_path, class: nav_link_classes('admin/dashboard') if current_user&.admin? %>
-      <a href="/venues" class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">Venues</a>
-      <a href="#" class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">My Bookings</a>
-      <a href="#" class="text-gray-900 hover:bg-gray-50 hover:text-gray-900 inline-flex items-center rounded-md py-2 px-3 text-sm font-medium">Calendar</a>
     </nav>
   </div>
   <!-- Mobile menu, show/hide based on menu state. -->
@@ -109,32 +100,66 @@
         <li>
           <div class="flex items-center px-4">
             <div class="flex-shrink-0">
-              <% if current_user.avatar.key %>
-                <%= cl_image_tag current_user.avatar.key, class: "avatar", alt: "dropdown menu" %>
-                <div class="ml-3">
-                  <div class="text-base font-medium text-gray-800"><%= current_user.full_name %></div>
-                  <div class="text-sm font-medium text-gray-500"><%= current_user.email %></div>
-                </div>
-              <% else %>
-                <%= image_tag "logo.png", class: "avatar" %>
-              <% end %>            </div>
-            <button type="button" class="relative ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
-              <span class="absolute -inset-1.5"></span>
-              <span class="sr-only">View notifications</span>
-              <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+              <button type="button" class="relative ml-auto flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                <span class="absolute -inset-1.5"></span>
+                <span class="sr-only">View notifications</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M14.857 17.082a23.848 23.848 0 005.454-1.31A8.967 8.967 0 0118 9.75v-.7V9A6 6 0 006 9v.75a8.967 8.967 0 01-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 01-5.714 0m5.714 0a3 3 0 11-5.714 0" />
+                </svg>
+              </button>
+            </div>
+          </li>
+          <li>
+            <%= link_to 'Admin', admin_root_path, class: nav_link_classes('admin/dashboard') if current_user&.admin? %>
+          </li>
+          <% if current_user %>
+            <li><%= link_to 'Dashboard', dashboard_path(current_user), class: nav_link_classes('dashboard') %></li>
+            <li><%= link_to 'Blog', blog_posts_path, class: nav_link_classes('blog') %></li>
+            <li><%= link_to 'Account', account_index_path, class: nav_link_classes('account') %></li>
+            <li><%= link_to 'Logout', destroy_user_session_path, class: nav_link_classes %></li>
+          <% else %>
+            <li><%= link_to 'Login', new_user_session_path, class: nav_link_classes('login') %></li>
+            <li><%= link_to 'Sign up', new_user_registration_path, class: nav_link_classes('signup') %></li>
+          <% end %>
+        </ul>
+      </div>
+    </nav>
+    <!-- new navbar-->
+ <div data-controller="spaces">
+      <div class="w-full flex justify-between p-8" >
+        <h2 class="text-xl font-light"><%= "Good morning#{current_user ? ' ' + current_user.first_name : ''}" %>!</h2>
+        <div class="justify-self-end text-xl text-slate-400 font-light"><i class="fa-regular fa-bell"></i></div>
+      </div>
+      <div class="flex px-8 pb-4">
+
+        <!-- Dropdown -->
+        <div class="relative inline-block text-left">
+          <div class="" >
+            <button type="button"  class="spaces-nav border border-white inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-lg font-semibold text-gray-900" data-action="click->spaces#space" id="spaces-button" aria-expanded="true" aria-haspopup="true">
+              Commonspaces
+              <svg class="-mr-1 h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                <path fill-rule="evenodd" d="M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z" clip-rule="evenodd" />
               </svg>
             </button>
           </div>
-        </li>
-        <li>
-          <%= link_to 'Admin', admin_root_path, class: nav_link_classes('admin/dashboard') if current_user&.admin? %>
-        </li>
-        <li><%= link_to 'Dashboard', dashboard_path(current_user), class: nav_link_classes('dashboard') %></li>
-        <li><%= link_to 'Blog', blog_posts_path, class: nav_link_classes('blog') %></li>
-        <li><%= link_to 'Account', account_index_path, class: nav_link_classes('account') %></li>
-        <li><%= link_to 'Logout', logout_path, class: nav_link_classes %></li>
-      </ul>
-    </div>
-  </nav>
-</header>
+          <!--
+      Dropdown menu, show/hide based on menu state.
+
+      Entering: "transition ease-out duration-100"
+        From: "transform opacity-0 scale-95"
+        To: "transform opacity-100 scale-100"
+      Leaving: "transition ease-in duration-75"
+        From: "transform opacity-100 scale-100"
+        To: "transform opacity-0 scale-95"
+    -->
+          <div class="space hidden absolute right-0 z-10 mt-2 w-56 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none" role="menu" aria-orientation="vertical" data-spaces-target="space" aria-labelledby="spaces-button" tabindex="-1">
+            <div class="pl-10" role="none" >
+              <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+              <%= link_to "Work Spaces", discovery_venues_path(spaces: "work"), role: "menuitem", tabindex: "-1", id: "menu-item-0", class: "block px-4 py-2 text-lg font-bold text-gray-900" %>
+              <%= link_to "Study Spaces", discovery_venues_path(spaces: "study"), role: "menuitem", tabindex: "-1", id: "menu-item-1", class: "block px-4 py-2 text-lg font-bold text-gray-900" %>
+              <%= link_to "Meeting Spaces", discovery_venues_path(spcaes: "meeting"), role: "menuitem", tabindex: "-1", id: "menu-item-2", class: "block px-4 py-2 text-lg font-bold text-gray-900" %>
+            </div>
+          </div>
+        </div>
+      </div>
+ </div></header>

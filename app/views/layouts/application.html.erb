@@ -29,26 +29,9 @@
     <%= render "shared/script_tags" %>
     <!-- Shim to enable js for ios -->
   </head>
-  <%  if !current_user && params[:controller].match?(/(devise)(\S)(\w+)/) %>
-    <body class="bg-brand-teal flex flex-col min-h-screen justify-between ">
-      <%= render "shared/flash" %>
-      <%= render "shared/header" %>
-    <% elsif !current_user && params[:controller] == "venues" || params[:controller] == "packages" %>
-      <body class="bg-white flex flex-col min-h-screen">
-        <%= render "shared/flash" %>
-        <%= render "shared/header" %>
-    <% elsif !current_user || params[:controller] == "onboarding"%>
-      <body class="bg-white flex flex-col min-h-screen">
-    <% elsif params[:controller] == "blog_posts" %>
-      <body class="bg-brand-teal flex flex-col min-h-screen">
-      <%= render "shared/flash" %>
-      <%=  render "shared/navbar" %>
-    <% else %>
-      <body class="bg-white flex flex-col min-h-screen">
       <%= render "shared/impersonator" %>
       <%= render "shared/flash" %>
       <%=  render "shared/navbar" %>
-    <% end %>
     <div class="relative container mx-auto px-2 flex-grow flex-col box-border">
       <%= yield %>
     </div>
