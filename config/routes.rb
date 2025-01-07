@@ -42,7 +42,7 @@ Rails.application.routes.draw do
 
   # static pages
   pages = %w[
-    privacy terms onboarding home
+    privacy terms onboarding home test
   ]
 
   pages.each do |page|
