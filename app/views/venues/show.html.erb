@@ -1,32 +1,42 @@
 
 
-<h1 class="text-black">Discovery Page</h1>
-<div class="flex">
-    <h2><%= @venue.name %></h3>
-</div>
-<div class="m-4 p-4 border border-pink-400">
-  <% if @venue.photos.attached? %>
-      <%= render 'venue_show_template', locals: {venue: @venue, venue_owner: @venue_owner} %>
-  <% else %>
-    <p>No venues found.</p>
-  <% end %>
-</div>
-<p class="text-pink-800 text-sm text-left ml-2"><%= @venue.categories.capitalize + " • " + @venue.google_data["rating"].to_s + " " + ("⭐" * @venue.google_data["rating"].to_i) %></p>
-<span class="text-black font-semibold text-sm text-left ml-2"><i class="fa-solid fa-location-dot"></i><%="  " + @venue.address%><i class="ml-4 text-xl fa-solid fa-person-walking"></i><span class="text-pink-800 text-xs font-extralight text-left mx-2"> 17 mins</span><i class="fa-solid fa-bus"></i><span class="text-pink-800 text-sm font-extralight text-left mx-2"> 5 mins</span> </span>
-<div>
-  <button class="bg-gray-900 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 rounded-full inline-flex items-center">
-    <i class="text-white font-bold text-xl fa-solid fa-diamond-turn-right"></i>
-    <span class="text-base font-light text-white ml-3">Get Directions</span>
-  </button>
-</div>
-<div class="px-10 pt-10 pb-4">
-  <p><strong>Name:</strong> <%= @venue.name %></p>
-  <p><strong>Hire Details:</strong> Venue hire for network</p>
-  <p><strong>Location:</strong> <%= @venue.address %></p>
-  <p><strong>Description:</strong> <%= @venue.amenities %></p>
+<div class='px-2 lg:px-80 mt-4 mx-2 mx-auto'>
+  <h1 class="text-black text-lg font-bold">Discovery Page</h1>
+  <div class="flex mx-4 ml-4 my-4 text-lg font-bold">
+      <h2><%= @venue.name %></h3>
+  </div>
+  <div class="m-4 p-4">
+    <% if @venue.photos.attached? %>
+        <%= render partial: "venue_show_template", locals: {venue: @venue, venue_owner: @venue_owner} %>
+    <% else %>
+      <p>No venues found.</p>
+    <% end %>
+  </div>
+<div class="px-2 pb-2">
+    <div class="px-2 pt-10 pb-4">
+    <p class="text-pink-800 text-sm text-left ml-2"><%= @venue.categories.capitalize + " • " + @venue.google_data["rating"].to_s + " " + ("⭐" * @venue.google_data["rating"].to_i) %></p>
+    <br>
+
+    <p class="text-black font-semibold text-sm text-left ml-2"><i class="fa-solid fa-location-dot"></i><%="  " + @venue.address%>
+    </p>
+    <br>
+    <i class="ml-2 text-xl fa-solid fa-person-walking"></i><span class="text-pink-800 text-xs font-extralight text-left mx-2"> 17 mins</span><i class="fa-solid fa-bus"></i><span class="text-pink-800 text-sm font-extralight text-left mx-2"> 5 mins</span>
+    <div class= 'my-4'>
+      <button class="bg-gray-900 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 py-4 rounded-full inline-flex items-center">
+        <i class="text-white font-bold text-xl fa-solid fa-diamond-turn-right"></i>
+        <span class="text-base font-light text-white ml-3">Get Directions</span>
+      </button>
+    </div>
+
+
+    <p><strong>Name:</strong> <%= @venue.name %></p>
+    <p><strong>Hire Details:</strong> Venue hire for network</p>
+    <p><strong>Location:</strong> <%= @venue.address %></p>
+    <p><strong>Description:</strong> <%= @venue.amenities %></p>
+  </div>
 </div>
 <!-- Add Package and edits if venue owner -->
-<div class='px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'>
+<div class='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4'>
   <% @packages.each do |package| %>
     <%= link_to venue_package_path(@venue, package) do %>
       <div class="flex w-4/5 h-64 m-4">
@@ -54,5 +64,6 @@
       </div>
     <% end %>
   <% end %>
+</div>
 </div>
 </div>

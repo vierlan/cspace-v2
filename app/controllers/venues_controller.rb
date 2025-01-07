@@ -4,6 +4,8 @@ class VenuesController < ApplicationController
     @bar_venues = Venue.where(categories: "bar")
     @restaurant_venues = Venue.where(categories: "restaurant")
     @cafe_venues = Venue.where(categories: "cafe")
+    @venue_types = [ @bar_venues, @restaurant_venues, @cafe_venues ]
+    @venue_categories = [ "Study!", "Working!", "Meetings" ]
   end
 
   def top
