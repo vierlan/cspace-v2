@@ -16,16 +16,19 @@
       </div>
       <div class="relative z-10 flex items-center lg:hidden">
         <!-- Mobile menu button -->
-        <i class="fa-regular fa-bell text-xl mr-2">
-          </i>
-          <span class="absolute -inset-0.5"></span>
-          <span class="sr-only">Notifications</span>
-          <!--
+        <!-- Mobile Hamburger Menu Button (Visible only when menu is closed) -->
+        <div class="block sm:hidden md:inline-block">
+          <button class="navbar-burger flex items-center px-3 py-2 border rounded text-white border-white hover:text-white hover:border-white" data-action="click->header#toggleMobileNav">
+            <svg class="text-black fill-current h-6 w-6" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+              <title>Menu</title><path d="M0 3h20v2H0V3zm0 6h20v2H0V9zm0 6h20v2H0v-2z"/>
+            </svg>
+          </button>
+        </div>
+        <!--
             Icon when menu is closed.
 
             Menu open: "hidden", Menu closed: "block"
           -->
-
       </div>
       <div class="hidden lg:relative lg:z-10 lg:ml-4 lg:flex lg:packages-center">
         <button type="button" class="relative flex-shrink-0 rounded-full bg-white p-1 text-gray-400 hover:text-gray-500 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
@@ -71,7 +74,7 @@
     </nav>
   </div>
   <!-- Mobile menu, show/hide based on menu state. -->
-  <nav class="hidden" aria-label="Global" id="moblie-nav" data-header-target="mobileNav">
+  <nav class="" aria-label="Global" id="moblie-nav" data-header-target="mobileNav">
     <div class="space-y-1 px-2 pb-3 pt-2">
       <!-- Current: "bg-gray-100 text-gray-900", Default: "text-gray-900 hover:bg-gray-50 hover:text-gray-900" -->
       <ul>
@@ -94,7 +97,8 @@
             <li><%= link_to 'Dashboard', dashboard_path(current_user), class: nav_link_classes('dashboard') %></li>
             <li><%= link_to 'Blog', blog_posts_path, class: nav_link_classes('blog') %></li>
             <li><%= link_to 'Account', account_index_path, class: nav_link_classes('account') %></li>
-            <li><%= link_to 'Logout', destroy_user_session_path, class: nav_link_classes %></li>
+            <li><%= link_to 'Logout', logout_path, class: nav_link_classes %></li>
+
           <% else %>
             <li><%= link_to 'Login', new_user_session_path, class: nav_link_classes('login') %></li>
             <li><%= link_to 'Sign up', new_user_registration_path, class: nav_link_classes('signup') %></li>
@@ -120,7 +124,7 @@
               <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
               <%= link_to "Work Spaces", discovery_venues_path(spaces: "work"), role: "menuitem", tabindex: "-1", id: "menu-item-0", class: "block px-4 py-2 text-lg font-bold text-gray-900" %>
               <%= link_to "Study Spaces", discovery_venues_path(spaces: "study"), role: "menuitem", tabindex: "-1", id: "menu-item-1", class: "block px-4 py-2 text-lg font-bold text-gray-900" %>
-              <%= link_to "Meeting Spaces", discovery_venues_path(spcaes: "meeting"), role: "menuitem", tabindex: "-1", id: "menu-item-2", class: "block px-4 py-2 text-lg font-bold text-gray-900" %>
+              <%= link_to "Meeting Spaces", discovery_venues_path(spaces: "meeting"), role: "menuitem", tabindex: "-1", id: "menu-item-2", class: "block px-4 py-2 text-lg font-bold text-gray-900" %>
             </div>
           </div>
         </div>
@@ -146,5 +150,5 @@
         </div>
       </div>
     </div>
-  <%#= render "map", venues: @venues %>
-</header>
+    <%#= render "map", venues: @venues %>
+  </header>

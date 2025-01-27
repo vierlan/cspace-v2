@@ -17,6 +17,7 @@ class VenuesController < ApplicationController
     @packages = @venue.packages
     @booking = Booking.new
     @venue_owner = @venue.user
+    @venues = [ @venue ]
 
   end
 
