@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+<!-- Run on 127.0.0.1:3000 Locally -->
 <html>
   <head>
     <%= metamagic site: 'Commonspace', title: [:site, :title], separator: " | " %>
@@ -28,32 +29,21 @@
     <script src="https://js.stripe.com/v3"></script>
     <%= render "shared/script_tags" %>
     <!-- Shim to enable js for ios -->
+    <script async src="https://ga.jspm.io/npm:es-module-shims@1.8.2/dist/es-module-shims.js" data-turbo-track="reload"></script>
   </head>
-  <%  if !current_user && params[:controller].match?(/(devise)(\S)(\w+)/) %>
-    <body class="bg-brand-teal flex flex-col min-h-screen justify-between ">
-      <%= render "shared/flash" %>
-      <%= render "shared/header" %>
-    <% elsif !current_user && params[:controller] == "venues" || params[:controller] == "packages" %>
-      <body class="bg-white flex flex-col min-h-screen">
-        <%= render "shared/flash" %>
-        <%= render "shared/header" %>
-    <% elsif !current_user || params[:controller] == "onboarding"%>
-      <body class="bg-white flex flex-col min-h-screen">
-    <% elsif params[:controller] == "blog_posts" %>
-      <body class="bg-brand-teal flex flex-col min-h-screen">
-      <%= render "shared/flash" %>
-      <%=  render "shared/navbar" %>
-    <% else %>
-      <body class="bg-white flex flex-col min-h-screen">
+      <body>
       <%= render "shared/impersonator" %>
       <%= render "shared/flash" %>
       <%=  render "shared/navbar" %>
-    <% end %>
-    <div class="relative container mx-auto px-2 flex-grow flex-col box-border">
       <%= yield %>
-    </div>
-    <div class='h-16 mt-4 pt-4'>
-    </div>
+
+
     <%= render 'layouts/footer_nav' %>
+    <% unless ENV['RAILS_ENV'] == 'production' %>
+      <div class="flex m-2">
+
+      </div>
+      <%#= console %>
+    <% end %>
     </body>
 </html>

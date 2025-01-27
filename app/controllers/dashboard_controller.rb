@@ -3,7 +3,6 @@ class DashboardController < ApplicationController
 
   def index
     @user = current_user
-
   end
 
   def my_venues
@@ -11,13 +10,10 @@ class DashboardController < ApplicationController
     @user_bookings = Booking.where(user: current_user)
   end
 
-
-
   def my_venue_packages
     @venue = Venue.find(params[:id])
     @packages = Package.where(venue: @venue)
   end
-
 
   def edit
     @user = current_user
@@ -41,13 +37,8 @@ class DashboardController < ApplicationController
   private
 
   def venue_owner?
-    if Venue.find(params[user_id]) == current_user.id
-      return true
-    else
-      return false
-    end
+    Venue.find(params[user_id]) == current_user.id
   end
-
 
   def user_params
     params.require(:user).permit(:first_name, :last_name, :bio, :avatar)

@@ -4,6 +4,8 @@ class VenuesController < ApplicationController
     @bar_venues = Venue.where(categories: "bar")
     @restaurant_venues = Venue.where(categories: "restaurant")
     @cafe_venues = Venue.where(categories: "cafe")
+    @venue_types = [ @bar_venues, @restaurant_venues, @cafe_venues ]
+    @venue_categories = [ "Study!", "Working!", "Meetings" ]
   end
 
   def top
@@ -15,6 +17,7 @@ class VenuesController < ApplicationController
     @packages = @venue.packages
     @booking = Booking.new
     @venue_owner = @venue.user
+    @venues = [ @venue ]
 
   end
 
@@ -49,13 +52,9 @@ class VenuesController < ApplicationController
     end
   end
 
-  def categories
-    @categories = params[:categories]
-    @venues = Venue.where(categories: params[:categories]).where.not(user: current_user)
-    if params[:query].present?
-      #sql_subquery = "name ILIKE :query OR facilities ILIKE :query OR address ILIKE :query"
-      @venues = @venues.where(sql_subquery, query: "%#{params[:query]}%")
-    end
+  def discovery
+    @venues = Venue.where("spaces ->> ? = 'true'", params[:spaces])
+    Rails.logger.debug "Venues found: #{@venues.inspect}"
   end
 
 

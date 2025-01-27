@@ -20,6 +20,7 @@ class Venue < ApplicationRecord
     else
       return nil
     end
+    city
   end
 
 

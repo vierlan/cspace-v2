@@ -6,7 +6,8 @@ module.exports = {
   content: [
     './app/helpers/**/*.rb',
     './app/javascript/**/*.js',
-    './app/views/**/*'
+    './app/views/**/*',
+    './public/*.html',
   ],
   theme: {
     fontFamily: {
@@ -39,9 +40,16 @@ module.exports = {
           '4/5': '80%',
           '5/6': '83.333333%',
           '11/12': '91.666667%',
+          '12': '3rem', // Ensure px-12 exists
+          '20': '5rem'
         }
       ),
 
+    },
+  },
+  variants: {
+    extend: {
+      padding: ['responsive'], // Ensure `responsive` variants are enabled
     },
   },
   plugins: [

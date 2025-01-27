@@ -27,7 +27,7 @@ Rails.application.routes.draw do
       resources :bookings, only: %i[ new create]
     end
     collection do
-      get 'categories/:categories', to: 'venues#categories', as: :categories
+      get 'discovery', to: 'venues#discovery', as: :discovery
     end
   end
 
@@ -42,7 +42,7 @@ Rails.application.routes.draw do
 
   # static pages
   pages = %w[
-    privacy terms onboarding home
+    privacy terms onboarding home test
   ]
 
   pages.each do |page|
