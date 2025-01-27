@@ -8,21 +8,21 @@ API_KEY = ENV['GOOGLE_API_KEY'] # Fetch the API key from the .env file
 LONDON_COORDINATES = '41.381691,2.177010'
 RADIUS = 5000
 TYPE = %w[restaurant cafe bar]
-#def destroy_all
-#  Booking.destroy_all
-#  packages = Package.all
-#  packages.each do |package|
-#    package.cloudinary_purge(package.photo)
-#    package.delete_stripe_package(package)
-#  end
-#  Package.destroy_all
-#  venues = Venue.all
-#  venues.each do |venue|
-#    venue.photos.purge
-#  end
-#  Venue.destroy_all
-#
-#end
+def destroy_all
+  Booking.destroy_all
+  packages = Package.all
+  packages.each do |package|
+    package.cloudinary_purge(package.photo)
+    package.delete_stripe_package(package)
+  end
+  Package.destroy_all
+  venues = Venue.all
+  venues.each do |venue|
+    venue.photos.purge
+  end
+  Venue.destroy_all
+  User.destroy_all
+end
 
 # Fetch places from Google Places API
 def fetch_places(api_key, location, radius, type)
@@ -226,6 +226,7 @@ end
 
 
 def run_seed
+  destroy_all
   create_users
   users = User.all
   create_places(API_KEY, LONDON_COORDINATES, RADIUS, TYPE, users)
