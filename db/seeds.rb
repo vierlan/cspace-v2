@@ -223,16 +223,24 @@ def seed_bookings
   end
 end
 
-
+def add_spaces
+  puts "Adding spaces..."
+  venues = Venue.all
+  venues.each do |venue|
+    venue.spaces = { work: rand(1..10).odd?, study: rand(1..10).odd?, meeting: rand(1..10).odd? }
+    venue.save!
+  end
+end
 
 def run_seed
-  destroy_all
-  create_users
-  users = User.all
-  create_places(API_KEY, LONDON_COORDINATES, RADIUS, TYPE, users)
-  seed_packages
-  seed_bookings
-  puts "Seed completed!"
+  add_spaces
+  #destroy_all
+  #create_users
+  #users = User.all
+  #create_places(API_KEY, LONDON_COORDINATES, RADIUS, TYPE, users)
+  #seed_packages
+  #seed_bookings
+  #puts "Seed completed!"
 end
 
 run_seed
