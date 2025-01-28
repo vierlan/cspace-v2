@@ -20,7 +20,12 @@
                   <h5 class="line-clamp-2 text-left mx-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white"><%= venue.name %></h5>
                 </div>
               <% end %>
-              <p class="text-pink-800 text-base text-left ml-2"><%= venue.categories.first(4).capitalize + " • " + venue.google_data["rating"].to_s + " " + ("⭐" * venue.google_data["rating"].to_i) %></p>
+              <% if venue.google_data.present? %>
+                <% rating =  venue.google_data["rating"].to_s + " " + ("⭐" * venue.google_data["rating"].to_i)%>
+              <% else %>
+                <% rating = "No rating" %>
+              <% end %>
+              <p class="text-pink-800 text-base text-left ml-2"><%= venue.categories.first(4).capitalize + " • " + rating %></p>
               <div class=" ml-2 text-left text-red-500">
                 <i class="fa-regular fa-heart"></i>
               </div>
