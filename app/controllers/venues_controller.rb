@@ -8,9 +8,6 @@ class VenuesController < ApplicationController
     @venue_categories = [ "Study!", "Working!", "Meetings" ]
   end
 
-  def top
-  end
-
   def show
     @user = current_user
     @venue = Venue.find(params[:id])
@@ -32,6 +29,7 @@ class VenuesController < ApplicationController
   def create
     @venue = Venue.new(venue_params)
     @venue.user = current_user
+    @venue.spaces = assign_spaces
     if @venue.save!
       redirect_to venue_path(@venue)
     else
@@ -45,6 +43,7 @@ class VenuesController < ApplicationController
 
   def update
     @venue = Venue.find(params[:id])
+    @venue.spaces = assign_spaces
     if @venue.update(venue_params)
       redirect_to @venue
     else
@@ -57,8 +56,6 @@ class VenuesController < ApplicationController
 
     Rails.logger.debug "Venues found: #{@venues.inspect}"
   end
-
-
 
   def destroy
     @venue = Venue.find(params[:id])
@@ -93,5 +90,11 @@ class VenuesController < ApplicationController
     end
   end
 
-
+  def assign_spaces
+    @spaces = []
+    @spaces << "work" if params[:work] == "true"
+    @spaces << "study" if params[:study] == "true"
+    @spaces << "meeting" if params[:meeting] == "true"
+    @spaces
+  end
 end

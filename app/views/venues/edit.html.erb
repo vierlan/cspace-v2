@@ -9,6 +9,10 @@
           <%= f.label :categories %>
           <%= f.select :categories, :collection => %w[bar restaurant cafe hotel other] %>
         </div>
+        <div class="input-group">
+          <%= f.label :spaces %>
+          <%= f.select :categories, :collection => %w[meeting study work] %>
+        </div>
         <%= f.input :amenities %>
         <%= f.input :address %>
         <%= f.input :photos, as: :file, input_html: { multiple: true } %>
