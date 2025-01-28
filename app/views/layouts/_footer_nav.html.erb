@@ -1,17 +1,27 @@
-<div class="fixed bottom-0 left-0 right-0 bg-white md:hidden z-50 mt-auto justify-self-end w-screen">
-  <nav class="flex flex-grow justify-around py-4 ">
-    <%= link_to root_path do %>
-      <%= image_tag 'logo.png', class: 'w-50 h-50' %>
+<div class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 md:hidden z-50">
+  <nav class="flex justify-around py-4">
+    <!-- Home Link -->
+    <%= link_to root_path, class: "group flex flex-col items-center cursor-pointer hover:bg-gray-100 rounded-lg px-4 py-2 transition-all duration-300" do %>
+      <i class="fa-solid fa-house text-3xl text-gray-700 group-hover:text-blue-500 transition-all duration-300"></i>
+      <span class="text-xs text-gray-600 group-hover:text-blue-500 transition-all duration-300">Home</span>
     <% end %>
-    <%= link_to venues_path do %>
-      <i class="fa-solid fa-heart text-4xl"></i>
+
+    <!-- Bookings Link -->
+    <%= link_to bookings_path, class: "group flex flex-col items-center cursor-pointer hover:bg-gray-100 rounded-lg px-4 py-2 transition-all duration-300" do %>
+      <i class="fa-solid fa-calendar-days text-3xl text-gray-700 group-hover:text-green-500 transition-all duration-300"></i>
+      <span class="text-xs text-gray-600 group-hover:text-green-500 transition-all duration-300">Bookings</span>
     <% end %>
-    <%= link_to root_path do %>
-      <i class="fa-solid fa-magnifying-glass text-4xl"></i>
+
+    <!-- Heart/Favorites Link -->
+    <%= link_to venues_path, class: "group flex flex-col items-center cursor-pointer hover:bg-gray-100 rounded-lg px-4 py-2 transition-all duration-300" do %>
+      <i class="fa-solid fa-heart text-3xl text-gray-700 group-hover:text-red-500 transition-all duration-300"></i>
+      <span class="text-xs text-gray-600 group-hover:text-red-500 transition-all duration-300">Favorites</span>
     <% end %>
-    <%= link_to root_path do %>
-      <i class="fa-regular fa-user text-4xl"></i>
+
+    <!-- User/Profile Link -->
+    <%= link_to dashboard_path(current_user), class: "group flex flex-col items-center cursor-pointer hover:bg-gray-100 rounded-lg px-4 py-2 transition-all duration-300" do %>
+      <i class="fa-regular fa-user text-3xl text-gray-700 group-hover:text-yellow-500 transition-all duration-300"></i>
+      <span class="text-xs text-gray-600 group-hover:text-yellow-500 transition-all duration-300">Profile</span>
     <% end %>
   </nav>
-
 </div>

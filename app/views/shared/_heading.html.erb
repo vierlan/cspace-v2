@@ -1,5 +1,14 @@
 <% description ||= '' %>
-<div class="text-center mb-4">
-  <h1 class="mt-1 font-extrabold text-gray-900 text-4xl sm:text-4xl sm:tracking-tight lg:text-5xl dark:text-gray-200"><%= title %></h1>
-  <p class="max-w-xl mt-5 mx-auto text-xl text-gray-500"><%= description.html_safe %></p>
+<div class="text-left">
+  <!-- Title -->
+  <h1 class="mt-2 ml-4 text-left font-heading text-gray-900 text-xl sm:text-5xl lg:text-6xl tracking">
+    <%= title %>
+  </h1>
+  
+  <!-- Description -->
+  <% if description.present? %>
+    <p class="max-w-2xl mt-4 mx-auto text-lg sm:text-xl lg:text-2xl text-gray-600 dark:text-gray-400">
+      <%= description.html_safe %>
+    </p>
+  <% end %>
 </div>

@@ -1,38 +1,75 @@
-<%= render partial: "shared/heading", locals: { title: 'My Account' } %>
+<%= render partial: "shared/heading", locals: { title: 'Account Settings', description: 'Update your profile information and manage your subscription.' } %>
+<main>
+  <div class="max-w-7xl mx-auto py-3 sm:px-6 lg:px-8">
+    <div class="px-4 sm:px-0">
+      <div class="p-6 border border-gray-200 rounded-2xl shadow-lg bg-white">
+        <!-- Subscription Status -->
+        <div class="mb-6 text-center">
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Subscription</h3>
+          <div class="flex items-center justify-between">
+            <p class="text-sm text-gray-700">
+              Billing Status:
+              <span class="<%= current_user.paying_customer? ? 'text-green-600' : 'text-red-600' %> font-medium">
+                <%= current_user.paying_customer? ? 'Active' : 'Inactive' %>
+              </span>
+            </p>
+            <%= button_to "Manage", billing_portal_index_path, method: :post, class: "btn-secondary", data: { turbo: false } %>
+          </div>
+        </div>
 
-<div class="max-w-xl mx-auto sm:py-12">
-  <h3 class="mb-2 text-2xl leading-9 font-extrabold text-gray-900">Subscription</h3>
-  <div class="flex">
-    <div class="flex-auto">
-      Billing Status: <%= current_user.paying_customer? ? 'Active' : 'Inactive' %><br>
-    </div>
-    <div class="flex-shrink">
-      <%= button_to 'Manage >>', billing_portal_index_path, method: :post, data: { turbo: false }, class: "font-medium text-primary-500" %>
+        <!-- Profile Form -->
+        <%= form_for(current_user, url: account_path(current_user), method: :patch, html: { class: "space-y-6" }) do |f| %>
+          <div class="space-y-6">
+            <!-- Email -->
+            <div>
+              <label for="user_email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+              <%= f.text_field :email, required: true, class: "input-field" %>
+            </div>
+
+            <!-- First Name -->
+            <div>
+              <label for="user_first_name" class="block text-sm font-medium text-gray-700 mb-1">First naasdfasdme</label>
+              <%= f.text_field :first_name, required: true, class: "input-field" %>
+            </div>
+
+            <!-- Last Name -->
+            <div>
+              <label for="user_last_name" class="block text-sm font-medium text-gray-700 mb-1">Last name</label>
+              <%= f.text_field :last_name, required: true, class: "input-field" %>
+            </div>
+
+            <!-- Password -->
+            <div>
+              <label for="user_password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <%= f.password_field :password, autocomplete: "new-password", class: "input-field" %>
+            </div>
+
+            <!-- Password Confirmation -->
+            <div>
+              <label for="user_password_confirmation" class="block text-sm font-medium text-gray-700 mb-1">Password confirmation</label>
+              <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "input-field" %>
+            </div>
+
+            <!-- Avatar -->
+            <div>
+              <label for="user_avatar" class="block text-sm font-medium text-gray-700 mb-1">Avatar</label>
+              <%= f.file_field :avatar, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border file:border-gray-300 file:text-sm file:font-medium file:bg-secondary file:text-white hover:file:bg-secondary-light" %>
+            </div>
+
+            <!-- Submit Button -->
+            <div>
+              <button type="submit" data-turbo="false" class="btn-primary w-full">
+                <span class="flex items-center justify-center space-x-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                    <path fill-rule="evenodd" d="M5 10a5 5 0 0110 0 5 5 0 11-10 0zm5-7a7 7 0 100 14A7 7 0 0010 3z" clip-rule="evenodd" />
+                  </svg>
+                  <span>Save</span>
+                </span>
+              </button>
+            </div>
+          </div>
+        <% end %>
+      </div>
     </div>
   </div>
-
-  <%= form_for(current_user, url: account_path(current_user.id), method: 'patch', html: {class: "mt-8", autocomplete: 'off'}) do |f| %>
-    <div>
-      <h3 class="mb-2 text-2xl leading-9 font-extrabold text-gray-900">Profile</h3>
-      <div class="mb-2 border border-gray-300 rounded-md px-3 py-2">
-        <label for="email" class="block text-xs font-medium text-gray-900">Email</label>
-        <input type="text" required="true" name="user[email]" id="user_email" class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm" placeholder="<%= current_user.email %>">
-      </div>
-
-      <div class="mb-2 border border-gray-300 rounded-md px-3 py-2">
-        <label for="password" class="block text-xs font-medium text-gray-900">Password</label>
-        <input type="password" autocomplete="new-password" name="user[password]" id="user_password" class="block w-full border-0 p-0 text-gray-900 placeholder-gray-500 focus:ring-0 sm:text-sm">
-      </div>
-
-      <button type="submit" data-turbo="false" class="mt-4 group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500">
-        <span class="absolute left-0 inset-y-0 flex items-center pl-3">
-          <!-- Heroicon name: solid/lock-closed -->
-          <svg class="h-5 w-5 text-primary-500 group-hover:text-primary-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white" aria-hidden="true">
-            <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd"></path>
-          </svg>
-        </span>
-        Save
-      </button>
-    </div>
-  <% end %>
-</div>
+</main>
