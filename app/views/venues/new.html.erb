@@ -10,18 +10,14 @@
       <!-- Categories -->
       <div class="input-group">
         <%= f.label :categories %>
-        <%= f.select :categories,
-                     %w[bar restaurant cafe hotel other],
-                     {},
-                     { multiple: true, class: "form-control" } %>
+        <%= f.input :categories,
+                     :collection => %w[bar restaurant cafe hotel other] %>
       </div>
       <!-- Spaces -->
-      <div class="input-group">
+      <div class="flex flex-row">
         <%= f.label :spaces %>
-        <%= f.select :spaces,
-                     %w[meeting study work],
-                     {},
-                     { multiple: true, class: "form-control" } %>
+        <%= f.input :spaces, as: :check_boxes,
+             collection: %w[meeting study work] %>
       </div>
       <div class="opening-hours">
         <% Date::DAYNAMES.each do |day| %>
@@ -36,8 +32,16 @@
       <%= f.input :amenities, placeholder: 'Describe facilities' %>
       <!-- Address -->
       <%= f.input :address, placeholder: '20 London Road, W1 4HF' %>
-      <!-- Submit Button -->
-      <%= f.submit "Add Venue", class: 'btn btn-primary' %>
-    <% end %>
+      <!-- Unclaimed venue added by admin -->
+      <div class="flex flex-row">
+        <% if current_user.admin? %>
+          <%= f.input :claimed, as: :select, input_html: { value: 0 } %>
+        <% else %>
+          <%= f.input :claimed, as: :hidden, input_html: { value: true } %>
+        <% end %>
+      </div>
+        <!-- Submit Button -->
+        <%= f.submit "Add Venue", class: 'btn btn-primary' %>
+      <% end %>
+    </div>
   </div>
-</div>

@@ -25,8 +25,12 @@ class Venue < ApplicationRecord
   end
 
   def set_default_claimed
-    self.claimed = !user.admin? if self.claimed.nil?
+    if self.claimed.nil? && user.admin?
+      self.claimed = false
+    elsif self.claimed.nil? && !user.admin?
+      self.claimed = true
+    end
   end
-  
+
   #validates :categories, inclusion: { in: CATEGORIES }
 end
