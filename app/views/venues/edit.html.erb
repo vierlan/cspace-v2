@@ -1,22 +1,40 @@
 <div class="container py-5">
   <div class="row justify-content-center">
-     <div class="col-12 col-md-6 offset-lg-3">
-     <div class="bg-white rounded p-3 shadow">
+    <div class="col-12 col-md-6 offset-lg-3">
+      <div class="bg-white rounded p-3 shadow">
         <h3>Edit your venue</h3>
         <%= simple_form_for(@venue) do |f| %>
-        <%= f.input :name %>
-        <div class="input-group">
-          <%= f.label :categories %>
-          <%= f.select :categories, :collection => %w[bar restaurant cafe hotel other] %>
-        </div>
-        <div class="input-group">
-          <%= f.label :spaces %>
-          <%= f.select :categories, :collection => %w[meeting study work] %>
-        </div>
-        <%= f.input :amenities %>
-        <%= f.input :address %>
-        <%= f.input :photos, as: :file, input_html: { multiple: true } %>
-        <%= f.submit "Submit Edits", class: 'btn btn-primary' %>
+          <%= f.input :name %>
+          <div class="input-group">
+            <%= f.label :categories %>
+            <%= f.select :categories, :collection => %w[bar restaurant cafe hotel other] %>
+          </div>
+          <div class="input-group">
+            <%= f.label :spaces %>
+            <%= f.select :categories, :collection => %w[meeting study work] %>
+          </div>
+          <div class="opening-hours grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <% Date::DAYNAMES.each do |day| %>
+              <div class="flex items-center space-x-4">
+                <!-- Day Label -->
+                <%= label_tag day, class: "w-1/4 font-semibold text-gray-700" %>
+                <!-- Opening Time -->
+                <%= text_field_tag "venue[opening_hours][#{day.downcase}][0][open]",
+                         nil,
+                         placeholder: "Opening Time",
+                         class: "w-1/3 border rounded px-2 py-1 text-sm" %>
+                <!-- Closing Time -->
+                <%= text_field_tag "venue[opening_hours][#{day.downcase}][0][close]",
+                         nil,
+                         placeholder: "Closing Time",
+                         class: "w-1/3 border rounded px-2 py-1 text-sm" %>
+              </div>
+            <% end %>
+          </div>
+          <%= f.input :amenities %>
+          <%= f.input :address %>
+          <%= f.input :photos, as: :file, input_html: { multiple: true } %>
+          <%= f.submit "Submit Edits", class: 'btn btn-primary' %>
         <% end %>
       </div>
     </div>

@@ -5,10 +5,8 @@
     <%= simple_form_for(@venue) do |f| %>
       <!-- Venue Name -->
       <%= f.input :name, placeholder: 'Venue' %>
-
       <!-- Photos -->
       <%= f.input :photos, as: :file, input_html: { multiple: true } %>
-
       <!-- Categories -->
       <div class="input-group">
         <%= f.label :categories %>
@@ -17,7 +15,6 @@
                      {},
                      { multiple: true, class: "form-control" } %>
       </div>
-
       <!-- Spaces -->
       <div class="input-group">
         <%= f.label :spaces %>
@@ -26,13 +23,19 @@
                      {},
                      { multiple: true, class: "form-control" } %>
       </div>
-
+      <div class="opening-hours">
+        <% Date::DAYNAMES.each do |day| %>
+          <div>
+            <%= label_tag day %>
+            <%= text_field_tag "venue[opening_hours][#{day.downcase}][0][open]", nil, placeholder: "Opening Time" %>
+            <%= text_field_tag "venue[opening_hours][#{day.downcase}][0][close]", nil, placeholder: "Closing Time" %>
+          </div>
+        <% end %>
+      </div>
       <!-- Amenities -->
       <%= f.input :amenities, placeholder: 'Describe facilities' %>
-
       <!-- Address -->
       <%= f.input :address, placeholder: '20 London Road, W1 4HF' %>
-
       <!-- Submit Button -->
       <%= f.submit "Add Venue", class: 'btn btn-primary' %>
     <% end %>
