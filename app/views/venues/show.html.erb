@@ -1,4 +1,4 @@
-<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">  
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
   <!-- Venue Information -->
   <div class="bg-white border border-gray-200 rounded-xl shadow-lg p-6 m-3">
     <h2 class="text-xl font-heading font-semibold text-gray-800 mb-4"><%= @venue.name %></h2>
@@ -10,7 +10,8 @@
       <p class="text-gray-600">No venues found.</p>
     <% end %>
     <p class="text-pink-800 text-sm font-medium mt-4">
-      <%= @venue.categories.capitalize + " • " + @venue.google_data["rating"].to_s + " " + ("⭐" * @venue.google_data["rating"].to_i) %>
+      <%= @venue.categories.capitalize + " • " + @rating.to_s + " " + ("⭐" * @rating.to_i) %>
+
     </p>
     <p class="text-gray-600 mt-2">
       <i class="fa-solid fa-location-dot text-pink-800"></i> <%= @venue.address %>

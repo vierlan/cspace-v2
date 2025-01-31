@@ -1,21 +1,25 @@
 
-        <div class="relative rounded h-80 grid grid-cols-3">
+  <div class="relative rounded h-80 grid grid-cols-3">
 
-          <!-- Left-side large image, spans 2 rows and 2 columns -->
-          <div class="relative col-span-2 top-0 left-0 bottom-0  overflow-hidden mr-4" style="padding-bottom: 20%" >
-            <%= cl_image_tag venue.photos[0].key, alt: venue.name + "1", class: "absolute object-cover h-full w-full rounded-lg" %>
-          </div>
+  <!-- Left-side large image, spans 2 rows and 2 columns -->
+  <div class="relative col-span-2 top-0 left-0 bottom-0 overflow-hidden mr-4" style="padding-bottom: 20%">
+    <%= cl_image_tag venue.photos[0].key, alt: venue.name + "1", class: "absolute object-cover h-full w-full rounded-lg" %>
+  </div>
 
-          <!-- Top-right small image -->
-          <div class="grid grid-rows-2">
-            <div class="relative overflow-hidden mb-4" style="padding-bottom: 20%">
-              <%= cl_image_tag venue.photos[0].key, alt: venue.name + "2", class: "absolute object-cover h-full w-full rounded-lg" %>
-            </div>
+  <!-- Top-right small image -->
+  <div class="grid grid-rows-2">
+    <div class="relative overflow-hidden mb-4" style="padding-bottom: 20%">
+      <%= cl_image_tag (venue.photos[1]&.key || venue.photos[0].key),
+          alt: venue.name + "2",
+          class: "absolute object-cover h-full w-full rounded-lg" %>
+    </div>
 
-            <!-- Bottom-right small image -->
-            <div class="relative overflow-hidden" style="padding-bottom: 20%">
-              <%= cl_image_tag venue.photos[0].key, alt: venue.name + "3", class: "absolute object-cover h-full w-full rounded-lg" %>
-            </div>
-          </div>
+    <!-- Bottom-right small image -->
+    <div class="relative overflow-hidden" style="padding-bottom: 20%">
+      <%= cl_image_tag (venue.photos[2]&.key || venue.photos[0].key),
+          alt: venue.name + "3",
+          class: "absolute object-cover h-full w-full rounded-lg" %>
+    </div>
+  </div>
 
-        </div>
+</div>

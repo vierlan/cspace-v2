@@ -1,4 +1,5 @@
 class Venue < ApplicationRecord
+  before_create :set_default_claimed
   CATEGORIES = %w[bar restaurant cafe hotel other]
 
   belongs_to :user
@@ -23,6 +24,13 @@ class Venue < ApplicationRecord
     city
   end
 
+  def set_default_claimed
+    if self.claimed.nil? && user.admin?
+      self.claimed = false
+    elsif self.claimed.nil? && !user.admin?
+      self.claimed = true
+    end
+  end
 
   #validates :categories, inclusion: { in: CATEGORIES }
 end

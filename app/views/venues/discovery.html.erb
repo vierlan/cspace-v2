@@ -25,7 +25,7 @@
 
         </div>
       <% else %>
-        <p>No venues found.</p>
+        <p>No Images found.</p>
       <% end %>
 
       <!-- Venue details -->
@@ -53,9 +53,11 @@
           </div>
 
           <div class="flex items-center">
+            <%= link_to venue_path(venue) do %>
             <button class="bg-gray-900 hover:bg-gray-400 text-gray-800 font-bold py-2 px-6 my-1 rounded inline-flex items-center">
               <span class="text-base font-light text-white ml-3">Get a spot</span>
             </button>
+            <% end %>
             <i class="fa-solid fa-share-nodes text-3xl font-thin ml-10"></i>
           </div>
         </div>
