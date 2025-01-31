@@ -1,68 +1,63 @@
-
-
-<div class='px-2 lg:px-80 mt-4 mx-2 mx-auto'>
-  <h1 class="text-black text-lg font-bold">Discovery Page</h1>
-  <div class="flex mx-4 ml-4 my-4 text-lg font-bold">
-      <h2><%= @venue.name %></h3>
-  </div>
-  <div class="m-4 p-4">
+<div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
+  <!-- Venue Information -->
+  <div class="bg-white border border-gray-200 rounded-xl shadow-lg p-6 m-3">
+    <h2 class="text-xl font-heading font-semibold text-gray-800 mb-4"><%= @venue.name %></h2>
     <% if @venue.photos.attached? %>
+      <div class="rounded-xl overflow-hidden mb-4">
         <%= render partial: "venue_show_template", locals: {venue: @venue, venue_owner: @venue_owner} %>
+      </div>
     <% else %>
-      <p>No venues found.</p>
+      <p class="text-gray-600">No venues found.</p>
     <% end %>
-  </div>
-<div class="px-2 pb-2">
-    <div class="px-2 pt-10 pb-4">
-    <p class="text-pink-800 text-sm text-left ml-2"><%= @venue.categories.capitalize + " • " + @rating.to_s + " " + ("⭐" * @rating.to_i) %></p>
-    <br>
+    <p class="text-pink-800 text-sm font-medium mt-4">
+      <%= @venue.categories.capitalize + " • " + @rating.to_s + " " + ("⭐" * @rating.to_i) %>
 
-    <p class="text-black font-semibold text-sm text-left ml-2"><i class="fa-solid fa-location-dot"></i><%="  " + @venue.address%>
     </p>
-    <br>
-    <i class="ml-2 text-xl fa-solid fa-person-walking"></i><span class="text-pink-800 text-xs font-extralight text-left mx-2"> 17 mins</span><i class="fa-solid fa-bus"></i><span class="text-pink-800 text-sm font-extralight text-left mx-2"> 5 mins</span>
-    <div class= 'my-4'>
-      <button class="bg-gray-900 hover:bg-gray-400 text-gray-800 font-bold py-2 px-4 py-4 rounded-full inline-flex items-center">
-        <i class="text-white font-bold text-xl fa-solid fa-diamond-turn-right"></i>
-        <span class="text-base font-light text-white ml-3">Get Directions</span>
+    <p class="text-gray-600 mt-2">
+      <i class="fa-solid fa-location-dot text-pink-800"></i> <%= @venue.address %>
+    </p>
+    <div class="mt-6 flex items-center space-x-6">
+      <div class="flex items-center space-x-2 text-pink-800">
+        <i class="fa-solid fa-person-walking text-xl"></i>
+        <span class="text-sm">17 mins</span>
+      </div>
+      <div class="flex items-center space-x-2 text-pink-800">
+        <i class="fa-solid fa-bus text-xl"></i>
+        <span class="text-sm">5 mins</span>
+      </div>
+    </div>
+    <div class="mt-6">
+      <button class="bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-full flex items-center space-x-2">
+        <i class="fa-solid fa-diamond-turn-right text-lg"></i>
+        <span>Get Directions</span>
       </button>
     </div>
-
-
-    <p><strong>Name:</strong> <%= @venue.name %></p>
-    <p><strong>Location:</strong> <%= @venue.address %></p>
-    <p><strong>Description:</strong> <%= @venue.amenities %></p>
   </div>
-</div>
-<!-- Add Package and edits if venue owner -->
-<div class='grid grid-cols-1 '>
-  <% @packages.each do |package| %>
-    <%= link_to venue_package_path(@venue, package) do %>
-      <div class="flex w-4/5 h-64 m-4">
-        <div class="flex-1 flex-col w-3/6 p-1">
-          <div class="h-20 overflow-hidden hover:overflow-visable text-gray-700" ><b>
-              <p><%= package.package_name.capitalize %></p>
-            </b></div>
-          <div class="h-20 overflow-hidden hover:overflow-visable text-gray-500">
-            <p><%= package.package_description %> </p>
+
+  <!-- Package Cards -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 m-3">
+    <% @packages.each do |package| %>
+      <%= link_to venue_package_path(@venue, package), class: "block" do %>
+        <div class="bg-white border border-gray-200 rounded-xl shadow-md hover:shadow-lg transition p-4 flex items-center">
+          <!-- Package Info -->
+          <div class="flex-1">
+            <h3 class="text-lg font-semibold text-gray-800 mb-2"><%= package.package_name.capitalize %></h3>
+            <p class="text-gray-600 text-sm mb-2"><%= package.package_description %></p>
+            <% if package.package_duration %>
+              <p class="text-gray-500 text-sm">Duration: <%= "#{package.package_duration} hours" %></p>
+            <% end %>
+            <p class="text-gray-500 text-sm font-semibold">Price: €<%= package.package_price %></p>
           </div>
-          <div class="h-10 overflow-hidden hover:overflow-visable text-gray-400">
-            <p><%= "#{package.package_duration} hours" if package.package_duration %></p>
-          </div>
-          <div class="h-10 overflow-hidden hover:overflow-visable text-gray-400">
-            <p>€<%= package.package_price %></p>
+          <!-- Package Image -->
+          <div class="w-24 h-24 flex-shrink-0">
+            <% if package.photo.key %>
+              <%= cl_image_tag package.photo.key, alt: "PICTURE", class: "object-cover h-full w-full rounded-lg" %>
+            <% else %>
+              <%= image_tag "avatar.png", alt: "Default Image", class: "object-cover h-full w-full rounded-lg" %>
+            <% end %>
           </div>
         </div>
-        <div class="flex-1 w-3/6">
-          <% if package.photo.key %>
-            <%= cl_image_tag package.photo.key, alt: "PICTURE", class: "object-cover h-full w-full rounded" %>
-          <% else %>
-            <%= image_tag "avatar.png", class: "h-10 w-10 rounded-full" %>
-          <% end %>
-        </div>
-      </div>
+      <% end %>
     <% end %>
-  <% end %>
-</div>
-</div>
+  </div>
 </div>

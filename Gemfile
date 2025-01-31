@@ -34,7 +34,7 @@ gem 'simple_form'
 gem 'split', require: 'split/dashboard'
 gem 'sprockets-rails'
 gem 'stimulus-rails'
-gem 'stripe'
+gem "stripe", "~> 12.0"
 gem 'tailwindcss-rails'
 gem 'turbo-rails'
 gem 'wicked'
