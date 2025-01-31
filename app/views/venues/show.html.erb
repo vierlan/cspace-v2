@@ -10,7 +10,8 @@
       <p class="text-gray-600">No venues found.</p>
     <% end %>
     <p class="text-pink-800 text-sm font-medium mt-4">
-      <%= @venue.categories.capitalize + " • " + @rating.to_s + " " + ("⭐" * @rating.to_i) %>
+      <%= @venue.categories.capitalize if @venue.categories.present? %>
+      <%= " • " + @rating.to_s + " " + ("⭐" * @rating.to_i) %>
 
     </p>
     <p class="text-gray-600 mt-2">

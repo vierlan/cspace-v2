@@ -1,36 +1,26 @@
-  <div class="swiper mySwiper bg-white pb-3 px-4" data-controller="swiper">
-    <h2 class='text-black font-bold text-2xl my-4 ml-2'>Most popular for <%= venue_categories[index] %></h2>
-    <!-- Additional required wrapper -->
-    <div class="swiper-wrapper">
-      <!-- Slides -->
-      <% venue_type.each_with_index do |venue, index| %>
-        <div class="swiper-slide">
-          <%= link_to venue_path(venue) do %>
-            <div class="w-60 max-w-sm bg-white border border-gray-500 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-              <div class="relative" style="padding-bottom: 75%">
-                <% if venue.photos.attached? %>
-                  <% photo = venue.photos.first %>
-                  <%= cl_image_tag photo.key, alt: venue.name, class: "absolute object-cover h-full w-full rounded-t-lg" %>
-                <% else %>
-                  <%= image_tag("img2") %>
-                <% end %>
-              </div>
-              <div class="relative p-3 w-full h-full">
-                <div class="flex h-14 items-center overflow-hidden">
-                  <h5 class="line-clamp-2 text-left mx-2 text-lg font-bold tracking-tight text-gray-900 dark:text-white"><%= venue.name %></h5>
-                </div>
-              <% end %>
-              <% if venue.google_data.present? %>
-                <% rating =  venue.google_data["rating"].to_s + " " + ("⭐" * venue.google_data["rating"].to_i)%>
+<div class="swiper mySwiper bg-white pb-6 px-4" data-controller="swiper">
+  <h2 class="text-gray-900 font-heading font-bold text-2xl my-6 ml-2">Most popular for <%= venue_categories[index] %></h2>
+
+  <div class="swiper-wrapper">
+    <% venue_type.each_with_index do |venue, index| %>
+      <div class="swiper-slide">
+        <%= link_to venue_path(venue) do %>
+          <div class="w-60 mb-8 max-w-sm bg-white border border-gray-300 rounded-xl shadow-lg hover:shadow-xl transition duration-200">
+            <div class="relative rounded-t-xl overflow-hidden" style="padding-bottom: 75%">
+              <% if venue.photos.attached? %>
+                <% photo = venue.photos.first %>
+                <%= cl_image_tag photo.key, alt: venue.name, class: "absolute object-cover h-full w-full" %>
               <% else %>
-                <% rating = "No rating" %>
+                <%= image_tag("img2", alt: "Venue image", class: "absolute object-cover h-full w-full") %>
               <% end %>
-              <p class="text-pink-800 text-base text-left ml-2"><%= venue.categories.first(4).capitalize + " • " + rating %></p>
-              <div class=" ml-2 text-left text-red-500">
-                <i class="fa-regular fa-heart"></i>
-              </div>
-              <div class="hidden text-left text-red-500">
-                <i class="fa-solid fa-heart "></i>
+            </div>
+            <div class="p-4">
+              <h5 class="text-lg font-semibold text-gray-900 truncate">
+                <%= venue.name %>
+              </h5>
+              <div class="mt-2 flex items-center space-x-2">
+                <span class="text-gray-600 text-sm"><%= venue.categories.capitalize %></span>
+                <i class="fa-regular fa-heart text-gray-400 hover:text-red-500 transition-colors duration-150"></i>
               </div>
             </div>
           </div>
