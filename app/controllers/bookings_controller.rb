@@ -14,19 +14,21 @@ class BookingsController < ApplicationController
     @venue = @package.venue
     @booking.package = @package
     @booking.venue = @venue
-    @stripe_price_id = @package.stripe_price_id
     @booking_date = params[:booking][:booking_date]
     @booking_start_time = params[:booking][:booking_start_time]
+    @booking.booking_cost = @package.package_price
 
     if @booking.valid? && @booking.save
       @booking_id = @booking.id
       readable_time = readable_date_time(@booking.booking_date, @booking.booking_start_time)
       Rails.logger.info "Booking time: #{readable_time}"
+
       @booking.update(booking_start_time: readable_time)
+
       Rails.logger.info "Booking created with ID: #{@booking_id}, booking date: #{@booking_date}, booking start time: #{@booking_start_time}"
-      @checkout_session = create_stripe_checkout_session(@booking)
-      redirect_to @checkout_session.url, status: 303, allow_other_host: true
-      Rails.logger.info "Redirecting to Stripe checkout session URL: #{@checkout_session.url}"
+
+      # Redirect to the booking show page
+      redirect_to @booking, notice: 'Booking confirmed successfully!'
     else
       Rails.logger.error "Booking save failed: #{@booking.errors.full_messages.join(', ')}"
       flash.now[:error] = 'Something went wrong'
@@ -34,6 +36,7 @@ class BookingsController < ApplicationController
       render 'packages/show', status: :unprocessable_entity, id: @booking.package.id
     end
   end
+
 
   def create_stripe_checkout_session(booking)
     Stripe.api_key = ENV['STRIPE_SECRET_KEY']
