@@ -35,6 +35,22 @@
                       class: "input-field" %>
         </div>
 
+        <!-- Spaces -->
+      <div class="flex flex-row">
+        <%= f.label :spaces %>
+        <%= f.input :spaces, as: :check_boxes,
+             collection: %w[meeting study work] %>
+      </div>
+      <div class="opening-hours">
+        <% Date::DAYNAMES.each do |day| %>
+          <div>
+            <%= label_tag day %>
+            <%= text_field_tag "venue[opening_hours][#{day.downcase}][0][open]", nil, placeholder: "Opening Time" %>
+            <%= text_field_tag "venue[opening_hours][#{day.downcase}][0][close]", nil, placeholder: "Closing Time" %>
+          </div>
+        <% end %>
+      </div>
+
         <!-- Venue Amenities -->
         <div>
           <%= f.input :amenities,
