@@ -4,6 +4,9 @@
 
   <!-- Venues List -->
   <ul class="space-y-6">
+<!--<div class="border-cyanborder-500 flex flex-col">
+  <h1 class="text-black text-lg">Dashboard My venues</h1>
+  <ul class='ml-10'>-->
     <% @venues.each do |venue| %>
       <li>
         <div class="bg-white border border-gray-200 rounded-xl shadow-lg p-6 grid grid-cols-1 lg:grid-cols-2 gap-6 items-center">
@@ -17,10 +20,25 @@
 
           <!-- Actions -->
           <div class="flex flex-col sm:flex-row sm:space-x-4 lg:justify-end">
+            <%= link_to "View venue show page", venue_path(venue), class: "btn-primary mb-4 sm:mb-0 sm:w-auto lg:w-auto text-center" %>
             <%= link_to "Add items for sale", new_venue_package_path(venue), class: "btn-primary mb-4 sm:mb-0 sm:w-auto lg:w-auto text-center" %>
             <%= link_to "View and edit packages", my_venue_packages_path(venue), class: "btn-primary sm:w-auto lg:w-auto text-center" %>
           </div>
         </div>
+
+
+        <%
+          api_key = ENV['GOOGLE_PLACES_API_KEY']
+          encoded_venue_name = URI.encode_www_form_component(venue.name)
+          url = "https://maps.googleapis.com/maps/api/place/findplacefromtext/json?input=#{encoded_venue_name}&inputtype=textquery&fields=rating&key=#{api_key}"
+          response = HTTParty.get(url)
+          if venue&.google_data&.dig("rating").present?
+            venue.google_data["rating"]
+          else
+            response = HTTParty.get(url)
+          end
+        %>
+
       </li>
     <% end %>
   </ul>
