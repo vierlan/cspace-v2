@@ -126,7 +126,7 @@ class VenuesController < ApplicationController
   #end
 
   def venue_params
-    params.require(:venue).permit(:name, :address, :assign_to_user, :user_email, :phone, :website, :amenities, :claimed, :description, :categories, spaces: [], photos: [],  videos: [], opening_hours: {})
+    params.require(:venue).permit(:name, :address, :assign_to_user, :user_email, :phone_number, :website, :venue_email, :amenities, :claimed, :description, :categories, spaces: [], photos: [],  videos: [], opening_hours: {})
   end
 
   def rating(venue)
