@@ -8,6 +8,10 @@
       <div class="bg-white border border-gray-200 rounded-xl shadow-lg p-6 space-y-4">
         <!-- Venue Name -->
         <h3 class="text-lg font-semibold text-gray-900"><%= booking.venue.name %></h3>
+        <p class="text-gray-600 mb-2"><strong>Address:</strong> <%= booking.venue&.address %></p>
+        <p class="text-gray-600 mb-2"><strong>Phone:</strong> <%= booking.venue&.phone_number %></p>
+        <p class="text-gray-600 mb-2"><strong>Email:</strong> <%= booking.venue&.venue_email %></p>
+        <p class="text-gray-600 mb-2"><strong>Website:</strong> <%= booking.venue&.website %></p>
         <!-- Package Name -->
         <p class="text-gray-600"><strong>Package:</strong> <%= booking.package.package_name %></p>
         <!-- Booking Date -->
@@ -33,7 +37,7 @@
         <!-- Actions -->
         <div class="flex justify-between">
           <%= link_to "Edit", edit_booking_path(booking.venue, booking.package, booking), class: "btn-primary w-full mr-2" %>
-          <%= link_to "Delete", booking_path(booking.venue, booking.package, booking), method: :delete, data: { confirm: "Are you sure?" }, class: "btn-danger w-full" %>
+          <%= link_to "Delete", booking_path(booking.venue, booking.package, booking), method: :delete, data: { confirm: "Are you sure you want to cancel this booking?" }, class: "btn-danger w-full" %>
         </div>
       </div>
     <% end %>
