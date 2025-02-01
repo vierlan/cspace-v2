@@ -36,7 +36,11 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :bookings, except: %i[ new create ]
+  resources :bookings, except: %i[ new create ] do
+    member do
+      patch :confirm
+    end
+  end
   resources :packages, except: %i[ new create index show]
   resources :subscribe, only: [:index]
   resources :account, only: %i[index update] do
