@@ -135,11 +135,9 @@ class BookingsController < ApplicationController
   def confirm
     @booking = Booking.find(params[:id])
     if @booking.update(booking_confirmed: true)
-
-
      redirect_to venue_bookings_path, notice: "Booking confirmed successfully!"
     else
-      render 'bookings/index'
+      render venue_bookings_path, status: :unprocessable_entity
     end
   end
 
