@@ -28,8 +28,27 @@ class VenuesController < ApplicationController
 
   def create
     @venue = Venue.new(venue_params)
-    @venue.user = current_user
     @venue.spaces = assign_spaces
+
+    if params[:venue][:assign_to_user] == "1" && params[:venue][:user_email].present?
+      user_email = params[:venue][:user_email].strip.downcase
+      user = User.find_by(email: user_email)
+
+      unless user
+        # No user found with that email
+        @venue.errors.add(:user_email, "No user found with email #{user_email}")
+        return render :new, status: :unprocessable_entity
+      end
+
+      # If user is found, assign the venue
+      @venue.user = user
+      @venue.claimed = true
+    else # If the venue is not assigned to a user, assign it to the current user
+      @venue.user = current_user
+      @venue.claimed = false
+    end
+
+
     if @venue.save!
       redirect_to venue_path(@venue)
     else
@@ -44,6 +63,19 @@ class VenuesController < ApplicationController
   def update
     @venue = Venue.find(params[:id])
     @venue.spaces = assign_spaces
+
+        # If new media files are uploaded, append them; don't replace the old ones.
+        if venue_params[:photos]
+          @venue.photos.attach(venue_params[:photos])
+        end
+
+        # Handle photos reordering if provided
+        if params[:photos_order].present?
+          params[:photos_order].each do |photos_id, position|
+            photos = @venue.photos.find(photos_id)
+            photos.update(position: position.to_i)
+          end
+        end
     if @venue.update(venue_params)
       redirect_to @venue
     else
@@ -64,6 +96,29 @@ class VenuesController < ApplicationController
     redirect_to venues_path
   end
 
+  def move_media
+    #Find the venue who's images we are re-arranging
+    @venue = Venue.find(params[:id])
+    #Find the image we are moving
+    @image = @venue.images[params[:old_position].to_i - 1]
+    # Use the insert_at method we get from acts_as_list gem
+    @image.insert_at(params[:new_position].to_i)
+    head :ok
+  end
+
+  def remove_photos
+    @venue = Venue.find(params[:id])
+    photos = @venue.photos.find(params[:photos_id])
+    media_id = photos.id
+    photos.purge
+
+    respond_to do |format|
+      format.html { redirect_to edit_venue_path(@venue), notice: 'Media removed successfully.' }
+      format.turbo_stream { render turbo_stream: turbo_stream.remove("media_#{media_id}") }
+    end
+  end
+
+
   private
 
   #def distance_from_user(@venue)
@@ -71,7 +126,7 @@ class VenuesController < ApplicationController
   #end
 
   def venue_params
-    params.require(:venue).permit(:name, :address, :phone, :website, :amenities, :claimed, :description, :categories, spaces: [], photos: [], opening_hours: {})
+    params.require(:venue).permit(:name, :address, :assign_to_user, :user_email, :phone, :website, :amenities, :claimed, :description, :categories, spaces: [], photos: [],  videos: [], opening_hours: {})
   end
 
   def rating(venue)

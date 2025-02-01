@@ -1,4 +1,6 @@
 class Venue < ApplicationRecord
+  attr_accessor :user_email
+
   before_create :set_default_claimed
   CATEGORIES = %w[bar restaurant cafe hotel other]
 

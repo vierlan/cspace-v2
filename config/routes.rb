@@ -29,6 +29,11 @@ Rails.application.routes.draw do
     collection do
       get 'discovery', to: 'venues#discovery', as: :discovery
     end
+
+    member do
+      patch :move_media
+      delete :remove_photos
+    end
   end
 
   resources :bookings, except: %i[ new create ]

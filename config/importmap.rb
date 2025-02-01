@@ -19,3 +19,4 @@ pin "@popperjs/core", to: "https://ga.jspm.io/npm:@popperjs/core@2.11.8/lib/inde
 pin "@rails/ujs", to: "https://ga.jspm.io/npm:@rails/ujs@7.1.2/app/assets/javascripts/rails-ujs.esm.js"
 pin "swiper", to: "https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"
 pin "flatpickr" # @4.6.13
+pin "sortablejs" # @1.15.3
