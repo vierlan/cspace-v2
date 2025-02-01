@@ -6,6 +6,7 @@ class Venue < ApplicationRecord
 
   belongs_to :user
   has_many_attached :photos
+  has_many_attached :videos
   has_many :bookings, dependent: :destroy
   has_many :packages, dependent: :destroy
 

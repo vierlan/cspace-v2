@@ -70,10 +70,10 @@ class VenuesController < ApplicationController
         end
 
         # Handle photos reordering if provided
-        if params[:photos_order].present?
-          params[:photos_order].each do |photos_id, position|
-            photos = @venue.photos.find(photos_id)
-            photos.update(position: position.to_i)
+        if params[:venue][:photo_positions].present?
+          params[:venue][:photo_positions].each_with_index do |photo_id, index|
+            photo = @venue.photos.find(photo_id) rescue nil
+            photo&.update(position: index + 1) # Assuming `position` column exists in your ActiveStorage metadata
           end
         end
     if @venue.update(venue_params)

@@ -8,6 +8,29 @@
                 input_html: { class: "input-field", required: true } %>
   </div>
 
+    <!-- Venue Address -->
+  <div>
+    <%= f.input :address,
+                placeholder: 'Enter venue address',
+                label_html: { class: "block text-sm font-medium text-gray-700 mb-1" },
+                input_html: { class: "input-field" } %>
+  </div>
+
+  <!-- Venue Phone Number -->
+  <div>
+    <%= f.input :phone_number,
+                placeholder: 'Enter venue phone number',
+                label_html: { class: "block text-sm font-medium text-gray-700 mb-1" },
+                input_html: { class: "input-field", type: "tel", pattern: "[0-9+ -]+" } %>
+  </div>
+
+  <!-- Venue Website -->
+  <div>
+    <%= f.input :website,
+                placeholder: 'Enter venue website (https://example.com)',
+                label_html: { class: "block text-sm font-medium text-gray-700 mb-1" },
+                input_html: { class: "input-field", type: "url" } %>
+  </div>
   <!-- Venue Photos -->
 
             <!-- photos Upload Section -->
@@ -20,19 +43,27 @@
             <% if @venue.photos.present? %>
             <div class="images-wrapper gap-4 mt-4" data-controller="sortable">
               <% @venue.photos.each_with_index do |media_file, index| %>
-                <div class="form-image-card border rounded-lg p-4 shadow-sm bg-white flex flex-col items-center" id="media_<%= media_file.id %>" data-id="<%= media_file.id %>">
-                  <% if media_file.image? %>
-                    <%= image_tag media_file, class: "uploaded-photos form-image w-full h-48 object-cover rounded-md mb-2" %>
-                  <% elsif media_file.video? %>
-                    <%= video_tag media_file, controls: true, class: "uploaded-photos form-image w-full h-48 rounded-md mb-2" %>
-                  <% end %>
-                  <!-- Remove button for photos files -->
-                  <%= button_to "Remove", remove_photos_venue_path(@venue, photos_id: media_file.id),
-                      method: :delete,
-                      data: { turbo_confirm: "Are you sure you want to remove this photo?" },
-                      class: "text-sm text-red-600 hover:text-red-800 mt-2"
-                  %>
-                </div>
+                <div class="form-image-card border rounded-lg p-4 shadow-sm bg-white flex flex-col items-center"
+     id="media_<%= media_file.id %>"
+     data-id="<%= media_file.id %>">
+
+  <% if media_file.image? %>
+    <%= image_tag media_file, class: "uploaded-photos form-image w-full h-48 object-cover rounded-md mb-2" %>
+  <% elsif media_file.video? %>
+    <%= video_tag media_file, controls: true, class: "uploaded-photos form-image w-full h-48 rounded-md mb-2" %>
+  <% end %>
+
+  <!-- Hidden field to store the order of images -->
+  <%= hidden_field_tag "venue[photo_positions][]", index + 1, class: "photo-position" %>
+
+  <!-- Remove button for photo files -->
+  <%= button_to "Remove", remove_photos_venue_path(@venue, photos_id: media_file.id),
+      method: :delete,
+      data: { turbo_confirm: "Are you sure you want to remove this photo?" },
+      class: "text-sm text-red-600 hover:text-red-800 mt-2"
+  %>
+</div>
+
               <% end %>
             <% end %>
           <% end %>
