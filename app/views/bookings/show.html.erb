@@ -11,6 +11,13 @@
       <!-- Left Column -->
       <div>
         <p class="text-gray-600 mb-2"><strong>Package:</strong> <%= @booking.package.package_name %></p>
+        <p class="text-gray-600 mb-2"><strong>Venue:</strong> <%= @booking.venue.name %></p>
+        <p class="text-gray-600 mb-2"><strong>Address:</strong> <%= @booking.venue.address %></p>
+        <p class="text-gray-600 mb-2"><strong>City:</strong> <%= @booking.venue.city %></p>
+        <p class="text-gray-600 mb-2"><strong>Country:</strong> <%= @booking.venue.country %></p>
+        <p class="text-gray-600 mb-2"><strong>Phone:</strong> <%= @booking.venue.phone_number %></p>
+        <p class="text-gray-600 mb-2"><strong>Email:</strong> <%= @booking.venue.email %></p>
+        <p class="text-gray-600 mb-2"><strong>Website:</strong> <%= @booking.venue.website %></p>
         <p class="text-gray-600 mb-2"><strong>Date:</strong> <%= @booking.booking_date.strftime("%A, %d %b %Y") %></p>
         <p class="text-gray-600 mb-2"><strong>Start Time:</strong> <%= @booking.booking_start_time.strftime("%H:%M") %></p>
         <p class="text-gray-600 mb-2"><strong>Cost:</strong> €<%= @booking.booking_cost %></p>

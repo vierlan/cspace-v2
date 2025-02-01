@@ -1,5 +1,6 @@
 {
   "dependencies": {
-    "@stimulus-components/carousel": "^6.0.0"
+    "@stimulus-components/carousel": "^6.0.0",
+    "sortablejs": "^1.15.6"
   }
 }

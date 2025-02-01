@@ -106,8 +106,8 @@ class BookingsController < ApplicationController
       else
         @past_bookings << booking
       end
+    end
   end
-end
 
 
   def show
@@ -131,6 +131,18 @@ end
     @booking = Booking.find(params[:id])
     @booking.destroy
   end
+
+  def confirm
+    @booking = Booking.find(params[:id])
+    if @booking.update(booking_confirmed: true)
+
+
+     redirect_to venue_bookings_path, notice: "Booking confirmed successfully!"
+    else
+      render 'bookings/index'
+    end
+  end
+
 
   private
 

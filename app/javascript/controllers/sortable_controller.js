@@ -1,21 +1,30 @@
-import { Controller } from "@hotwired/stimulus"
-import Sortable from "sortablejs"
+import { Controller } from "@hotwired/stimulus";
+import Sortable from "sortablejs";
 
 export default class extends Controller {
   connect() {
-    console.log("Sortable controller connected")
-    this.sortable = Sortable.create(this.element, {
+    console.log("Sortable Controller Connected!");
+
+    this.sortable = new Sortable(this.element, {
       animation: 150,
-      onEnd: this.updatePositions.bind(this)
-    })
+      onEnd: (event) => this.updatePositions(),
+    });
   }
 
-  updatePositions(event) {
-    // Recalculate the position of each media file after sorting
-    const mediaItems = this.element.querySelectorAll('.form-image-card')
-    mediaItems.forEach((item, index) => {
-      const positionInput = item.querySelector('.media-position')
-      positionInput.value = index + 1 // Update the position field with the new index
-    })
+  updatePositions() {
+    console.log("Updating positions...");
+
+    const images = this.element.querySelectorAll(".form-image-card");
+
+    images.forEach((element, index) => {
+      // Ensure there's an input field to update
+      let positionInput = element.querySelector("input.photo-position");
+      if (positionInput) {
+        positionInput.value = index + 1; // Update position
+        console.log(`Updated image ${element.dataset.id} to position ${index + 1}`);
+      } else {
+        console.warn(`No position input found inside #${element.id}`);
+      }
+    });
   }
 }

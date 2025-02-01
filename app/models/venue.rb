@@ -1,9 +1,12 @@
 class Venue < ApplicationRecord
+  attr_accessor :user_email
+
   before_create :set_default_claimed
   CATEGORIES = %w[bar restaurant cafe hotel other]
 
   belongs_to :user
   has_many_attached :photos
+  has_many_attached :videos
   has_many :bookings, dependent: :destroy
   has_many :packages, dependent: :destroy
 

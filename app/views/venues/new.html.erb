@@ -1,87 +1,9 @@
 <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
   <div class="grid grid-cols-8 p-4 m-4">
-    <!-- Spacer for responsive alignment -->
     <div class="hidden md:block"></div>
-
-    <!-- Form Card -->
     <div class="col-span-8 sm:col-span-8 md:col-span-6 lg:col-span-4 bg-white rounded-2xl shadow-lg p-6">
       <h3 class="text-2xl font-bold text-gray-900 mb-6 text-center">List your venue</h3>
-
-      <!-- Form -->
-      <%= simple_form_for(@venue, html: { class: "space-y-6" }) do |f| %>
-        <!-- Venue Name -->
-        <div>
-          <%= f.input :name,
-                      required: true,
-                      placeholder: 'Venue',
-                      label_html: { class: "block text-sm font-medium text-gray-700 mb-1" },
-                      input_html: { class: "input-field", required: true } %>
-        </div>
-
-        <!-- Venue Photos -->
-        <div>
-          <%= f.input :photos,
-                      as: :file,
-                      input_html: { multiple: true, class: "block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border file:border-gray-300 file:text-sm file:font-medium file:bg-secondary file:text-white hover:file:bg-secondary-light" },
-                      label_html: { class: "block text-sm font-medium text-gray-700 mb-1" } %>
-        </div>
-
-        <!-- Venue Categories -->
-        <div>
-          <%= f.label :categories, "Categories", class: "block text-sm font-medium text-gray-700 mb-1" %>
-          <%= f.select :categories,
-                      %w[bar restaurant cafe hotel other],
-                      {},
-                      class: "input-field" %>
-        </div>
-
-        <!-- Spaces -->
-      <div class="flex flex-row">
-        <%= f.label :spaces %>
-        <%= f.input :spaces, as: :check_boxes,
-             collection: %w[meeting study work] %>
-      </div>
-      <div class="opening-hours">
-        <% Date::DAYNAMES.each do |day| %>
-          <div>
-            <%= label_tag day %>
-            <%= text_field_tag "venue[opening_hours][#{day.downcase}][0][open]", nil, placeholder: "Opening Time" %>
-            <%= text_field_tag "venue[opening_hours][#{day.downcase}][0][close]", nil, placeholder: "Closing Time" %>
-          </div>
-        <% end %>
-      </div>
-
-        <!-- Venue Amenities -->
-        <div>
-          <%= f.input :amenities,
-                      placeholder: 'Describe facilities',
-                      label_html: { class: "block text-sm font-medium text-gray-700 mb-1" },
-                      input_html: { class: "input-field" } %>
-        </div>
-
-        <!-- Venue Address -->
-        <div>
-          <%= f.input :address,
-                      placeholder: '20 London Road, W1 4HF',
-                      label_html: { class: "block text-sm font-medium text-gray-700 mb-1" },
-                      input_html: { class: "input-field" } %>
-        </div>
-
-      <!-- Unclaimed venue added by admin -->
-    <div class="flex flex-row">
-      <% if current_user.admin? %>
-        <%= f.input :claimed, as: :select, input_html: { value: 0 } %>
-      <% else %>
-        <%= f.input :claimed, as: :hidden, input_html: { value: true } %>
-      <% end %>
-    </div>
-
-
-        <!-- Submit Button -->
-        <div>
-          <%= f.submit "Add Venue", class: "btn-primary w-full" %>
-        </div>
-      <% end %>
+      <%= render 'form' %>
     </div>
   </div>
 </div>

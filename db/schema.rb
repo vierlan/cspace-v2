@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2025_01_30_115610) do
+ActiveRecord::Schema[7.1].define(version: 2025_02_01_023339) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -270,6 +270,9 @@ ActiveRecord::Schema[7.1].define(version: 2025_01_30_115610) do
     t.jsonb "spaces"
     t.jsonb "opening_hours", default: {}
     t.boolean "claimed"
+    t.string "phone_number"
+    t.string "website"
+    t.string "venue_email"
     t.index ["user_id"], name: "index_venues_on_user_id"
   end
 
