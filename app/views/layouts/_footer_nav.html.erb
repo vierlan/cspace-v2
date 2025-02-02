@@ -19,9 +19,16 @@
     <% end %>
 
     <!-- User/Profile Link -->
+    <% if current_user %>
     <%= link_to dashboard_path(current_user), class: "group flex flex-col items-center cursor-pointer hover:bg-gray-100 rounded-lg px-4 py-2 transition-all duration-300" do %>
       <i class="fa-regular fa-user text-3xl text-gray-700 group-hover:text-yellow-500 transition-all duration-300"></i>
       <span class="text-xs text-gray-600 group-hover:text-yellow-500 transition-all duration-300">Profile</span>
+      <% end %>
+    <% else %>
+      <%= link_to new_user_session_path, class: "group flex flex-col items-center cursor-pointer hover:bg-gray-100 rounded-lg px-4 py-2 transition-all duration-300" do %>
+      <i class="fa-regular fa-user text-3xl text-gray-700 group-hover:text-yellow-500 transition-all duration-300"></i>
+      <span class="text-xs text-gray-600 group-hover:text-yellow-500 transition-all duration-300">Profile</span>
+      <% end %>
     <% end %>
   </nav>
 </div>
