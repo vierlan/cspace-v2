@@ -7,12 +7,8 @@
           <div class="text-center space-y-6">
             <!-- Heading -->
             <h2 class="text-5xl font-heading font-bold text-gray-900">
-              Hi 
-              <% if @user.full_name.present? %>
+              Hi
                 <%= @user.full_name %>
-              <% else %>
-                <%= @user.email %>
-              <% end %>!
             </h2>
 
             <!-- Subtitle -->
@@ -32,15 +28,15 @@
                   <% end %>
                 </li>
                 </ul>
-       
+
 
             <!-- Conditional Dashboard Rendering -->
-           
+
             <ul class="flex flex-col items-start space-y-4">
-              <% if @user.venue_owner %>
-                <%= render "venue_owner_dash" %>
-              <% elsif @user.admin %>
+              <% if @user.admin? %>
                 <%= render "admin_dash" %>
+              <% elsif @user.venue_owner %>
+                <%= render "venue_owner_dash" %>
               <% else %>
                 <%= render "user_dash" %>
               <% end %>

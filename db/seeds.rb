@@ -68,8 +68,9 @@ def create_users
     User.create!(first_name: "John", last_name: "Doe", email: "john@example.com", password: "password123", password_confirmation: "password123", venue_owner: true),
     User.create!(first_name: "Jan", last_name: "Smith", email: "jane@example.com", password: "password123", password_confirmation: "password123", venue_owner: true),
     User.create!(first_name: "Alice", last_name: "Johnso4n", email: "alice@example.com", password: "password123", password_confirmation: "password123", venue_owner: true),
-    User.create!(first_name: "Dev", last_name: "Halai", email: "Dev@la.la", password: "123123", password_confirmation: "123123", venue_owner: true, admin: true),
-    User.create!(first_name: "Lan", last_name: "Anh", email: "la@la.la", password: "123123", password_confirmation: "123123", venue_owner: true, admin: true)
+    User.create!(first_name: "Billy", last_name: "eilish", email: "billy@common-space.app", password: "123123", password_confirmation: "123123", venue_owner: true, admin: true),
+    User.create!(first_name: "Lan", last_name: "Anh", email: "la@la.la", password: "123123", password_confirmation: "123123", venue_owner: true, admin: true),
+    User.create!(first_name: "Arvi", last_name: "dev", email: "arvi@gmail.com", password: "123123", password_confirmation: "123123", venue_owner: true, admin: true)
   ]
   users.each do |user|
     user.avatar.attach(io: URI.open(avatar_urls.sample), filename: "avatar_#{SecureRandom.hex}.jpg")
@@ -83,7 +84,7 @@ def create_places(api_key, location, radius, type, users)
   place_ids = []
   TYPE.each do |cat|
     places = fetch_places(API_KEY, LONDON_COORDINATES, RADIUS, cat)
-    places.first(10).each_with_index do |place, index|
+    places.first(5).each_with_index do |place, index|
       if place_ids.include?(place['place_id']) || place['photos'].nil? || place['photos'].empty?
         puts "Place already exists!"
         next
@@ -105,6 +106,11 @@ def create_places(api_key, location, radius, type, users)
         )
         if venue.save!
           puts "Venue created successfully!"
+          if user.admin?
+            venue.update!(claimed: false)
+          else
+            venue.update!(claimed: true)
+          end
           attach_photos(venue, place)
         else
           puts "Venue creation failed!"
@@ -233,14 +239,14 @@ def add_spaces
 end
 
 def run_seed
+  destroy_all
+  create_users
+  users = User.all
+  create_places(API_KEY, LONDON_COORDINATES, RADIUS, TYPE, users)
   add_spaces
-  #destroy_all
-  #create_users
-  #users = User.all
-  #create_places(API_KEY, LONDON_COORDINATES, RADIUS, TYPE, users)
-  #seed_packages
-  #seed_bookings
-  #puts "Seed completed!"
+  seed_packages
+  seed_bookings
+  puts "Seed completed!"
 end
 
 run_seed
