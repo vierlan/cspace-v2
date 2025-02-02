@@ -28,7 +28,11 @@ class User < ApplicationRecord
 
 
   def full_name
+    if self.first_name.nil? || self.last_name.nil?
+      return self.email
+    else
     "#{first_name.capitalize} #{last_name.capitalize}"
+    end
   end
 
 

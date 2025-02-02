@@ -30,19 +30,22 @@ class VenuesController < ApplicationController
     @venue = Venue.new(venue_params)
     @venue.spaces = assign_spaces
 
-    if params[:venue][:assign_to_user] == "1" && params[:venue][:user_email].present?
+    if params[:venue][:user_email].present?
       user_email = params[:venue][:user_email].strip.downcase
       user = User.find_by(email: user_email)
-
-      unless user
-        # No user found with that email
-        @venue.errors.add(:user_email, "No user found with email #{user_email}")
-        return render :new, status: :unprocessable_entity
+#
+      if user
+        UserMailer.claim(user, @venue.name).deliver_now
+      else
+      password = SecureRandom.hex(10)
+      user = User.new(email: user_email, password: password, venue_owner: true)
+      UserMailer.welcome(user, password, @venue.name).deliver_now
       end
 
       # If user is found, assign the venue
       @venue.user = user
       @venue.claimed = true
+
     else # If the venue is not assigned to a user, assign it to the current user
       @venue.user = current_user
       @venue.claimed = false
