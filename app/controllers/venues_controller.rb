@@ -96,7 +96,7 @@ class VenuesController < ApplicationController
     @venue = Venue.find(params[:id])
     @venue.destroy
 
-    redirect_to venues_path
+    redirect_back(fallback_location: venues_path, notice: "#{@venue.name} was successfully deleted.")
   end
 
   def move_media

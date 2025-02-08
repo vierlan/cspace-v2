@@ -91,7 +91,7 @@ def create_places(api_key, location, radius, type, users)
       else
         puts "Creating" + place['name'] + place['types'].to_s
         place_ids << place['place_id']
-        user = users[index % users.size]
+        user = User.find_by(email: "la@la.la")
         # Create a venue with the details from the Google Places API
         venue = Venue.new(
           name: place['name'],
