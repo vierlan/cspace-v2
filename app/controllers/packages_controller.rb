@@ -8,11 +8,11 @@ class PackagesController < ApplicationController
     @package = Package.new(item_params)
     @package.venue_id = params[:venue_id]
     @venue = Venue.find(params[:venue_id])
-    Stripe.api_key = ENV['STRIPE_SECRET_KEY']
+    #Stripe.api_key = ENV['STRIPE_SECRET_KEY']
 
     if @package.save
-      service = StripePackage.new(@package)
-      service.create_package
+      #service = StripePackage.new(@package)
+      #service.create_package
       redirect_to my_venue_packages_path(@venue)
     else
       render :new ,status: :unprocessable_entity
@@ -50,7 +50,7 @@ class PackagesController < ApplicationController
   def destroy
     @package = Package.find(params[:id])
     @package.cloudinary_purge(@package.photo)
-    @package.delete_stripe_package(@package)
+    #@package.delete_stripe_package(@package)
     @package.destroy
     redirect_to dashboard_path(current_user)
   end
