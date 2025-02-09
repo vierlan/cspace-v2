@@ -1,3 +1,5 @@
+    <%= render "map", venues: @venues %>
+
 <h1 class="text-black text-3xl pt-4 font-bold">Discover <%= params[:spaces].capitalize %> Spaces</h1>
 <div class="m-4 p-2 lg:px-64">
   <% @venues.each do |venue| %>

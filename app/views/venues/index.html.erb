@@ -1,4 +1,4 @@
-
+<%= render "map", venues: @venues %>
 <div class=" px-4 mb-4 bg-white">
   <% @venue_types.each_with_index do | venue_type, index | %>
     <%= render partial: "index_template", locals: {venue_type: venue_type, venue_categories: @venue_categories, index: index} %>
